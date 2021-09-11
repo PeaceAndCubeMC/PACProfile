@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+group = project.pacprofile_group
+archivesBaseName = project.pacprofile_name
+version = project.pacprofile_version
+
+repositories {
+    // LuckPerms
+    mavenCentral()
+    // Paper
+    maven { url "https://papermc.io/repo/repository/maven-public/" }
+    // AnvilGUI
+    maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
+    // Essentials
+    maven { url "https://repo.essentialsx.net/releases/" }
+    // GriefPrevention
+    maven { url "https://jitpack.io" }
+
+    flatDir { dirs 'libs' }
+}
+
+configurations {
+    include
+    include.canBeResolved = true
+    compileOnly.extendsFrom(include)
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:${paper_version}"
+
+    include "net.wesjd:anvilgui:${anvilgui_version}"
+
+    compileOnly "net.luckperms:api:${luckperms_version}"
+    compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
+    compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
+
+    compileOnly name: "pAcPI-${pacpi_version}"
+    compileOnly name: "PACBirthday-${pacbirthday_version}"
+}
+
+build {
+    dependsOn(shadowJar)
+}
+
+shadowJar {
+    configurations = [project.configurations.include]
+    classifier(null)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 16
+}
+
+processResources {
+    filesMatching('plugin.yml') {
+        expand(
+                version: version
+        )
+    }
+}

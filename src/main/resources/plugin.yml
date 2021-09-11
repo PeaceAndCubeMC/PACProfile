@@ -1,0 +1,30 @@
+name: PACProfile
+main: fr.peaceandcube.pacprofile.PACProfile
+version: ${version}
+author: YanisBft
+website: https://github.com/PeaceAndCubeMC/PACProfile
+api-version: 1.17
+
+depend:
+  - LuckPerms
+  - Essentials
+  - GriefPrevention
+  - PACBirthday
+  - pAcPI
+
+commands:
+  profile:
+    description: Opens the profile interface
+    permission: pacprofile.profile
+    permission-message: §cYou do not have the permission to use this command.
+    usage: "§eUsage: §r/profile [<player>]"
+
+permissions:
+  pacprofile.profile:
+    description: Gives access to your own profile
+    default: true
+    children:
+      pacprofile.profile.others: false
+  pacprofile.profile.others:
+    description: Gives access to another player's profile
+    default: op
