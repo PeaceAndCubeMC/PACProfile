@@ -31,7 +31,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("homes_remaining", "Remaining: ");
         DEFAULT_TRANSLATIONS.put("homes_max_available", "Maximum available: ");
         DEFAULT_TRANSLATIONS.put("homes_click", "⇒ Click to see homes");
-        DEFAULT_TRANSLATIONS.put("homes_title", "Homes of %s");
+        DEFAULT_TRANSLATIONS.put("homes_title", "Homes of %s (%2$d/%3$d)");
         DEFAULT_TRANSLATIONS.put("home_world", "World: ");
         DEFAULT_TRANSLATIONS.put("home_x", "X: ");
         DEFAULT_TRANSLATIONS.put("home_y", "Y: ");

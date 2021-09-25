@@ -20,10 +20,12 @@ import java.util.*;
 public class HomesGui extends UnmodifiableGui {
     private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
     private final int page;
+    private final int maxPages;
 
-    public HomesGui(Player viewer, Player player, int page) {
-        super(6, Component.text(String.format(Messages.HOMES_TITLE, player.getName())), viewer, player);
+    public HomesGui(Player viewer, Player player, int page, int maxPages) {
+        super(6, Component.text(String.format(Messages.HOMES_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
         this.page = Math.max(1, page);
+        this.maxPages = maxPages;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -78,11 +80,11 @@ public class HomesGui extends UnmodifiableGui {
             ));
         }
 
-        this.setItem(45, Material.ARROW, NameComponents.PAGE_PREVIOUS, List.of());
-        this.setItem(49, Material.BARRIER, NameComponents.EXIT, List.of());
+        this.setItem(45, Material.ARROW, NameComponents.PAGE_PREVIOUS);
+        this.setItem(49, Material.BARRIER, NameComponents.EXIT);
         // if it's not the last page
         if (homeCount > maxHomeOnPage) {
-            this.setItem(53, Material.ARROW, NameComponents.PAGE_NEXT, List.of());
+            this.setItem(53, Material.ARROW, NameComponents.PAGE_NEXT);
         }
     }
 
@@ -101,7 +103,7 @@ public class HomesGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new HomesGui(this.viewer, this.player, this.page - 1).open();
+                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages).open();
             }
         }
 
@@ -115,7 +117,7 @@ public class HomesGui extends UnmodifiableGui {
             int homeCount = this.user.getHomes().size();
             int maxHomeOnPage = this.page * 10;
             if (homeCount > maxHomeOnPage) {
-                new HomesGui(this.viewer, this.player, this.page + 1).open();
+                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
             }
         }
 
@@ -136,7 +138,7 @@ public class HomesGui extends UnmodifiableGui {
                     .itemLeft(new ItemStack(Material.PAPER))
                     .onComplete(((p, s) -> {
                         PACProfile.getInstance().playerData.setHomeNotes(p.getUniqueId(), HOME_SLOTS.get(slot - 1), s);
-                        new HomesGui(this.viewer, this.player, this.page).open();
+                        new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();
                         return AnvilGUI.Response.close();
                     }))
                     .open(this.viewer);
@@ -144,7 +146,7 @@ public class HomesGui extends UnmodifiableGui {
 
         // home colors
         else if (HOME_SLOTS.containsKey(slot - 2)) {
-            new HomeColorGui(this.viewer, this.player, HOME_SLOTS.get(slot - 2), this.page).open();
+            new HomeColorGui(this.viewer, this.player, HOME_SLOTS.get(slot - 2), this.page, this.maxPages).open();
         }
     }
 }

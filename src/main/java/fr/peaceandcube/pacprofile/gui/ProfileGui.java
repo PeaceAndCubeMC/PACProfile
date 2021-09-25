@@ -117,20 +117,20 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.LINKS_CLICK
         ));
 
-        this.setItem(53, Material.BARRIER, NameComponents.EXIT, List.of());
+        this.setItem(53, Material.BARRIER, NameComponents.EXIT);
 
         this.fillStainedGlassPanes();
     }
 
     private void fillStainedGlassPanes() {
-        this.setItem(0, Material.RED_STAINED_GLASS_PANE);
-        this.setItem(1, Material.RED_STAINED_GLASS_PANE);
-        this.setItem(2, Material.RED_STAINED_GLASS_PANE);
-        this.setItem(3, Material.ORANGE_STAINED_GLASS_PANE);
-        this.setItem(5, Material.ORANGE_STAINED_GLASS_PANE);
-        this.setItem(6, Material.LIME_STAINED_GLASS_PANE);
-        this.setItem(7, Material.LIME_STAINED_GLASS_PANE);
-        this.setItem(8, Material.LIME_STAINED_GLASS_PANE);
+        this.setItem(0, Material.RED_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(1, Material.RED_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(2, Material.RED_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(3, Material.ORANGE_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(5, Material.ORANGE_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(6, Material.LIME_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(7, Material.LIME_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(8, Material.LIME_STAINED_GLASS_PANE, Component.empty());
     }
 
     private String getRank() {
@@ -170,7 +170,7 @@ public class ProfileGui extends UnmodifiableGui {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
                 this.inv.close();
             }
-            case 30 -> new HomesGui(this.viewer, this.player, 1).open();
+            case 30 -> new HomesGui(this.viewer, this.player, 1, (int) Math.ceil(this.user.getHomes().size() / 10.0f)).open();
             case 32 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickClaims());
                 this.inv.close();

@@ -9,7 +9,7 @@ public enum Color {
     MAGENTA("magenta", Material.MAGENTA_DYE, Material.MAGENTA_BED),
     LIGHT_BLUE("light_blue", Material.LIGHT_BLUE_DYE, Material.LIGHT_BLUE_BED),
     YELLOW("yellow", Material.YELLOW_DYE, Material.YELLOW_BED),
-    LIME("lime", Material.LIME_BED, Material.LIME_BED),
+    LIME("lime", Material.LIME_DYE, Material.LIME_BED),
     PINK("pink", Material.PINK_DYE, Material.PINK_BED),
     GRAY("gray", Material.GRAY_DYE, Material.GRAY_BED),
     LIGHT_GRAY("light_gray", Material.LIGHT_GRAY_DYE, Material.LIGHT_GRAY_BED),

@@ -37,8 +37,8 @@ public abstract class UnmodifiableGui implements Listener {
         this.viewer.openInventory(this.inv);
     }
 
-    protected void setItem(int slot, Material material) {
-        this.inv.setItem(slot, new ItemStack(material));
+    protected void setItem(int slot, Material material, Component name) {
+        this.setItem(slot, material, name, List.of());
     }
 
     protected void setItem(int slot, Material material, Component name, List<Component> lore) {
