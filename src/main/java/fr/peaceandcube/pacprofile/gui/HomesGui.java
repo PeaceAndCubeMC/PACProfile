@@ -49,7 +49,7 @@ public class HomesGui extends UnmodifiableGui {
 
             String name = this.user.getHomes().get(index);
             Location location = this.user.getHome(name);
-            String world = location.getWorld().getName();
+            String world = location.isWorldLoaded() ? location.getWorld().getName() : "";
             int x = location.getBlockX();
             int y = location.getBlockY();
             int z = location.getBlockZ();
@@ -133,7 +133,7 @@ public class HomesGui extends UnmodifiableGui {
         // home notes
         else if (HOME_SLOTS.containsKey(slot - 1)) {
             new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.HOME_COLOR_TITLE)
+                    .title(Messages.HOME_NOTES_TITLE)
                     .text(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
                     .itemLeft(new ItemStack(Material.PAPER))
                     .onComplete(((p, s) -> {

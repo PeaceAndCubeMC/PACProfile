@@ -40,6 +40,17 @@ public class LoreComponents {
     public static final Component CLAIMS_CB_TOTAL = Component.text(Messages.CLAIMS_CB_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static final Component CLAIMS_CB_PER_HOUR = Component.text(Messages.CLAIMS_CB_PER_HOUR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static final Component CLAIMS_CLICK = Component.text(Messages.CLAIMS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_WORLD = Component.text(Messages.CLAIM_WORLD, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_GREATER_CORNER = Component.text(Messages.CLAIM_GREATER_CORNER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_LESSER_CORNER = Component.text(Messages.CLAIM_LESSER_CORNER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_WIDTH = Component.text(Messages.CLAIM_WIDTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_LENGTH = Component.text(Messages.CLAIM_LENGTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_AREA = Component.text(Messages.CLAIM_AREA, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_PERMISSIONS_BUILDERS = Component.text(Messages.CLAIM_PERMISSIONS_BUILDERS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_PERMISSIONS_CONTAINERS = Component.text(Messages.CLAIM_PERMISSIONS_CONTAINERS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_PERMISSIONS_ACCESSORS = Component.text(Messages.CLAIM_PERMISSIONS_ACCESSORS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_PERMISSIONS_MANAGERS = Component.text(Messages.CLAIM_PERMISSIONS_MANAGERS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component CLAIM_NAME_CLICK = Component.text(Messages.CLAIM_NAME_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static final Component RULES_CLICK = Component.text(Messages.RULES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 

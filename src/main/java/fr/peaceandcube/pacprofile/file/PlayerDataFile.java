@@ -1,14 +1,20 @@
 package fr.peaceandcube.pacprofile.file;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import me.ryanhamshire.GriefPrevention.Claim;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 public class PlayerDataFile extends YamlFile {
+    private static final String HOMES = "homes";
+    private static final String CLAIMS = "claims";
     private static final String NOTES = "notes";
+    private static final String NAME = "name";
     private static final String COLOR = "color";
 
     public PlayerDataFile(String name, Plugin plugin) {
@@ -16,68 +22,98 @@ public class PlayerDataFile extends YamlFile {
     }
 
     public String getHomeNotes(UUID player, String home) {
-        ConfigurationSection topSection = this.config.getConfigurationSection(player.toString());
+        return this.getNotes(player, HOMES, home, NOTES);
+    }
 
-        if (topSection != null) {
-            ConfigurationSection section = topSection.getConfigurationSection(home);
+    public String getClaimName(UUID player, String claimId) {
+        return this.getNotes(player, CLAIMS, claimId, NAME);
+    }
 
+    private String getNotes(UUID player, String sectionName, String subsectionName, String key) {
+        ConfigurationSection playerSection = this.config.getConfigurationSection(player.toString());
+        if (playerSection != null) {
+            ConfigurationSection section = playerSection.getConfigurationSection(sectionName);
             if (section != null) {
-                return section.getString(NOTES, "");
+                ConfigurationSection subsection = section.getConfigurationSection(subsectionName);
+                if (subsection != null) {
+                    return subsection.getString(key, "");
+                }
             }
         }
-
         return "";
     }
 
     public void setHomeNotes(UUID player, String home, String notes) {
-        ConfigurationSection topSection;
+        this.setNotes(player, HOMES, home, notes, NOTES);
+    }
+
+    public void setClaimName(UUID player, String claimId, String notes) {
+        this.setNotes(player, CLAIMS, claimId, notes, NAME);
+    }
+
+    private void setNotes(UUID player, String sectionName, String subsectionName, String notes, String key) {
+        ConfigurationSection playerSection;
         if (this.config.getConfigurationSection(player.toString()) != null) {
-            topSection = this.config.getConfigurationSection(player.toString());
+            playerSection = this.config.getConfigurationSection(player.toString());
         } else {
-            topSection = this.config.createSection(player.toString());
+            playerSection = this.config.createSection(player.toString());
         }
 
         ConfigurationSection section;
-        if (topSection.getConfigurationSection(home) != null) {
-            section = topSection.getConfigurationSection(home);
+        if (playerSection.getConfigurationSection(sectionName) != null) {
+            section = playerSection.getConfigurationSection(sectionName);
         } else {
-            section = topSection.createSection(home);
+            section = playerSection.createSection(sectionName);
         }
 
-        section.set(NOTES, notes);
+        ConfigurationSection subsection;
+        if (section.getConfigurationSection(subsectionName) != null) {
+            subsection = section.getConfigurationSection(subsectionName);
+        } else {
+            subsection = section.createSection(subsectionName);
+        }
+
+        subsection.set(key, notes);
         this.save();
     }
 
     public String getHomeColor(UUID player, String home) {
-        ConfigurationSection topSection = this.config.getConfigurationSection(player.toString());
-
-        if (topSection != null) {
-            ConfigurationSection section = topSection.getConfigurationSection(home);
-
+        ConfigurationSection playerSection = this.config.getConfigurationSection(player.toString());
+        if (playerSection != null) {
+            ConfigurationSection section = playerSection.getConfigurationSection(HOMES);
             if (section != null) {
-                return section.getString(COLOR, PACProfile.getInstance().config.getDefaultHomeColor());
+                ConfigurationSection subsection = section.getConfigurationSection(home);
+                if (subsection != null) {
+                    return subsection.getString(COLOR, PACProfile.getInstance().config.getDefaultHomeColor());
+                }
             }
         }
-
         return PACProfile.getInstance().config.getDefaultHomeColor();
     }
 
     public void setHomeColor(UUID player, String home, String color) {
-        ConfigurationSection topSection;
+        ConfigurationSection playerSection;
         if (this.config.getConfigurationSection(player.toString()) != null) {
-            topSection = this.config.getConfigurationSection(player.toString());
+            playerSection = this.config.getConfigurationSection(player.toString());
         } else {
-            topSection = this.config.createSection(player.toString());
+            playerSection = this.config.createSection(player.toString());
         }
 
         ConfigurationSection section;
-        if (topSection.getConfigurationSection(home) != null) {
-            section = topSection.getConfigurationSection(home);
+        if (playerSection.getConfigurationSection(HOMES) != null) {
+            section = playerSection.getConfigurationSection(HOMES);
         } else {
-            section = topSection.createSection(home);
+            section = playerSection.createSection(HOMES);
         }
 
-        section.set(COLOR, color);
+        ConfigurationSection subsection;
+        if (section.getConfigurationSection(home) != null) {
+            subsection = section.getConfigurationSection(home);
+        } else {
+            subsection = section.createSection(home);
+        }
+
+        subsection.set(COLOR, color);
         this.save();
     }
 
@@ -85,10 +121,31 @@ public class PlayerDataFile extends YamlFile {
         ConfigurationSection playerSection = this.config.getConfigurationSection(player.toString());
 
         if (playerSection != null) {
-            for (String fileHome : playerSection.getKeys(false)) {
-                if (!homes.contains(fileHome)) {
-                    playerSection.set(fileHome, null);
-                    this.save();
+            ConfigurationSection section = playerSection.getConfigurationSection(HOMES);
+            if (section != null) {
+                for (String fileHome : section.getKeys(false)) {
+                    if (!homes.contains(fileHome)) {
+                        section.set(fileHome, null);
+                        this.save();
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeOutdatedClaims(UUID player, Vector<Claim> claims) {
+        List<String> claimIds = new ArrayList<>();
+        claims.forEach(c -> claimIds.add(c.getID().toString()));
+        ConfigurationSection playerSection = this.config.getConfigurationSection(player.toString());
+
+        if (playerSection != null) {
+            ConfigurationSection section = playerSection.getConfigurationSection(CLAIMS);
+            if (section != null) {
+                for (String fileClaim : section.getKeys(false)) {
+                    if (!claimIds.contains(fileClaim)) {
+                        section.set(fileClaim, null);
+                        this.save();
+                    }
                 }
             }
         }

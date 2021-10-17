@@ -15,7 +15,6 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets_scoreboard", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("coins", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("mails", "mail read", "commands_on_click"));
-        DEFAULT_CONFIGS.add(new ConfigEntry("claims", "claimlist", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
     }
@@ -65,10 +64,6 @@ public class ConfigFile extends YamlFile {
 
     public String getCommandOnClickMails() {
         return this.config.getConfigurationSection("commands_on_click").getString("mails");
-    }
-
-    public String getCommandOnClickClaims() {
-        return this.config.getConfigurationSection("commands_on_click").getString("claims");
     }
 
     public String getCommandOnClickRules() {

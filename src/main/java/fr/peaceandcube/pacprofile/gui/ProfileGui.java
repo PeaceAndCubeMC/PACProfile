@@ -24,9 +24,13 @@ import java.util.Date;
 import java.util.List;
 
 public class ProfileGui extends UnmodifiableGui {
+    private PlayerData playerData;
+    private int maxHomePages;
+    private int maxClaimPages;
 
     public ProfileGui(Player viewer, Player player) {
         super(6, Component.text(String.format(Messages.PROFILE, player.getName())), viewer, player);
+        this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -75,6 +79,7 @@ public class ProfileGui extends UnmodifiableGui {
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = totalHomeCount - usedHomeCount;
+        this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
         this.setItem(30, Material.RED_BED, NameComponents.HOMES, List.of(
                 Component.empty(),
                 LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -84,14 +89,14 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.HOMES_CLICK
         ));
 
-        PlayerData playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
-        int totalClaimCount = playerData.getClaims().size();
-        int remainingClaimBlocks = playerData.getRemainingClaimBlocks();
-        int accruedClaimBlocks = playerData.getAccruedClaimBlocks();
-        int bonusClaimBlocks = playerData.getBonusClaimBlocks();
+        int totalClaimCount = this.playerData.getClaims().size();
+        int remainingClaimBlocks = this.playerData.getRemainingClaimBlocks();
+        int accruedClaimBlocks = this.playerData.getAccruedClaimBlocks();
+        int bonusClaimBlocks = this.playerData.getBonusClaimBlocks();
         int totalClaimsBlocks = accruedClaimBlocks + bonusClaimBlocks;
         int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
         int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
+        this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
         this.setItem(32, Material.GOLDEN_SHOVEL, NameComponents.CLAIMS, List.of(
                 Component.empty(),
                 LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -170,11 +175,8 @@ public class ProfileGui extends UnmodifiableGui {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
                 this.inv.close();
             }
-            case 30 -> new HomesGui(this.viewer, this.player, 1, (int) Math.ceil(this.user.getHomes().size() / 10.0f)).open();
-            case 32 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickClaims());
-                this.inv.close();
-            }
+            case 30 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
+            case 32 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
             case 45 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
                 this.inv.close();
@@ -191,6 +193,7 @@ public class ProfileGui extends UnmodifiableGui {
     public void onInventoryOpen(InventoryOpenEvent e) {
         if (e.getInventory().equals(this.inv)) {
             PACProfile.getInstance().playerData.removeOutdatedHomes(this.player.getUniqueId(), this.user.getHomes());
+            PACProfile.getInstance().playerData.removeOutdatedClaims(this.player.getUniqueId(), this.playerData.getClaims());
         }
     }
 }
