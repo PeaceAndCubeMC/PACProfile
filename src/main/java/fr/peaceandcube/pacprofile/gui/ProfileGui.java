@@ -78,7 +78,7 @@ public class ProfileGui extends UnmodifiableGui {
 
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
-        int remainingHomeCount = totalHomeCount - usedHomeCount;
+        int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
         this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
         this.setItem(30, Material.RED_BED, NameComponents.HOMES, List.of(
                 Component.empty(),

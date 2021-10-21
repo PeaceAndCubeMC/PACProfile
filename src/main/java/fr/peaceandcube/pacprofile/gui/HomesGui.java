@@ -49,10 +49,10 @@ public class HomesGui extends UnmodifiableGui {
 
             String name = this.user.getHomes().get(index);
             Location location = this.user.getHome(name);
-            String world = location.isWorldLoaded() ? location.getWorld().getName() : "";
-            int x = location.getBlockX();
-            int y = location.getBlockY();
-            int z = location.getBlockZ();
+            String world = location != null ? location.getWorld().getName() : Messages.INVALID;
+            String x = location != null ? String.valueOf(location.getBlockX()) : Messages.INVALID;
+            String y = location != null ? String.valueOf(location.getBlockY()) : Messages.INVALID;
+            String z = location != null ? String.valueOf(location.getBlockZ()) : Messages.INVALID;
             Color color = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), name));
 
             HOME_SLOTS.put(slot, name);

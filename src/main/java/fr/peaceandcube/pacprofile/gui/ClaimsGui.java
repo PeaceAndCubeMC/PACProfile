@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class ClaimsGui extends UnmodifiableGui {
     private final Map<Integer, String> CLAIM_SLOTS = new LinkedHashMap<>();
@@ -78,18 +79,14 @@ public class ClaimsGui extends UnmodifiableGui {
             ArrayList<String> accessors = new ArrayList<>();
             ArrayList<String> managers = new ArrayList<>();
             claim.getPermissions(builders, containers, accessors, managers);
-            String buildersStr = String.join(" ", builders.stream().map(s -> Bukkit.getOfflinePlayer(UUID.fromString(s)).getName()).toList());
-            String containersStr = String.join(" ", containers.stream().map(s -> Bukkit.getOfflinePlayer(UUID.fromString(s)).getName()).toList());
-            String accessorsStr = String.join(" ", accessors.stream().map(s -> Bukkit.getOfflinePlayer(UUID.fromString(s)).getName()).toList());
-            String managersStr = String.join(" ", managers.stream().map(s -> Bukkit.getOfflinePlayer(UUID.fromString(s)).getName()).toList());
-            this.setItem(slot + 1, Material.KNOWLEDGE_BOOK, NameComponents.CLAIM_PERMISSIONS, List.of(
-                    Component.empty(),
-                    LoreComponents.CLAIM_PERMISSIONS_BUILDERS.append(Component.text(buildersStr, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_PERMISSIONS_CONTAINERS.append(Component.text(containersStr, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_PERMISSIONS_ACCESSORS.append(Component.text(accessorsStr, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_PERMISSIONS_MANAGERS.append(Component.text(managersStr, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    Component.empty()
-            ));
+            List<Component> components = new ArrayList<>();
+            components.add(Component.empty());
+            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_BUILDERS, builders);
+            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_CONTAINERS, containers);
+            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_ACCESSORS, accessors);
+            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_MANAGERS, managers);
+            components.add(Component.empty());
+            this.setItem(slot + 1, Material.KNOWLEDGE_BOOK, NameComponents.CLAIM_PERMISSIONS, components);
 
             this.setItem(slot + 2, Material.PAPER, NameComponents.CLAIM_NAME, List.of(
                     Component.empty(),
@@ -111,6 +108,27 @@ public class ClaimsGui extends UnmodifiableGui {
             return Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         }
         return Component.text(Messages.NOT_DEFINED, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    }
+
+    private void getPermissionLore(List<Component> components, Component baseComponent, List<String> list) {
+        List<String> mappedList = list.stream().map(s -> {
+            try {
+                return Bukkit.getOfflinePlayer(UUID.fromString(s)).getName();
+            } catch (IllegalArgumentException e) {
+                return s;
+            }
+        }).toList();
+
+        List<List<String>> subLists = IntStream.range(0, (mappedList.size() + 3 - 1) / 3)
+                .mapToObj(i -> mappedList.subList(3 * i, Math.min(3 * i + 3, mappedList.size())))
+                .toList();
+
+        components.add(baseComponent);
+
+        for (var subList : subLists) {
+            String subListStr = String.join(" ", subList);
+            components.add(Component.text(subListStr, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        }
     }
 
     @Override

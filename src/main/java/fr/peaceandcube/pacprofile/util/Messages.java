@@ -8,6 +8,7 @@ public class Messages {
     public static final String PLAYER_NOT_FOUND = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_player_not_found");
 
     public static final String NOT_DEFINED = PACProfile.getInstance().lang.translate("not_defined");
+    public static final String INVALID = PACProfile.getInstance().lang.translate("invalid");
 
     public static final String PROFILE = PACProfile.getInstance().lang.translate("profile");
     public static final String PROFILE_RANK = PACProfile.getInstance().lang.translate("profile_rank");
