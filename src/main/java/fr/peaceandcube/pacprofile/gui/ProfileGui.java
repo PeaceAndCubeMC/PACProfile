@@ -41,7 +41,7 @@ public class ProfileGui extends UnmodifiableGui {
         String nickname = this.user.getNickname() != null ? this.user.getNickname() : Messages.NOT_DEFINED;
         String birthday = this.getBirthday();
         String joinDate = this.getFirstPlayed();
-        this.setPlayerHead(4, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
+        this.setPlayerHead(4, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
                 Component.empty(),
                 LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
@@ -52,7 +52,7 @@ public class ProfileGui extends UnmodifiableGui {
         ));
 
         double coinCount = this.user.getMoney().doubleValue();
-        this.setItem(20, Material.SUNFLOWER, NameComponents.COINS, List.of(
+        this.setItem(20, Material.SUNFLOWER, 3004, NameComponents.COINS, List.of(
                 Component.empty(),
                 LoreComponents.COINS_NUMBER.append(Component.text(coinCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
@@ -61,14 +61,14 @@ public class ProfileGui extends UnmodifiableGui {
 
         Objective objective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
         int headTicketCount = objective != null ? objective.getScore(this.player.getName()).getScore() : 0;
-        this.setItem(22, Material.NAME_TAG, NameComponents.HEAD_TICKETS, List.of(
+        this.setItem(22, Material.NAME_TAG, 3004, NameComponents.HEAD_TICKETS, List.of(
                 Component.empty(),
                 LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
         ));
 
         int mailCount = this.user.getMailAmount();
         int unreadMailCount = this.user.getUnreadMailAmount();
-        this.setItem(24, Material.WRITABLE_BOOK, NameComponents.MAILS, List.of(
+        this.setItem(24, Material.WRITABLE_BOOK, 3004, NameComponents.MAILS, List.of(
                 Component.empty(),
                 LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -80,7 +80,7 @@ public class ProfileGui extends UnmodifiableGui {
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
         this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
-        this.setItem(30, Material.RED_BED, NameComponents.HOMES, List.of(
+        this.setItem(30, Material.RED_BED, 3004, NameComponents.HOMES, List.of(
                 Component.empty(),
                 LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -97,7 +97,7 @@ public class ProfileGui extends UnmodifiableGui {
         int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
         int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
         this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
-        this.setItem(32, Material.GOLDEN_SHOVEL, NameComponents.CLAIMS, List.of(
+        this.setItem(32, Material.GOLDEN_SHOVEL, 3004, NameComponents.CLAIMS, List.of(
                 Component.empty(),
                 LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -112,30 +112,30 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.CLAIMS_CLICK
         ));
 
-        this.setItem(45, Material.KNOWLEDGE_BOOK, NameComponents.RULES, List.of(
+        this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
                 Component.empty(),
                 LoreComponents.RULES_CLICK
         ));
 
-        this.setItem(46, Material.CHAIN, NameComponents.LINKS, List.of(
+        this.setItem(46, Material.CHAIN, 3004, NameComponents.LINKS, List.of(
                 Component.empty(),
                 LoreComponents.LINKS_CLICK
         ));
 
-        this.setItem(53, Material.BARRIER, NameComponents.EXIT);
+        this.setItem(53, Material.BARRIER, 3002, NameComponents.EXIT);
 
         this.fillStainedGlassPanes();
     }
 
     private void fillStainedGlassPanes() {
-        this.setItem(0, Material.RED_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(1, Material.RED_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(2, Material.RED_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(3, Material.ORANGE_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(5, Material.ORANGE_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(6, Material.LIME_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(7, Material.LIME_STAINED_GLASS_PANE, Component.empty());
-        this.setItem(8, Material.LIME_STAINED_GLASS_PANE, Component.empty());
+        this.setItem(0, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(1, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(2, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(3, Material.ORANGE_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(5, Material.ORANGE_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(6, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(7, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItem(8, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
     }
 
     private String getRank() {

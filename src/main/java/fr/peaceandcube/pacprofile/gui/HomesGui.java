@@ -57,7 +57,7 @@ public class HomesGui extends UnmodifiableGui {
 
             HOME_SLOTS.put(slot, name);
 
-            this.setItem(slot, color.getBed(), Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
+            this.setItem(slot, color.getBed(), 3010, Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
                     Component.empty(),
                     LoreComponents.HOME_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.HOME_X.append(Component.text(x, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -67,24 +67,24 @@ public class HomesGui extends UnmodifiableGui {
                     LoreComponents.HOME_CLICK
             ));
 
-            this.setItem(slot + 1, Material.PAPER, NameComponents.HOME_NOTES, List.of(
+            this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, List.of(
                     Component.empty(),
                     this.getNotesLore(name),
                     Component.empty(),
                     LoreComponents.HOME_NOTES_CLICK
             ));
 
-            this.setItem(slot + 2, color.getDye(), NameComponents.HOME_COLOR, List.of(
+            this.setItem(slot + 2, color.getDye(), 3012, NameComponents.HOME_COLOR, List.of(
                     Component.empty(),
                     LoreComponents.HOME_COLOR_CLICK
             ));
         }
 
-        this.setItem(45, Material.ARROW, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, NameComponents.EXIT);
+        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
+        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
         // if it's not the last page
         if (homeCount > maxHomeOnPage) {
-            this.setItem(53, Material.ARROW, NameComponents.PAGE_NEXT);
+            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
         }
     }
 

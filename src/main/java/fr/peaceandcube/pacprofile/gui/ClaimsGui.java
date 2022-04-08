@@ -62,7 +62,8 @@ public class ClaimsGui extends UnmodifiableGui {
 
             CLAIM_SLOTS.put(slot, claimId);
 
-            this.setItem(slot, Material.GOLDEN_SHOVEL, this.getNameLore(claimId), List.of(
+            int customModelData = world.equals("world_nether") ? 3021 : 3020;
+            this.setItem(slot, Material.GOLDEN_SHOVEL, customModelData, this.getNameLore(claimId), List.of(
                     Component.empty(),
                     LoreComponents.CLAIM_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.CLAIM_GREATER_CORNER.append(Component.text(greaterCorner.getBlockX() + " " + greaterCorner.getBlockY() + " " + greaterCorner.getBlockZ(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -86,19 +87,19 @@ public class ClaimsGui extends UnmodifiableGui {
             this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_ACCESSORS, accessors);
             this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_MANAGERS, managers);
             components.add(Component.empty());
-            this.setItem(slot + 1, Material.KNOWLEDGE_BOOK, NameComponents.CLAIM_PERMISSIONS, components);
+            this.setItem(slot + 1, Material.KNOWLEDGE_BOOK, 3022, NameComponents.CLAIM_PERMISSIONS, components);
 
-            this.setItem(slot + 2, Material.PAPER, NameComponents.CLAIM_NAME, List.of(
+            this.setItem(slot + 2, Material.PAPER, 3023, NameComponents.CLAIM_NAME, List.of(
                     Component.empty(),
                     LoreComponents.CLAIM_NAME_CLICK
             ));
         }
 
-        this.setItem(45, Material.ARROW, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, NameComponents.EXIT);
+        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
+        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
         // if it's not the last page
         if (claimCount > maxClaimOnPage) {
-            this.setItem(53, Material.ARROW, NameComponents.PAGE_NEXT);
+            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
         }
     }
 

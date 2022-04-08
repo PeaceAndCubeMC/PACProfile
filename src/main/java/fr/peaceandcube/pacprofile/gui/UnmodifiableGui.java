@@ -37,26 +37,28 @@ public abstract class UnmodifiableGui implements Listener {
         this.viewer.openInventory(this.inv);
     }
 
-    protected void setItem(int slot, Material material, Component name) {
-        this.setItem(slot, material, name, List.of());
+    protected void setItem(int slot, Material material, int customModelData, Component name) {
+        this.setItem(slot, material, customModelData, name, List.of());
     }
 
-    protected void setItem(int slot, Material material, Component name, List<Component> lore) {
+    protected void setItem(int slot, Material material, int customModelData, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         meta.displayName(name);
         meta.lore(lore);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setCustomModelData(customModelData);
         stack.setItemMeta(meta);
         this.inv.setItem(slot, stack);
     }
 
-    protected void setPlayerHead(int slot, Component name, List<Component> lore) {
+    protected void setPlayerHead(int slot, int customModelData, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
         if (stack.getItemMeta() instanceof SkullMeta meta) {
             meta.displayName(name);
             meta.lore(lore);
             meta.setOwningPlayer(this.player);
+            meta.setCustomModelData(customModelData);
             stack.setItemMeta(meta);
         }
         this.inv.setItem(slot, stack);
