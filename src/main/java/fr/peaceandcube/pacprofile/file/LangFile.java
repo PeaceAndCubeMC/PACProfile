@@ -11,6 +11,7 @@ public class LangFile extends YamlFile {
     static {
         DEFAULT_TRANSLATIONS.put("command_profile_sender_not_player", "Command sender must be a player!");
         DEFAULT_TRANSLATIONS.put("command_profile_player_not_found", "Target player was not found.");
+        DEFAULT_TRANSLATIONS.put("command_reload_success", "PACProfile was successfully reloaded");
         DEFAULT_TRANSLATIONS.put("not_defined", "Not defined");
         DEFAULT_TRANSLATIONS.put("invalid", "Invalid");
         DEFAULT_TRANSLATIONS.put("profile", "Profile of %s");

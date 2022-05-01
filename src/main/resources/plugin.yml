@@ -13,6 +13,11 @@ depend:
   - pAcPI
 
 commands:
+  reload:
+    description: Reloads the plugin
+    permission: pacprofile.reload
+    permission-message: §cYou do not have the permission to use this command.
+    usage: "§eUsage: §r/reload"
   profile:
     description: Opens the profile interface
     permission: pacprofile.profile
@@ -20,6 +25,9 @@ commands:
     usage: "§eUsage: §r/profile [<player>]"
 
 permissions:
+  pacprofile.reload:
+    description: Allows you to use /reload command
+    default: op
   pacprofile.profile:
     description: Gives access to your own profile
     default: true

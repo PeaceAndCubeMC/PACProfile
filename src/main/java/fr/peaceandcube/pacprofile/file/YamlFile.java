@@ -44,4 +44,9 @@ public class YamlFile {
             this.config.save(this.file);
         }
     }
+
+    public void reload() {
+        this.config = YamlConfiguration.loadConfiguration(this.file);
+        save();
+    }
 }

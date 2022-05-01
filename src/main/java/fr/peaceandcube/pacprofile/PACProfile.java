@@ -2,9 +2,11 @@ package fr.peaceandcube.pacprofile;
 
 import com.earth2me.essentials.Essentials;
 import fr.peaceandcube.pacprofile.command.ProfileCommand;
+import fr.peaceandcube.pacprofile.command.ReloadCommand;
 import fr.peaceandcube.pacprofile.file.ConfigFile;
 import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
+import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -27,11 +29,19 @@ public class PACProfile extends JavaPlugin {
         essentials = Essentials.getPlugin(Essentials.class);
         griefPrevention = GriefPrevention.getPlugin(GriefPrevention.class);
 
+        this.getCommand("reload").setExecutor(new ReloadCommand());
         this.getCommand("profile").setExecutor(new ProfileCommand());
 
-        this.config = new ConfigFile("config.yml", this);
-        this.lang = new LangFile("lang.yml", this);
-        this.playerData = new PlayerDataFile("playerdata.yml", this);
+        config = new ConfigFile("config.yml", this);
+        lang = new LangFile("lang.yml", this);
+        playerData = new PlayerDataFile("playerdata.yml", this);
+    }
+
+    public static void reload() {
+        PACProfile.getInstance().config.reload();
+        PACProfile.getInstance().lang.reload();
+        PACProfile.getInstance().playerData.reload();
+        Messages.init();
     }
 
     public static PACProfile getInstance() {
