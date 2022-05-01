@@ -22,6 +22,7 @@ import org.bukkit.scoreboard.Objective;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProfileGui extends UnmodifiableGui {
     private PlayerData playerData;
@@ -41,7 +42,7 @@ public class ProfileGui extends UnmodifiableGui {
         String nickname = this.user.getNickname() != null ? this.user.getNickname() : Messages.NOT_DEFINED;
         String birthday = this.getBirthday();
         String joinDate = this.getFirstPlayed();
-        this.setPlayerHead(4, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
+        this.setPlayerHead(4, this.player, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
                 Component.empty(),
                 LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
@@ -112,6 +113,14 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.CLAIMS_CLICK
         ));
 
+        int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList()).size();
+        this.setItem(40, Material.PLAYER_HEAD, 3005, NameComponents.ONLINE_PLAYERS, List.of(
+                Component.empty(),
+                LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.ONLINE_PLAYERS_CLICK
+        ));
+
         this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
                 Component.empty(),
                 LoreComponents.RULES_CLICK
@@ -177,6 +186,7 @@ public class ProfileGui extends UnmodifiableGui {
             }
             case 30 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
             case 32 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
+            case 40 -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxClaimPages).open();
             case 45 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
                 this.inv.close();

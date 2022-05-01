@@ -13,6 +13,7 @@ import java.util.Vector;
 public class PlayerDataFile extends YamlFile {
     private static final String HOMES = "homes";
     private static final String CLAIMS = "claims";
+    private static final String PLAYERS = "players";
     private static final String NOTES = "notes";
     private static final String NAME = "name";
     private static final String COLOR = "color";
@@ -27,6 +28,10 @@ public class PlayerDataFile extends YamlFile {
 
     public String getClaimName(UUID player, String claimId) {
         return this.getNotes(player, CLAIMS, claimId, NAME);
+    }
+
+    public String getPlayerNotes(UUID player, String target) {
+        return this.getNotes(player, PLAYERS, target, NOTES);
     }
 
     private String getNotes(UUID player, String sectionName, String subsectionName, String key) {
@@ -49,6 +54,10 @@ public class PlayerDataFile extends YamlFile {
 
     public void setClaimName(UUID player, String claimId, String notes) {
         this.setNotes(player, CLAIMS, claimId, notes, NAME);
+    }
+
+    public void setPlayerNotes(UUID player, String target, String notes) {
+        this.setNotes(player, PLAYERS, target, notes, NOTES);
     }
 
     private void setNotes(UUID player, String sectionName, String subsectionName, String notes, String key) {

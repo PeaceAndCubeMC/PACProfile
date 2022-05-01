@@ -52,6 +52,13 @@ public class LoreComponents {
     public static final Component CLAIM_PERMISSIONS_MANAGERS = Component.text(Messages.CLAIM_PERMISSIONS_MANAGERS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static final Component CLAIM_NAME_CLICK = Component.text(Messages.CLAIM_NAME_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
+    public static final Component ONLINE_PLAYERS_COUNT = Component.text(Messages.ONLINE_PLAYERS_COUNT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component ONLINE_PLAYERS_CLICK = Component.text(Messages.ONLINE_PLAYERS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component ONLINE_PLAYER_TRUST_COUNT_1 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_1, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component ONLINE_PLAYER_TRUST_COUNT_2 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static final Component ONLINE_PLAYER_NOTES_CLICK = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
     public static final Component RULES_CLICK = Component.text(Messages.RULES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static final Component LINKS_CLICK = Component.text(Messages.LINKS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
