@@ -79,6 +79,8 @@ public class Messages {
     public static String RULES_CLICK = PACProfile.getInstance().lang.translate("rules_click");
     public static String LINKS = PACProfile.getInstance().lang.translate("links");
     public static String LINKS_CLICK = PACProfile.getInstance().lang.translate("links_click");
+    public static String DYNMAP = PACProfile.getInstance().lang.translate("dynmap");
+    public static String DYNMAP_CLICK = PACProfile.getInstance().lang.translate("dynmap_click");
     public static String EXIT = PACProfile.getInstance().lang.translate("exit");
     public static String PAGE_PREVIOUS = PACProfile.getInstance().lang.translate("page_previous");
     public static String PAGE_NEXT = PACProfile.getInstance().lang.translate("page_next");
@@ -159,6 +161,8 @@ public class Messages {
         RULES_CLICK = PACProfile.getInstance().lang.translate("rules_click");
         LINKS = PACProfile.getInstance().lang.translate("links");
         LINKS_CLICK = PACProfile.getInstance().lang.translate("links_click");
+        DYNMAP = PACProfile.getInstance().lang.translate("dynmap");
+        DYNMAP_CLICK = PACProfile.getInstance().lang.translate("dynmap_click");
         EXIT = PACProfile.getInstance().lang.translate("exit");
         PAGE_PREVIOUS = PACProfile.getInstance().lang.translate("page_previous");
         PAGE_NEXT = PACProfile.getInstance().lang.translate("page_next");

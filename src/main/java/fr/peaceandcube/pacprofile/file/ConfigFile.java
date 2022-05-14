@@ -17,6 +17,7 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("mails", "mail read", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("dynmap", "", "commands_on_click"));
     }
 
     public ConfigFile(String name, Plugin plugin) {
@@ -72,5 +73,9 @@ public class ConfigFile extends YamlFile {
 
     public String getCommandOnClickLinks() {
         return this.config.getConfigurationSection("commands_on_click").getString("links");
+    }
+
+    public String getCommandOnClickDynmap() {
+        return this.config.getConfigurationSection("commands_on_click").getString("dynmap");
     }
 }

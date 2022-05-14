@@ -6,6 +6,8 @@ import fr.peaceandcube.pacprofile.command.ReloadCommand;
 import fr.peaceandcube.pacprofile.file.ConfigFile;
 import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
+import fr.peaceandcube.pacprofile.text.LoreComponents;
+import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.luckperms.api.LuckPerms;
@@ -42,6 +44,8 @@ public class PACProfile extends JavaPlugin {
         PACProfile.getInstance().lang.reload();
         PACProfile.getInstance().playerData.reload();
         Messages.init();
+        NameComponents.init();
+        LoreComponents.init();
     }
 
     public static PACProfile getInstance() {

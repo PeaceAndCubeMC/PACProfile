@@ -75,13 +75,15 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("online_players_title", "Online Players (%2$d/%3$d)");
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_1", "Trusted in ");
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_2", " claim(s)");
-        DEFAULT_TRANSLATIONS.put("online_player_click", "⇒ Click to ask to teleport to this player");
+        DEFAULT_TRANSLATIONS.put("online_player_click", "⇒ Click to ask for a teleportation");
         DEFAULT_TRANSLATIONS.put("online_player_notes_click", "⇒ Click to edit notes");
         DEFAULT_TRANSLATIONS.put("online_player_notes_title", "Edit notes");
         DEFAULT_TRANSLATIONS.put("rules", "Rules");
         DEFAULT_TRANSLATIONS.put("rules_click", "⇒ Click to see the rules");
         DEFAULT_TRANSLATIONS.put("links", "Server Links");
         DEFAULT_TRANSLATIONS.put("links_click", "⇒ Click to see the links");
+        DEFAULT_TRANSLATIONS.put("dynmap", "Dynmap");
+        DEFAULT_TRANSLATIONS.put("dynmap_click", "⇒ Click to open the dynmap");
         DEFAULT_TRANSLATIONS.put("exit", "Exit");
         DEFAULT_TRANSLATIONS.put("page_previous", "Previous Page");
         DEFAULT_TRANSLATIONS.put("page_next", "Next Page");

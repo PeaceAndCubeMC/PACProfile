@@ -131,6 +131,11 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.LINKS_CLICK
         ));
 
+        this.setItem(47, Material.MAP, 3004, NameComponents.DYNMAP, List.of(
+                Component.empty(),
+                LoreComponents.DYNMAP_CLICK
+        ));
+
         this.setItem(53, Material.BARRIER, 3002, NameComponents.EXIT);
 
         this.fillStainedGlassPanes();
@@ -193,6 +198,10 @@ public class ProfileGui extends UnmodifiableGui {
             }
             case 46 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
+                this.inv.close();
+            }
+            case 47 -> {
+                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
                 this.inv.close();
             }
             case 53 -> this.inv.close();
