@@ -5,6 +5,7 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,13 +43,20 @@ public abstract class UnmodifiableGui implements Listener {
     }
 
     protected void setItem(int slot, Material material, int customModelData, Component name, List<Component> lore) {
+        this.setItem(slot, material, customModelData, false, name, lore);
+    }
+
+    protected void setItem(int slot, Material material, int customModelData, boolean glint, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         meta.displayName(name);
         meta.lore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         meta.setCustomModelData(customModelData);
         stack.setItemMeta(meta);
+        if (glint) {
+            stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        }
         this.inv.setItem(slot, stack);
     }
 

@@ -11,6 +11,12 @@ public class LoreComponents {
     public static Component PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
+    public static Component SETTINGS_CLICK = Component.text(Messages.SETTINGS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_MSGTOGGLE_CLICK = Component.text(Messages.SETTINGS_MSGTOGGLE_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_TOGGLEMSGSOUND_CLICK = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
     public static Component COINS_NUMBER = Component.text(Messages.COINS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
@@ -70,6 +76,12 @@ public class LoreComponents {
         PROFILE_NICKNAME = Component.text(Messages.PROFILE_NICKNAME, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
+        SETTINGS_CLICK = Component.text(Messages.SETTINGS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD);
+        SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD);
+        SETTINGS_MSGTOGGLE_CLICK = Component.text(Messages.SETTINGS_MSGTOGGLE_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_TOGGLEMSGSOUND_CLICK = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         COINS_NUMBER = Component.text(Messages.COINS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

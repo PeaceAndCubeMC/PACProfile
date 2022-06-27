@@ -19,6 +19,15 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("profile_nickname", "Nickname: ");
         DEFAULT_TRANSLATIONS.put("profile_birthday", "Birthday: ");
         DEFAULT_TRANSLATIONS.put("profile_join_date", "Joined on: ");
+        DEFAULT_TRANSLATIONS.put("settings", "Settings");
+        DEFAULT_TRANSLATIONS.put("settings_click", "⇒ Click to edit settings");
+        DEFAULT_TRANSLATIONS.put("settings_title", "Settings");
+        DEFAULT_TRANSLATIONS.put("settings_enabled", "Enabled");
+        DEFAULT_TRANSLATIONS.put("settings_disabled", "Disabled");
+        DEFAULT_TRANSLATIONS.put("settings_msgtoggle", "Private messages");
+        DEFAULT_TRANSLATIONS.put("settings_msgtoggle_click", "⇒ Click to toggle private messages");
+        DEFAULT_TRANSLATIONS.put("settings_togglemsgsound", "Private messages sound");
+        DEFAULT_TRANSLATIONS.put("settings_togglemsgsound_click", "⇒ Click to toggle private messages sound");
         DEFAULT_TRANSLATIONS.put("coins", "Coins");
         DEFAULT_TRANSLATIONS.put("coins_total", "Total: ");
         DEFAULT_TRANSLATIONS.put("coins_click", "⇒ Click to see more about coins");

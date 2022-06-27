@@ -22,7 +22,6 @@ import org.bukkit.scoreboard.Objective;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProfileGui extends UnmodifiableGui {
     private PlayerData playerData;
@@ -50,6 +49,11 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD))
+        ));
+
+        this.setItem(17, Material.COMPARATOR, 3004, NameComponents.SETTINGS, List.of(
+                Component.empty(),
+                LoreComponents.SETTINGS_CLICK
         ));
 
         double coinCount = this.user.getMoney().doubleValue();
@@ -181,6 +185,7 @@ public class ProfileGui extends UnmodifiableGui {
     @Override
     protected void onSlotLeftClick(int slot) {
         switch (slot) {
+            case 17 -> new SettingsGui(this.viewer, this.player).open();
             case 20 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
                 this.inv.close();

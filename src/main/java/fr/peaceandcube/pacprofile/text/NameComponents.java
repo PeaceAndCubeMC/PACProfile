@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
 public class NameComponents {
+    public static Component SETTINGS = Component.text(Messages.SETTINGS_TITLE, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component COINS = Component.text(Messages.COINS, TextColor.color(0xFFAA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component HEAD_TICKETS = Component.text(Messages.HEAD_TICKETS, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component MAILS = Component.text(Messages.MAILS, TextColor.color(0xAA00AA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -21,6 +22,9 @@ public class NameComponents {
     public static Component PAGE_PREVIOUS = Component.text(Messages.PAGE_PREVIOUS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component PAGE_NEXT = Component.text(Messages.PAGE_NEXT, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+    public static Component SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
     public static Component HOME_NOTES = Component.text(Messages.HOME_NOTES, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_COLOR = Component.text(Messages.HOME_COLOR, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
@@ -28,6 +32,7 @@ public class NameComponents {
     public static Component CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
     public static void init() {
+        SETTINGS = Component.text(Messages.SETTINGS_TITLE, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         COINS = Component.text(Messages.COINS, TextColor.color(0xFFAA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         HEAD_TICKETS = Component.text(Messages.HEAD_TICKETS, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         MAILS = Component.text(Messages.MAILS, TextColor.color(0xAA00AA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -42,6 +47,9 @@ public class NameComponents {
 
         PAGE_PREVIOUS = Component.text(Messages.PAGE_PREVIOUS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         PAGE_NEXT = Component.text(Messages.PAGE_NEXT, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
+        SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
         HOME_NOTES = Component.text(Messages.HOME_NOTES, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         HOME_COLOR = Component.text(Messages.HOME_COLOR, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);

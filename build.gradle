@@ -41,6 +41,7 @@ dependencies {
     compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
 
     compileOnly name: "pAcPI-${pacpi_version}"
+    compileOnly name: "pacutilities-${pacutilities_version}"
     compileOnly name: "PACBirthday-${pacbirthday_version}"
 }
 
