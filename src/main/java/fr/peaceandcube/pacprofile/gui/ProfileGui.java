@@ -27,6 +27,8 @@ public class ProfileGui extends UnmodifiableGui {
     private PlayerData playerData;
     private int maxHomePages;
     private int maxClaimPages;
+    private int maxOnlinePlayersPages;
+    private int maxWarpsPages;
 
     public ProfileGui(Player viewer, Player player) {
         super(6, Component.text(String.format(Messages.PROFILE, player.getName())), viewer, player);
@@ -85,7 +87,7 @@ public class ProfileGui extends UnmodifiableGui {
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
         this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
-        this.setItem(30, Material.RED_BED, 3004, NameComponents.HOMES, List.of(
+        this.setItem(28, Material.RED_BED, 3004, NameComponents.HOMES, List.of(
                 Component.empty(),
                 LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -102,7 +104,7 @@ public class ProfileGui extends UnmodifiableGui {
         int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
         int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
         this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
-        this.setItem(32, Material.GOLDEN_SHOVEL, 3004, NameComponents.CLAIMS, List.of(
+        this.setItem(30, Material.GOLDEN_SHOVEL, 3004, NameComponents.CLAIMS, List.of(
                 Component.empty(),
                 LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -117,12 +119,19 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.CLAIMS_CLICK
         ));
 
-        int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList()).size();
-        this.setItem(40, Material.PLAYER_HEAD, 3005, NameComponents.ONLINE_PLAYERS, List.of(
+        int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).toList().size();
+        this.maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
+        this.setItem(32, Material.PLAYER_HEAD, 3005, NameComponents.ONLINE_PLAYERS, List.of(
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_CLICK
+        ));
+
+        this.maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
+        this.setItem(34, Material.ENDER_PEARL, 3004, NameComponents.WARPS, List.of(
+                Component.empty(),
+                LoreComponents.WARPS_CLICK
         ));
 
         this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
@@ -194,9 +203,10 @@ public class ProfileGui extends UnmodifiableGui {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
                 this.inv.close();
             }
-            case 30 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
-            case 32 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
-            case 40 -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxClaimPages).open();
+            case 28 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
+            case 30 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
+            case 32 -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open();
+            case 34 -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open();
             case 45 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
                 this.inv.close();

@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.file;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
@@ -18,6 +19,9 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("dynmap", "", "commands_on_click"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("name", "Spawn", "warps.spawn"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("icon", "grass_block", "warps.spawn"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("category", "Spawn", "warps.spawn"));
     }
 
     public ConfigFile(String name, Plugin plugin) {
@@ -77,5 +81,20 @@ public class ConfigFile extends YamlFile {
 
     public String getCommandOnClickDynmap() {
         return this.config.getConfigurationSection("commands_on_click").getString("dynmap");
+    }
+
+    public List<WarpEntry> getWarps() {
+        List<WarpEntry> warps = new ArrayList<>();
+        ConfigurationSection section = this.config.getConfigurationSection("warps");
+        if (section != null) {
+            for (String key : section.getKeys(false)) {
+                ConfigurationSection warpSection = section.getConfigurationSection(key);
+                if (warpSection != null) {
+                    Material icon = warpSection.getString("icon") != null ? Material.getMaterial(warpSection.getString("icon").toUpperCase()) : Material.ENDER_PEARL;
+                    warps.add(new WarpEntry(key, warpSection.getString("name"), icon, warpSection.getString("category")));
+                }
+            }
+        }
+        return warps;
     }
 }

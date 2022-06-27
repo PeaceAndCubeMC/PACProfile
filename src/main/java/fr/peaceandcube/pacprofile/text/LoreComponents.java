@@ -65,6 +65,17 @@ public class LoreComponents {
     public static Component ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component ONLINE_PLAYER_NOTES_CLICK = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
+    public static Component WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_BY = Component.text(Messages.WARPS_ORDER_BY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_NAME_AZ = Component.text(Messages.WARPS_ORDER_NAME_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_NAME_ZA = Component.text(Messages.WARPS_ORDER_NAME_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_CATEGORY_AZ = Component.text(Messages.WARPS_ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_CATEGORY_ZA = Component.text(Messages.WARPS_ORDER_CATEGORY_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_CLICK = Component.text(Messages.WARPS_ORDER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARP_COMMAND = Component.text(Messages.WARP_COMMAND, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARP_CATEGORY = Component.text(Messages.WARP_CATEGORY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARP_CLICK = Component.text(Messages.WARP_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
     public static Component RULES_CLICK = Component.text(Messages.RULES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component LINKS_CLICK = Component.text(Messages.LINKS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -129,6 +140,17 @@ public class LoreComponents {
         ONLINE_PLAYER_TRUST_COUNT_2 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_NOTES_CLICK = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
+        WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_BY = Component.text(Messages.WARPS_ORDER_BY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_NAME_AZ = Component.text(Messages.WARPS_ORDER_NAME_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_NAME_ZA = Component.text(Messages.WARPS_ORDER_NAME_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_CATEGORY_AZ = Component.text(Messages.WARPS_ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_CATEGORY_ZA = Component.text(Messages.WARPS_ORDER_CATEGORY_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_CLICK = Component.text(Messages.WARPS_ORDER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARP_COMMAND = Component.text(Messages.WARP_COMMAND, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARP_CATEGORY = Component.text(Messages.WARP_CATEGORY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARP_CLICK = Component.text(Messages.WARP_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         RULES_CLICK = Component.text(Messages.RULES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 

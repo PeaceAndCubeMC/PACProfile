@@ -13,6 +13,7 @@ public class NameComponents {
     public static Component HOMES = Component.text(Messages.HOMES, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component CLAIMS = Component.text(Messages.CLAIMS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component ONLINE_PLAYERS = Component.text(Messages.ONLINE_PLAYERS, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS = Component.text(Messages.WARPS, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component RULES = Component.text(Messages.RULES, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component LINKS = Component.text(Messages.LINKS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component DYNMAP = Component.text(Messages.DYNMAP, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -31,6 +32,8 @@ public class NameComponents {
     public static Component CLAIM_PERMISSIONS = Component.text(Messages.CLAIM_PERMISSIONS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+    public static Component WARPS_ORDER = Component.text(Messages.WARPS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
     public static void init() {
         SETTINGS = Component.text(Messages.SETTINGS_TITLE, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         COINS = Component.text(Messages.COINS, TextColor.color(0xFFAA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -39,6 +42,7 @@ public class NameComponents {
         HOMES = Component.text(Messages.HOMES, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIMS = Component.text(Messages.CLAIMS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYERS = Component.text(Messages.ONLINE_PLAYERS, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        WARPS = Component.text(Messages.WARPS, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         RULES = Component.text(Messages.RULES, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         LINKS = Component.text(Messages.LINKS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         DYNMAP = Component.text(Messages.DYNMAP, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -56,5 +60,7 @@ public class NameComponents {
 
         CLAIM_PERMISSIONS = Component.text(Messages.CLAIM_PERMISSIONS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
+        WARPS_ORDER = Component.text(Messages.WARPS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     }
 }
