@@ -49,14 +49,9 @@ public class WarpsGui extends UnmodifiableGui {
         int maxWarpsOnPage = this.page * 35;
         int warpsOnPage = warpCount >= maxWarpsOnPage ? maxWarpsOnPage : (warpCount - (this.page - 1) * 35);
 
-        for (int i = 0; i < Math.min(warpsOnPage, 10); i++) {
+        for (int i = 0; i < Math.min(warpsOnPage, 35); i++) {
             int index = maxWarpsOnPage - 35 + i;
-            int slot;
-            if (i % 7 != 0) {
-                slot = i + 1;
-            } else {
-                slot = i + 1 + (i / 7) * 9;
-            }
+            int slot = (i / 7) * 9 + (i % 7 + 1);
 
             WarpEntry warp = this.warps.get(index);
 
@@ -109,7 +104,7 @@ public class WarpsGui extends UnmodifiableGui {
             int warpCount = this.warps.size();
             int maxWarpsOnPage = this.page * 35;
             if (warpCount > maxWarpsOnPage) {
-                new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
+                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
             }
         }
 

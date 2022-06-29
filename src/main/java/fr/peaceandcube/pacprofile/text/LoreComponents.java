@@ -89,8 +89,8 @@ public class LoreComponents {
         PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         SETTINGS_CLICK = Component.text(Messages.SETTINGS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD);
-        SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD);
+        SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         SETTINGS_MSGTOGGLE_CLICK = Component.text(Messages.SETTINGS_MSGTOGGLE_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         SETTINGS_TOGGLEMSGSOUND_CLICK = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
