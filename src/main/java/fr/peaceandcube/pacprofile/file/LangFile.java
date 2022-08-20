@@ -92,6 +92,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("warps_title", "Warps (%2$d/%3$d)");
         DEFAULT_TRANSLATIONS.put("warps_order", "Order warps");
         DEFAULT_TRANSLATIONS.put("warps_order_by", "Order by: ");
+        DEFAULT_TRANSLATIONS.put("warps_order_default", "Default");
         DEFAULT_TRANSLATIONS.put("warps_order_name_az", "Name (A-Z)");
         DEFAULT_TRANSLATIONS.put("warps_order_name_za", "Name (Z-A)");
         DEFAULT_TRANSLATIONS.put("warps_order_category_az", "Category (A-Z)");

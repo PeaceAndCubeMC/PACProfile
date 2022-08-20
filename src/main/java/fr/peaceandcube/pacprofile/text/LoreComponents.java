@@ -67,6 +67,7 @@ public class LoreComponents {
 
     public static Component WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component WARPS_ORDER_BY = Component.text(Messages.WARPS_ORDER_BY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component WARPS_ORDER_DEFAULT = Component.text(Messages.WARPS_ORDER_DEFAULT, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component WARPS_ORDER_NAME_AZ = Component.text(Messages.WARPS_ORDER_NAME_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component WARPS_ORDER_NAME_ZA = Component.text(Messages.WARPS_ORDER_NAME_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component WARPS_ORDER_CATEGORY_AZ = Component.text(Messages.WARPS_ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -143,6 +144,7 @@ public class LoreComponents {
 
         WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         WARPS_ORDER_BY = Component.text(Messages.WARPS_ORDER_BY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        WARPS_ORDER_DEFAULT = Component.text(Messages.WARPS_ORDER_DEFAULT, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         WARPS_ORDER_NAME_AZ = Component.text(Messages.WARPS_ORDER_NAME_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         WARPS_ORDER_NAME_ZA = Component.text(Messages.WARPS_ORDER_NAME_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         WARPS_ORDER_CATEGORY_AZ = Component.text(Messages.WARPS_ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);

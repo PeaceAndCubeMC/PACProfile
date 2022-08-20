@@ -89,6 +89,7 @@ public class Messages {
     public static String WARPS_TITLE = PACProfile.getInstance().lang.translate("warps_title");
     public static String WARPS_ORDER = PACProfile.getInstance().lang.translate("warps_order");
     public static String WARPS_ORDER_BY = PACProfile.getInstance().lang.translate("warps_order_by");
+    public static String WARPS_ORDER_DEFAULT = PACProfile.getInstance().lang.translate("warps_order_default");
     public static String WARPS_ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("warps_order_name_az");
     public static String WARPS_ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("warps_order_name_za");
     public static String WARPS_ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("warps_order_category_az");
@@ -193,6 +194,7 @@ public class Messages {
         WARPS_TITLE = PACProfile.getInstance().lang.translate("warps_title");
         WARPS_ORDER = PACProfile.getInstance().lang.translate("warps_order");
         WARPS_ORDER_BY = PACProfile.getInstance().lang.translate("warps_order_by");
+        WARPS_ORDER_DEFAULT = PACProfile.getInstance().lang.translate("warps_order_default");
         WARPS_ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("warps_order_name_az");
         WARPS_ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("warps_order_name_za");
         WARPS_ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("warps_order_category_az");

@@ -20,7 +20,7 @@ public class WarpsGui extends UnmodifiableGui {
     private final Map<Integer, WarpEntry> WARPS_SLOTS = new LinkedHashMap<>();
     private final int page;
     private final int maxPages;
-    private final List<WarpEntry> warps;
+    private List<WarpEntry> warps;
     private Order order;
 
     public WarpsGui(Player viewer, Player player, int page, int maxPages) {
@@ -28,14 +28,16 @@ public class WarpsGui extends UnmodifiableGui {
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.warps = PACProfile.getInstance().config.getWarps();
-        this.order = Order.NAME_AZ;
+        this.order = Order.DEFAULT;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        if (this.order == Order.NAME_AZ) {
+        if (this.order == Order.DEFAULT) {
+            this.warps = PACProfile.getInstance().config.getWarps();
+        } else if (this.order == Order.NAME_AZ) {
             this.warps.sort((warp1, warp2) -> warp1.name().compareToIgnoreCase(warp2.name()));
         } else if (this.order == Order.NAME_ZA) {
             this.warps.sort((warp1, warp2) -> warp2.name().compareToIgnoreCase(warp1.name()));
@@ -122,6 +124,7 @@ public class WarpsGui extends UnmodifiableGui {
     }
 
     enum Order {
+        DEFAULT(LoreComponents.WARPS_ORDER_DEFAULT),
         NAME_AZ(LoreComponents.WARPS_ORDER_NAME_AZ),
         NAME_ZA(LoreComponents.WARPS_ORDER_NAME_ZA),
         CATEGORY_AZ(LoreComponents.WARPS_ORDER_CATEGORY_AZ),
@@ -139,10 +142,11 @@ public class WarpsGui extends UnmodifiableGui {
 
         public Order next() {
             return switch (this) {
+                case DEFAULT -> NAME_AZ;
                 case NAME_AZ -> NAME_ZA;
                 case NAME_ZA -> CATEGORY_AZ;
                 case CATEGORY_AZ -> CATEGORY_ZA;
-                case CATEGORY_ZA -> NAME_AZ;
+                case CATEGORY_ZA -> DEFAULT;
             };
         }
     }
