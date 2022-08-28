@@ -6,7 +6,8 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
 public class NameComponents {
-    public static Component SETTINGS = Component.text(Messages.SETTINGS_TITLE, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS = Component.text(Messages.STATISTICS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS = Component.text(Messages.SETTINGS, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component COINS = Component.text(Messages.COINS, TextColor.color(0xFFAA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component HEAD_TICKETS = Component.text(Messages.HEAD_TICKETS, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component MAILS = Component.text(Messages.MAILS, TextColor.color(0xAA00AA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -38,6 +39,7 @@ public class NameComponents {
     public static Component WARPS_ORDER = Component.text(Messages.WARPS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
     public static void init() {
+        STATISTICS = Component.text(Messages.STATISTICS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         SETTINGS = Component.text(Messages.SETTINGS_TITLE, TextColor.color(0x555555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         COINS = Component.text(Messages.COINS, TextColor.color(0xFFAA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         HEAD_TICKETS = Component.text(Messages.HEAD_TICKETS, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);

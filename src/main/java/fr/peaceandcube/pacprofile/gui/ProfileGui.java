@@ -14,6 +14,7 @@ import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -29,10 +30,12 @@ public class ProfileGui extends UnmodifiableGui {
     private int maxClaimPages;
     private int maxOnlinePlayersPages;
     private int maxWarpsPages;
+    private boolean baseStatistics;
 
     public ProfileGui(Player viewer, Player player) {
         super(6, Component.text(String.format(Messages.PROFILE, player.getName())), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
+        this.baseStatistics = false;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -51,6 +54,30 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD))
+        ));
+
+        double[] statistics = this.getStatistics();
+        Component statisticsComponent = this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT;
+        Component clickComponent = this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE;
+        this.setItem(9, Material.ENCHANTED_BOOK, 3004, NameComponents.STATISTICS, List.of(
+                statisticsComponent,
+                Component.empty(),
+                LoreComponents.STATISTICS_HEALTH.append(Component.text(statistics[0], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.STATISTICS_MAX_HEALTH.append(Component.text(statistics[1], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.STATISTICS_ARMOR.append(Component.text(statistics[2], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.STATISTICS_ARMOR_TOUGHNESS.append(Component.text(statistics[3], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.STATISTICS_KNOCKBACK_RESISTANCE.append(Component.text(statistics[4], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.STATISTICS_SPEED.append(Component.text(statistics[5], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.STATISTICS_ATTACK_DAMAGE.append(Component.text(statistics[6], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.STATISTICS_ATTACK_SPEED.append(Component.text(statistics[7], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                LoreComponents.STATISTICS_LUCK.append(Component.text(statistics[8], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                Component.empty(),
+                clickComponent
         ));
 
         this.setItem(17, Material.COMPARATOR, 3004, NameComponents.SETTINGS, List.of(
@@ -191,9 +218,33 @@ public class ProfileGui extends UnmodifiableGui {
         return new SimpleDateFormat(PACProfile.getInstance().config.getDateFormat()).format(new Date(timestamp));
     }
 
+    private double[] getStatistics() {
+        double[] statistics = new double[9];
+
+        statistics[0] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : this.player.getHealth();
+        statistics[1] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        statistics[2] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ARMOR).getValue();
+        statistics[3] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getValue();
+        statistics[4] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue();
+        statistics[5] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
+        statistics[6] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue();
+        statistics[7] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue();
+        statistics[8] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_LUCK).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_LUCK).getValue();
+
+        for (int i = 0; i < statistics.length; i++) {
+            statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;
+        }
+
+        return statistics;
+    }
+
     @Override
     protected void onSlotLeftClick(int slot) {
         switch (slot) {
+            case 9 -> {
+                this.baseStatistics = !this.baseStatistics;
+                this.fillInventory();
+            }
             case 17 -> new SettingsGui(this.viewer, this.player).open();
             case 20 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());

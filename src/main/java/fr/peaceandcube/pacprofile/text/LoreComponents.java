@@ -11,6 +11,20 @@ public class LoreComponents {
     public static Component PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
+    public static Component STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_HEALTH = Component.text(Messages.STATISTICS_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_MAX_HEALTH = Component.text(Messages.STATISTICS_MAX_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_ARMOR = Component.text(Messages.STATISTICS_ARMOR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_ARMOR_TOUGHNESS = Component.text(Messages.STATISTICS_ARMOR_TOUGHNESS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_KNOCKBACK_RESISTANCE = Component.text(Messages.STATISTICS_KNOCKBACK_RESISTANCE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_SPEED = Component.text(Messages.STATISTICS_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_ATTACK_DAMAGE = Component.text(Messages.STATISTICS_ATTACK_DAMAGE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_ATTACK_SPEED = Component.text(Messages.STATISTICS_ATTACK_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_LUCK = Component.text(Messages.STATISTICS_LUCK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_CLICK_BASE = Component.text(Messages.STATISTICS_CLICK_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_CLICK_CURRENT = Component.text(Messages.STATISTICS_CLICK_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
     public static Component SETTINGS_CLICK = Component.text(Messages.SETTINGS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
@@ -89,6 +103,20 @@ public class LoreComponents {
         PROFILE_NICKNAME = Component.text(Messages.PROFILE_NICKNAME, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+
+        STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_HEALTH = Component.text(Messages.STATISTICS_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_MAX_HEALTH = Component.text(Messages.STATISTICS_MAX_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_ARMOR = Component.text(Messages.STATISTICS_ARMOR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_ARMOR_TOUGHNESS = Component.text(Messages.STATISTICS_ARMOR_TOUGHNESS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_KNOCKBACK_RESISTANCE = Component.text(Messages.STATISTICS_KNOCKBACK_RESISTANCE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_SPEED = Component.text(Messages.STATISTICS_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_ATTACK_DAMAGE = Component.text(Messages.STATISTICS_ATTACK_DAMAGE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_ATTACK_SPEED = Component.text(Messages.STATISTICS_ATTACK_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_LUCK = Component.text(Messages.STATISTICS_LUCK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_CLICK_BASE = Component.text(Messages.STATISTICS_CLICK_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_CLICK_CURRENT = Component.text(Messages.STATISTICS_CLICK_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         SETTINGS_CLICK = Component.text(Messages.SETTINGS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         SETTINGS_ENABLED = Component.text(Messages.SETTINGS_ENABLED, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
