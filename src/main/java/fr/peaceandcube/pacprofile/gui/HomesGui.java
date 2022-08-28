@@ -64,7 +64,8 @@ public class HomesGui extends UnmodifiableGui {
                     LoreComponents.HOME_Y.append(Component.text(y, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.HOME_Z.append(Component.text(z, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     Component.empty(),
-                    LoreComponents.HOME_CLICK
+                    LoreComponents.HOME_CLICK_LEFT,
+                    LoreComponents.HOME_CLICK_RIGHT
             ));
 
             this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, List.of(
@@ -147,6 +148,20 @@ public class HomesGui extends UnmodifiableGui {
         // home colors
         else if (HOME_SLOTS.containsKey(slot - 2)) {
             new HomeColorGui(this.viewer, this.player, HOME_SLOTS.get(slot - 2), this.page, this.maxPages).open();
+        }
+    }
+
+    @Override
+    protected void onSlotRightClick(int slot) {
+        // home beds
+        if (HOME_SLOTS.containsKey(slot)) {
+            String command;
+            if (this.player.equals(this.viewer)) {
+                command = "delhome " + HOME_SLOTS.get(slot);
+            } else {
+                command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
+            }
+            new ConfirmationGui(this.viewer, this.player, command, this).open();
         }
     }
 }

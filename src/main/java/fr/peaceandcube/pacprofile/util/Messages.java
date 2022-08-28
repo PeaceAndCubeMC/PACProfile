@@ -11,6 +11,10 @@ public class Messages {
     public static String NOT_DEFINED = PACProfile.getInstance().lang.translate("not_defined");
     public static String INVALID = PACProfile.getInstance().lang.translate("invalid");
 
+    public static String CONFIRMATION_TITLE = PACProfile.getInstance().lang.translate("confirmation_title");
+    public static String CONFIRMATION_YES = PACProfile.getInstance().lang.translate("confirmation_yes");
+    public static String CONFIRMATION_NO = PACProfile.getInstance().lang.translate("confirmation_no");
+
     public static String PROFILE = PACProfile.getInstance().lang.translate("profile");
     public static String PROFILE_RANK = PACProfile.getInstance().lang.translate("profile_rank");
     public static String PROFILE_NICKNAME = PACProfile.getInstance().lang.translate("profile_nickname");
@@ -44,7 +48,8 @@ public class Messages {
     public static String HOME_X = PACProfile.getInstance().lang.translate("home_x");
     public static String HOME_Y = PACProfile.getInstance().lang.translate("home_y");
     public static String HOME_Z = PACProfile.getInstance().lang.translate("home_z");
-    public static String HOME_CLICK = PACProfile.getInstance().lang.translate("home_click");
+    public static String HOME_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_click_left");
+    public static String HOME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_click_right");
     public static String HOME_NOTES = PACProfile.getInstance().lang.translate("home_notes");
     public static String HOME_NOTES_CLICK = PACProfile.getInstance().lang.translate("home_notes_click");
     public static String HOME_NOTES_TITLE = PACProfile.getInstance().lang.translate("home_notes_title");
@@ -116,6 +121,10 @@ public class Messages {
         NOT_DEFINED = PACProfile.getInstance().lang.translate("not_defined");
         INVALID = PACProfile.getInstance().lang.translate("invalid");
 
+        CONFIRMATION_TITLE = PACProfile.getInstance().lang.translate("confirmation_title");
+        CONFIRMATION_YES = PACProfile.getInstance().lang.translate("confirmation_yes");
+        CONFIRMATION_NO = PACProfile.getInstance().lang.translate("confirmation_no");
+
         PROFILE = PACProfile.getInstance().lang.translate("profile");
         PROFILE_RANK = PACProfile.getInstance().lang.translate("profile_rank");
         PROFILE_NICKNAME = PACProfile.getInstance().lang.translate("profile_nickname");
@@ -149,7 +158,8 @@ public class Messages {
         HOME_X = PACProfile.getInstance().lang.translate("home_x");
         HOME_Y = PACProfile.getInstance().lang.translate("home_y");
         HOME_Z = PACProfile.getInstance().lang.translate("home_z");
-        HOME_CLICK = PACProfile.getInstance().lang.translate("home_click");
+        HOME_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_click_left");
+        HOME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_click_right");
         HOME_NOTES = PACProfile.getInstance().lang.translate("home_notes");
         HOME_NOTES_CLICK = PACProfile.getInstance().lang.translate("home_notes_click");
         HOME_NOTES_TITLE = PACProfile.getInstance().lang.translate("home_notes_title");

@@ -61,8 +61,6 @@ tasks.withType(JavaCompile).configureEach {
 
 processResources {
     filesMatching('plugin.yml') {
-        expand(
-                version: version
-        )
+        expand(version: version)
     }
 }

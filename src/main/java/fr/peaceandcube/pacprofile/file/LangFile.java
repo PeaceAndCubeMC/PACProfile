@@ -14,6 +14,9 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("command_reload_success", "PACProfile was successfully reloaded");
         DEFAULT_TRANSLATIONS.put("not_defined", "Not defined");
         DEFAULT_TRANSLATIONS.put("invalid", "Invalid");
+        DEFAULT_TRANSLATIONS.put("confirmation_title", "Confirmation");
+        DEFAULT_TRANSLATIONS.put("confirmation_yes", "Confirm");
+        DEFAULT_TRANSLATIONS.put("confirmation_no", "Cancel");
         DEFAULT_TRANSLATIONS.put("profile", "Profile of %s");
         DEFAULT_TRANSLATIONS.put("profile_rank", "Rank: ");
         DEFAULT_TRANSLATIONS.put("profile_nickname", "Nickname: ");
@@ -47,7 +50,8 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("home_x", "X: ");
         DEFAULT_TRANSLATIONS.put("home_y", "Y: ");
         DEFAULT_TRANSLATIONS.put("home_z", "Z: ");
-        DEFAULT_TRANSLATIONS.put("home_click", "⇒ Click to go to this home");
+        DEFAULT_TRANSLATIONS.put("home_click_left", "⇒ Left click to go to this home");
+        DEFAULT_TRANSLATIONS.put("home_click_right", "⇒ Right click to delete this home");
         DEFAULT_TRANSLATIONS.put("home_notes", "Notes");
         DEFAULT_TRANSLATIONS.put("home_notes_click", "⇒ Click to edit notes");
         DEFAULT_TRANSLATIONS.put("home_notes_title", "Edit notes");

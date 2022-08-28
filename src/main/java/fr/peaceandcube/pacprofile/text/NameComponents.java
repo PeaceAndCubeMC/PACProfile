@@ -23,6 +23,9 @@ public class NameComponents {
     public static Component PAGE_PREVIOUS = Component.text(Messages.PAGE_PREVIOUS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component PAGE_NEXT = Component.text(Messages.PAGE_NEXT, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+    public static Component CONFIRMATION_YES = Component.text(Messages.CONFIRMATION_YES, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+    public static Component CONFIRMATION_NO = Component.text(Messages.CONFIRMATION_NO, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
     public static Component SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
@@ -51,6 +54,9 @@ public class NameComponents {
 
         PAGE_PREVIOUS = Component.text(Messages.PAGE_PREVIOUS, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         PAGE_NEXT = Component.text(Messages.PAGE_NEXT, TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
+        CONFIRMATION_YES = Component.text(Messages.CONFIRMATION_YES, TextColor.color(0x55FF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        CONFIRMATION_NO = Component.text(Messages.CONFIRMATION_NO, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
         SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);

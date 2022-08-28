@@ -74,6 +74,8 @@ public abstract class UnmodifiableGui implements Listener {
 
     protected abstract void onSlotLeftClick(int slot);
 
+    protected void onSlotRightClick(int slot) {}
+
     protected void dispatchCommand(String command) {
         if (command != null && !command.isEmpty()) {
             Bukkit.dispatchCommand(this.viewer, command);
@@ -85,6 +87,8 @@ public abstract class UnmodifiableGui implements Listener {
         if (e.getInventory().equals(this.inv)) {
             if (!e.isShiftClick() && e.isLeftClick()) {
                 this.onSlotLeftClick(e.getSlot());
+            } else if (!e.isShiftClick() && e.isRightClick()) {
+                this.onSlotRightClick(e.getSlot());
             }
             e.setCancelled(true);
         }

@@ -34,7 +34,8 @@ public class LoreComponents {
     public static Component HOME_X = Component.text(Messages.HOME_X, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_Y = Component.text(Messages.HOME_Y, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_Z = Component.text(Messages.HOME_Z, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-    public static Component HOME_CLICK = Component.text(Messages.HOME_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component HOME_CLICK_LEFT = Component.text(Messages.HOME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component HOME_CLICK_RIGHT = Component.text(Messages.HOME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_NOTES_CLICK = Component.text(Messages.HOME_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_COLOR_CLICK = Component.text(Messages.HOME_COLOR_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
@@ -111,7 +112,9 @@ public class LoreComponents {
         HOME_WORLD = Component.text(Messages.HOME_WORLD, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_X = Component.text(Messages.HOME_X, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_Y = Component.text(Messages.HOME_Y, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        HOME_Z = Component.text(Messages.HOME_Z, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);HOME_CLICK = Component.text(Messages.HOME_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HOME_Z = Component.text(Messages.HOME_Z, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HOME_CLICK_LEFT = Component.text(Messages.HOME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HOME_CLICK_RIGHT = Component.text(Messages.HOME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_NOTES_CLICK = Component.text(Messages.HOME_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_COLOR_CLICK = Component.text(Messages.HOME_COLOR_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
