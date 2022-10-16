@@ -11,8 +11,8 @@ public class LoreComponents {
     public static Component PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
-    public static Component STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-    public static Component STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xFF5555)).decoration(TextDecoration.ITALIC, false);
+    public static Component STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0x55FF55)).decoration(TextDecoration.ITALIC, false);
     public static Component STATISTICS_HEALTH = Component.text(Messages.STATISTICS_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component STATISTICS_MAX_HEALTH = Component.text(Messages.STATISTICS_MAX_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component STATISTICS_ARMOR = Component.text(Messages.STATISTICS_ARMOR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -104,8 +104,8 @@ public class LoreComponents {
         PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
-        STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xFF5555)).decoration(TextDecoration.ITALIC, false);
+        STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0x55FF55)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_HEALTH = Component.text(Messages.STATISTICS_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_MAX_HEALTH = Component.text(Messages.STATISTICS_MAX_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_ARMOR = Component.text(Messages.STATISTICS_ARMOR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
