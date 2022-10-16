@@ -58,6 +58,7 @@ public class Messages {
     public static String HOMES_MAX_AVAILABLE = PACProfile.getInstance().lang.translate("homes_max_available");
     public static String HOMES_CLICK = PACProfile.getInstance().lang.translate("homes_click");
     public static String HOMES_TITLE = PACProfile.getInstance().lang.translate("homes_title");
+    public static String HOMES_ORDER = PACProfile.getInstance().lang.translate("homes_order");
     public static String HOME_WORLD = PACProfile.getInstance().lang.translate("home_world");
     public static String HOME_X = PACProfile.getInstance().lang.translate("home_x");
     public static String HOME_Y = PACProfile.getInstance().lang.translate("home_y");
@@ -80,6 +81,7 @@ public class Messages {
     public static String CLAIMS_CB_PER_HOUR = PACProfile.getInstance().lang.translate("claims_cb_per_hour");
     public static String CLAIMS_CLICK = PACProfile.getInstance().lang.translate("claims_click");
     public static String CLAIMS_TITLE = PACProfile.getInstance().lang.translate("claims_title");
+    public static String CLAIMS_ORDER = PACProfile.getInstance().lang.translate("claims_order");
     public static String CLAIM_WORLD = PACProfile.getInstance().lang.translate("claim_world");
     public static String CLAIM_GREATER_CORNER = PACProfile.getInstance().lang.translate("claim_greater_corner");
     public static String CLAIM_LESSER_CORNER = PACProfile.getInstance().lang.translate("claim_lesser_corner");
@@ -107,13 +109,6 @@ public class Messages {
     public static String WARPS_CLICK = PACProfile.getInstance().lang.translate("warps_click");
     public static String WARPS_TITLE = PACProfile.getInstance().lang.translate("warps_title");
     public static String WARPS_ORDER = PACProfile.getInstance().lang.translate("warps_order");
-    public static String WARPS_ORDER_BY = PACProfile.getInstance().lang.translate("warps_order_by");
-    public static String WARPS_ORDER_DEFAULT = PACProfile.getInstance().lang.translate("warps_order_default");
-    public static String WARPS_ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("warps_order_name_az");
-    public static String WARPS_ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("warps_order_name_za");
-    public static String WARPS_ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("warps_order_category_az");
-    public static String WARPS_ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("warps_order_category_za");
-    public static String WARPS_ORDER_CLICK = PACProfile.getInstance().lang.translate("warps_order_click");
     public static String WARP_COMMAND = PACProfile.getInstance().lang.translate("warp_command");
     public static String WARP_CATEGORY = PACProfile.getInstance().lang.translate("warp_category");
     public static String WARP_CLICK = PACProfile.getInstance().lang.translate("warp_click");
@@ -126,6 +121,15 @@ public class Messages {
     public static String EXIT = PACProfile.getInstance().lang.translate("exit");
     public static String PAGE_PREVIOUS = PACProfile.getInstance().lang.translate("page_previous");
     public static String PAGE_NEXT = PACProfile.getInstance().lang.translate("page_next");
+    public static String ORDER_BY = PACProfile.getInstance().lang.translate("order_by");
+    public static String ORDER_DEFAULT = PACProfile.getInstance().lang.translate("order_default");
+    public static String ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("order_name_az");
+    public static String ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("order_name_za");
+    public static String ORDER_AREA_ASC = PACProfile.getInstance().lang.translate("order_area_asc");
+    public static String ORDER_AREA_DESC = PACProfile.getInstance().lang.translate("order_area_desc");
+    public static String ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("order_category_az");
+    public static String ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("order_category_za");
+    public static String ORDER_CLICK = PACProfile.getInstance().lang.translate("order_click");
 
     public static void init() {
         SENDER_NOT_PLAYER = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_sender_not_player");
@@ -182,6 +186,7 @@ public class Messages {
         HOMES_MAX_AVAILABLE = PACProfile.getInstance().lang.translate("homes_max_available");
         HOMES_CLICK = PACProfile.getInstance().lang.translate("homes_click");
         HOMES_TITLE = PACProfile.getInstance().lang.translate("homes_title");
+        HOMES_ORDER = PACProfile.getInstance().lang.translate("homes_order");
         HOME_WORLD = PACProfile.getInstance().lang.translate("home_world");
         HOME_X = PACProfile.getInstance().lang.translate("home_x");
         HOME_Y = PACProfile.getInstance().lang.translate("home_y");
@@ -204,6 +209,7 @@ public class Messages {
         CLAIMS_CB_PER_HOUR = PACProfile.getInstance().lang.translate("claims_cb_per_hour");
         CLAIMS_CLICK = PACProfile.getInstance().lang.translate("claims_click");
         CLAIMS_TITLE = PACProfile.getInstance().lang.translate("claims_title");
+        CLAIMS_ORDER = PACProfile.getInstance().lang.translate("claims_order");
         CLAIM_WORLD = PACProfile.getInstance().lang.translate("claim_world");
         CLAIM_GREATER_CORNER = PACProfile.getInstance().lang.translate("claim_greater_corner");
         CLAIM_LESSER_CORNER = PACProfile.getInstance().lang.translate("claim_lesser_corner");
@@ -231,13 +237,6 @@ public class Messages {
         WARPS_CLICK = PACProfile.getInstance().lang.translate("warps_click");
         WARPS_TITLE = PACProfile.getInstance().lang.translate("warps_title");
         WARPS_ORDER = PACProfile.getInstance().lang.translate("warps_order");
-        WARPS_ORDER_BY = PACProfile.getInstance().lang.translate("warps_order_by");
-        WARPS_ORDER_DEFAULT = PACProfile.getInstance().lang.translate("warps_order_default");
-        WARPS_ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("warps_order_name_az");
-        WARPS_ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("warps_order_name_za");
-        WARPS_ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("warps_order_category_az");
-        WARPS_ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("warps_order_category_za");
-        WARPS_ORDER_CLICK = PACProfile.getInstance().lang.translate("warps_order_click");
         WARP_COMMAND = PACProfile.getInstance().lang.translate("warp_command");
         WARP_CATEGORY = PACProfile.getInstance().lang.translate("warp_category");
         WARP_CLICK = PACProfile.getInstance().lang.translate("warp_click");
@@ -250,5 +249,14 @@ public class Messages {
         EXIT = PACProfile.getInstance().lang.translate("exit");
         PAGE_PREVIOUS = PACProfile.getInstance().lang.translate("page_previous");
         PAGE_NEXT = PACProfile.getInstance().lang.translate("page_next");
+        ORDER_BY = PACProfile.getInstance().lang.translate("order_by");
+        ORDER_DEFAULT = PACProfile.getInstance().lang.translate("order_default");
+        ORDER_NAME_AZ = PACProfile.getInstance().lang.translate("order_name_az");
+        ORDER_NAME_ZA = PACProfile.getInstance().lang.translate("order_name_za");
+        ORDER_AREA_ASC = PACProfile.getInstance().lang.translate("order_area_asc");
+        ORDER_AREA_DESC = PACProfile.getInstance().lang.translate("order_area_desc");
+        ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("order_category_az");
+        ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("order_category_za");
+        ORDER_CLICK = PACProfile.getInstance().lang.translate("order_click");
     }
 }

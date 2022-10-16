@@ -76,9 +76,9 @@ public class WarpsGui extends UnmodifiableGui {
 
         this.setItem(51, Material.HOPPER, 3041, NameComponents.WARPS_ORDER, List.of(
                 Component.empty(),
-                LoreComponents.WARPS_ORDER_BY.append(this.order.getText()),
+                LoreComponents.ORDER_BY.append(this.order.getText()),
                 Component.empty(),
-                LoreComponents.WARPS_ORDER_CLICK
+                LoreComponents.ORDER_CLICK
         ));
 
         this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
@@ -128,11 +128,11 @@ public class WarpsGui extends UnmodifiableGui {
     }
 
     enum Order {
-        DEFAULT(LoreComponents.WARPS_ORDER_DEFAULT),
-        NAME_AZ(LoreComponents.WARPS_ORDER_NAME_AZ),
-        NAME_ZA(LoreComponents.WARPS_ORDER_NAME_ZA),
-        CATEGORY_AZ(LoreComponents.WARPS_ORDER_CATEGORY_AZ),
-        CATEGORY_ZA(LoreComponents.WARPS_ORDER_CATEGORY_ZA);
+        DEFAULT(LoreComponents.ORDER_DEFAULT),
+        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
+        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
+        CATEGORY_AZ(LoreComponents.ORDER_CATEGORY_AZ),
+        CATEGORY_ZA(LoreComponents.ORDER_CATEGORY_ZA);
 
         private final Component text;
 

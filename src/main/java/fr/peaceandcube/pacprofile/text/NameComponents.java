@@ -30,9 +30,11 @@ public class NameComponents {
     public static Component SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+    public static Component HOMES_ORDER = Component.text(Messages.HOMES_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_NOTES = Component.text(Messages.HOME_NOTES, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_COLOR = Component.text(Messages.HOME_COLOR, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+    public static Component CLAIMS_ORDER = Component.text(Messages.CLAIMS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component CLAIM_PERMISSIONS = Component.text(Messages.CLAIM_PERMISSIONS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
@@ -63,9 +65,11 @@ public class NameComponents {
         SETTINGS_MSGTOGGLE = Component.text(Messages.SETTINGS_MSGTOGGLE, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         SETTINGS_TOGGLEMSGSOUND = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+        HOMES_ORDER = Component.text(Messages.HOMES_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         HOME_NOTES = Component.text(Messages.HOME_NOTES, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         HOME_COLOR = Component.text(Messages.HOME_COLOR, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
+        CLAIMS_ORDER = Component.text(Messages.CLAIMS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIM_PERMISSIONS = Component.text(Messages.CLAIM_PERMISSIONS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 

@@ -24,19 +24,39 @@ public class ClaimsGui extends UnmodifiableGui {
     private final PlayerData playerData;
     private final int page;
     private final int maxPages;
+    private Vector<Claim> claims;
+    private Order order;
 
     public ClaimsGui(Player viewer, Player player, int page, int maxPages) {
+        this(viewer, player, page, maxPages, Order.DEFAULT);
+    }
+
+    public ClaimsGui(Player viewer, Player player, int page, int maxPages, Order order) {
         super(6, Component.text(String.format(Messages.CLAIMS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
+        this.claims = this.playerData.getClaims();
+        this.order = order;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        int claimCount = this.playerData.getClaims().size();
+        if (this.order == Order.DEFAULT) {
+            this.claims = this.playerData.getClaims();
+        } else if (this.order == Order.NAME_AZ) {
+            this.claims.sort((claim1, claim2) -> this.getName(claim1.getID().toString()).compareToIgnoreCase(this.getName(claim2.getID().toString())));
+        } else if (this.order == Order.NAME_ZA) {
+            this.claims.sort((claim1, claim2) -> this.getName(claim2.getID().toString()).compareToIgnoreCase(this.getName(claim1.getID().toString())));
+        } else if (this.order == Order.AREA_ASC) {
+            this.claims.sort(Comparator.comparingInt(Claim::getArea));
+        } else if (this.order == Order.AREA_DESC) {
+            this.claims.sort(Comparator.comparingInt(Claim::getArea).reversed());
+        }
+
+        int claimCount = this.claims.size();
         int maxClaimOnPage = this.page * 10;
         int claimsOnPage = claimCount >= maxClaimOnPage ? maxClaimOnPage : (claimCount - (this.page - 1) * 10);
 
@@ -51,7 +71,7 @@ public class ClaimsGui extends UnmodifiableGui {
                 slot = (i - 5) * 9 + 5;
             }
 
-            Claim claim = this.playerData.getClaims().get(index);
+            Claim claim = this.claims.get(index);
             String claimId = claim.getID().toString();
             Location greaterCorner = claim.getGreaterBoundaryCorner();
             Location lesserCorner = claim.getLesserBoundaryCorner();
@@ -95,6 +115,13 @@ public class ClaimsGui extends UnmodifiableGui {
             ));
         }
 
+        this.setItem(51, Material.HOPPER, 3024, NameComponents.CLAIMS_ORDER, List.of(
+                Component.empty(),
+                LoreComponents.ORDER_BY.append(this.order.getText()),
+                Component.empty(),
+                LoreComponents.ORDER_CLICK
+        ));
+
         this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
         this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
         // if it's not the last page
@@ -103,12 +130,13 @@ public class ClaimsGui extends UnmodifiableGui {
         }
     }
 
-    private Component getNameLore(String claimId) {
+    private String getName(String claimId) {
         String name = PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId);
-        if (!name.isEmpty()) {
-            return Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        }
-        return Component.text(Messages.NOT_DEFINED, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        return name.isEmpty() ? Messages.NOT_DEFINED : name;
+    }
+
+    private Component getNameLore(String claimId) {
+        return Component.text(this.getName(claimId), TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     }
 
     private void getPermissionLore(List<Component> components, Component baseComponent, List<String> list) {
@@ -139,7 +167,7 @@ public class ClaimsGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages).open();
+                new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
             }
         }
 
@@ -153,8 +181,14 @@ public class ClaimsGui extends UnmodifiableGui {
             int claimCount = this.playerData.getClaims().size();
             int maxClaimOnPage = this.page * 10;
             if (claimCount > maxClaimOnPage) {
-                new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
+                new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
             }
+        }
+
+        // order
+        else if (slot == 51) {
+            this.order = this.order.next();
+            this.fillInventory();
         }
 
         // claim names
@@ -169,6 +203,34 @@ public class ClaimsGui extends UnmodifiableGui {
                         return AnvilGUI.Response.close();
                     }))
                     .open(this.viewer);
+        }
+    }
+
+    enum Order {
+        DEFAULT(LoreComponents.ORDER_DEFAULT),
+        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
+        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
+        AREA_ASC(LoreComponents.ORDER_AREA_ASC),
+        AREA_DESC(LoreComponents.ORDER_AREA_DESC);
+
+        private final Component text;
+
+        Order(Component text) {
+            this.text = text;
+        }
+
+        public Component getText() {
+            return this.text;
+        }
+
+        public Order next() {
+            return switch (this) {
+                case DEFAULT -> NAME_AZ;
+                case NAME_AZ -> NAME_ZA;
+                case NAME_ZA -> AREA_ASC;
+                case AREA_ASC -> AREA_DESC;
+                case AREA_DESC -> DEFAULT;
+            };
         }
     }
 }

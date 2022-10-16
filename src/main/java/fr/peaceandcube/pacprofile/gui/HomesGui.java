@@ -21,18 +21,34 @@ public class HomesGui extends UnmodifiableGui {
     private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
     private final int page;
     private final int maxPages;
+    private List<String> homes;
+    private Order order;
 
     public HomesGui(Player viewer, Player player, int page, int maxPages) {
+        this(viewer, player, page, maxPages, Order.DEFAULT);
+    }
+
+    public HomesGui(Player viewer, Player player, int page, int maxPages, Order order) {
         super(6, Component.text(String.format(Messages.HOMES_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
+        this.homes = this.user.getHomes();
+        this.order = order;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        int homeCount = this.user.getHomes().size();
+        if (this.order == Order.DEFAULT) {
+            this.homes = this.user.getHomes();
+        } else if (this.order == Order.NAME_AZ) {
+            this.homes.sort(String::compareToIgnoreCase);
+        } else if (this.order == Order.NAME_ZA) {
+            this.homes.sort((home1, home2) -> home2.compareToIgnoreCase(home1));
+        }
+
+        int homeCount = this.homes.size();
         int maxHomeOnPage = this.page * 10;
         int homesOnPage = homeCount >= maxHomeOnPage ? maxHomeOnPage : (homeCount - (this.page - 1) * 10);
 
@@ -47,7 +63,7 @@ public class HomesGui extends UnmodifiableGui {
                 slot = (i - 5) * 9 + 5;
             }
 
-            String name = this.user.getHomes().get(index);
+            String name = this.homes.get(index);
             Location location = this.user.getHome(name);
             String world = location != null ? location.getWorld().getName() : Messages.INVALID;
             String x = location != null ? String.valueOf(location.getBlockX()) : Messages.INVALID;
@@ -81,6 +97,13 @@ public class HomesGui extends UnmodifiableGui {
             ));
         }
 
+        this.setItem(51, Material.HOPPER, 3013, NameComponents.HOMES_ORDER, List.of(
+                Component.empty(),
+                LoreComponents.ORDER_BY.append(this.order.getText()),
+                Component.empty(),
+                LoreComponents.ORDER_CLICK
+        ));
+
         this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
         this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
         // if it's not the last page
@@ -104,7 +127,7 @@ public class HomesGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages).open();
+                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
             }
         }
 
@@ -118,8 +141,14 @@ public class HomesGui extends UnmodifiableGui {
             int homeCount = this.user.getHomes().size();
             int maxHomeOnPage = this.page * 10;
             if (homeCount > maxHomeOnPage) {
-                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
+                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
             }
+        }
+
+        // order
+        else if (slot == 51) {
+            this.order = this.order.next();
+            this.fillInventory();
         }
 
         // home beds
@@ -162,6 +191,30 @@ public class HomesGui extends UnmodifiableGui {
                 command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
             }
             new ConfirmationGui(this.viewer, this.player, command, this).open();
+        }
+    }
+
+    enum Order {
+        DEFAULT(LoreComponents.ORDER_DEFAULT),
+        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
+        NAME_ZA(LoreComponents.ORDER_NAME_ZA);
+
+        private final Component text;
+
+        Order(Component text) {
+            this.text = text;
+        }
+
+        public Component getText() {
+            return this.text;
+        }
+
+        public Order next() {
+            return switch (this) {
+                case DEFAULT -> NAME_AZ;
+                case NAME_AZ -> NAME_ZA;
+                case NAME_ZA -> DEFAULT;
+            };
         }
     }
 }

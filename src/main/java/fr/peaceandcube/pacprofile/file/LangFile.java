@@ -60,6 +60,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("homes_max_available", "Maximum available: ");
         DEFAULT_TRANSLATIONS.put("homes_click", "⇒ Click to see homes");
         DEFAULT_TRANSLATIONS.put("homes_title", "Homes of %s (%2$d/%3$d)");
+        DEFAULT_TRANSLATIONS.put("homes_order", "Order homes");
         DEFAULT_TRANSLATIONS.put("home_world", "World: ");
         DEFAULT_TRANSLATIONS.put("home_x", "X: ");
         DEFAULT_TRANSLATIONS.put("home_y", "Y: ");
@@ -82,6 +83,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("claims_cb_per_hour", "Accrued per hour: ");
         DEFAULT_TRANSLATIONS.put("claims_click", "⇒ Click to see claims");
         DEFAULT_TRANSLATIONS.put("claims_title", "Claims of %s (%2$d/%3$d)");
+        DEFAULT_TRANSLATIONS.put("claims_order", "Order claims");
         DEFAULT_TRANSLATIONS.put("claim_world", "World: ");
         DEFAULT_TRANSLATIONS.put("claim_greater_corner", "Greater corner: ");
         DEFAULT_TRANSLATIONS.put("claim_lesser_corner", "Lesser corner: ");
@@ -109,13 +111,6 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("warps_click", "⇒ Click to see warps");
         DEFAULT_TRANSLATIONS.put("warps_title", "Warps (%2$d/%3$d)");
         DEFAULT_TRANSLATIONS.put("warps_order", "Order warps");
-        DEFAULT_TRANSLATIONS.put("warps_order_by", "Order by: ");
-        DEFAULT_TRANSLATIONS.put("warps_order_default", "Default");
-        DEFAULT_TRANSLATIONS.put("warps_order_name_az", "Name (A-Z)");
-        DEFAULT_TRANSLATIONS.put("warps_order_name_za", "Name (Z-A)");
-        DEFAULT_TRANSLATIONS.put("warps_order_category_az", "Category (A-Z)");
-        DEFAULT_TRANSLATIONS.put("warps_order_category_za", "Category (Z-A)");
-        DEFAULT_TRANSLATIONS.put("warps_order_click", "⇒ Click to toggle order");
         DEFAULT_TRANSLATIONS.put("warp_command", "Command: ");
         DEFAULT_TRANSLATIONS.put("warp_category", "Category: ");
         DEFAULT_TRANSLATIONS.put("warp_click", "⇒ Click to go to this warp");
@@ -144,6 +139,15 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("color_green", "Green");
         DEFAULT_TRANSLATIONS.put("color_red", "Red");
         DEFAULT_TRANSLATIONS.put("color_black", "Black");
+        DEFAULT_TRANSLATIONS.put("order_by", "Order by: ");
+        DEFAULT_TRANSLATIONS.put("order_default", "Default");
+        DEFAULT_TRANSLATIONS.put("order_name_az", "Name (A-Z)");
+        DEFAULT_TRANSLATIONS.put("order_name_za", "Name (Z-A)");
+        DEFAULT_TRANSLATIONS.put("order_area_asc", "Area (Ascending)");
+        DEFAULT_TRANSLATIONS.put("order_area_desc", "Area (Descending)");
+        DEFAULT_TRANSLATIONS.put("order_category_az", "Category (A-Z)");
+        DEFAULT_TRANSLATIONS.put("order_category_za", "Category (Z-A)");
+        DEFAULT_TRANSLATIONS.put("order_click", "⇒ Click to toggle order");
     }
 
     public LangFile(String name, Plugin plugin) {
