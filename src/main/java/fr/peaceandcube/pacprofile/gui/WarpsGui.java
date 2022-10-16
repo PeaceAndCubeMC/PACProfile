@@ -24,11 +24,15 @@ public class WarpsGui extends UnmodifiableGui {
     private Order order;
 
     public WarpsGui(Player viewer, Player player, int page, int maxPages) {
+        this(viewer, player, page, maxPages, Order.DEFAULT);
+    }
+
+    public WarpsGui(Player viewer, Player player, int page, int maxPages, Order order) {
         super(6, Component.text(String.format(Messages.WARPS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.warps = PACProfile.getInstance().config.getWarps();
-        this.order = Order.DEFAULT;
+        this.order = order;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -92,7 +96,7 @@ public class WarpsGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages).open();
+                new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
             }
         }
 
@@ -106,7 +110,7 @@ public class WarpsGui extends UnmodifiableGui {
             int warpCount = this.warps.size();
             int maxWarpsOnPage = this.page * 35;
             if (warpCount > maxWarpsOnPage) {
-                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
+                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
             }
         }
 
