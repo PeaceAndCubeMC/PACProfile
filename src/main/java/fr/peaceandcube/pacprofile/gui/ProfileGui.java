@@ -196,7 +196,7 @@ public class ProfileGui extends UnmodifiableGui {
         User user = PACProfile.getLuckPerms().getUserManager().getUser(this.player.getUniqueId());
         if (user != null) {
             Group group = PACProfile.getLuckPerms().getGroupManager().getGroup(user.getPrimaryGroup());
-            if (group != null) {
+            if (group != null && group.getDisplayName() != null) {
                 return group.getDisplayName();
             }
         }

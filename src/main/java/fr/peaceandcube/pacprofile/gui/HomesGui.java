@@ -166,10 +166,10 @@ public class HomesGui extends UnmodifiableGui {
                     .title(Messages.HOME_NOTES_TITLE)
                     .text(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
                     .itemLeft(new ItemStack(Material.PAPER))
-                    .onComplete(((p, s) -> {
-                        PACProfile.getInstance().playerData.setHomeNotes(p.getUniqueId(), HOME_SLOTS.get(slot - 1), s);
+                    .onComplete((completion -> {
+                        PACProfile.getInstance().playerData.setHomeNotes(completion.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), completion.getText());
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();
-                        return AnvilGUI.Response.close();
+                        return List.of(AnvilGUI.ResponseAction.close());
                     }))
                     .open(this.viewer);
         }

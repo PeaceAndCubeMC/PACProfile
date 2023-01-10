@@ -147,10 +147,10 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .title(Messages.ONLINE_PLAYER_NOTES_TITLE)
                     .text(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
                     .itemLeft(new ItemStack(Material.PAPER))
-                    .onComplete(((p, s) -> {
-                        PACProfile.getInstance().playerData.setPlayerNotes(p.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), s);
+                    .onComplete((completion -> {
+                        PACProfile.getInstance().playerData.setPlayerNotes(completion.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), completion.getText());
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages).open();
-                        return AnvilGUI.Response.close();
+                        return List.of(AnvilGUI.ResponseAction.close());
                     }))
                     .open(this.viewer);
         }
