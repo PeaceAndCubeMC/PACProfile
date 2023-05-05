@@ -57,25 +57,26 @@ public class ProfileGui extends UnmodifiableGui {
         ));
 
         double[] statistics = this.getStatistics();
+        double[] statisticDifferences = this.getStatisticDifferences();
         Component statisticsComponent = this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT;
         Component clickComponent = this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE;
         this.setItem(9, Material.ENCHANTED_BOOK, 3004, NameComponents.STATISTICS, List.of(
                 statisticsComponent,
                 Component.empty(),
-                LoreComponents.STATISTICS_HEALTH.append(Component.text(statistics[0], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.STATISTICS_MAX_HEALTH.append(Component.text(statistics[1], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_HEALTH, statistics[0], statisticDifferences[0]),
+                getStatisticComponent(LoreComponents.STATISTICS_MAX_HEALTH, statistics[1], statisticDifferences[1]),
                 Component.empty(),
-                LoreComponents.STATISTICS_ARMOR.append(Component.text(statistics[2], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.STATISTICS_ARMOR_TOUGHNESS.append(Component.text(statistics[3], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_ARMOR, statistics[2], statisticDifferences[2]),
+                getStatisticComponent(LoreComponents.STATISTICS_ARMOR_TOUGHNESS, statistics[3], statisticDifferences[3]),
                 Component.empty(),
-                LoreComponents.STATISTICS_KNOCKBACK_RESISTANCE.append(Component.text(statistics[4], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_KNOCKBACK_RESISTANCE, statistics[4], statisticDifferences[4]),
                 Component.empty(),
-                LoreComponents.STATISTICS_SPEED.append(Component.text(statistics[5], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_SPEED, statistics[5], statisticDifferences[5]),
                 Component.empty(),
-                LoreComponents.STATISTICS_ATTACK_DAMAGE.append(Component.text(statistics[6], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.STATISTICS_ATTACK_SPEED.append(Component.text(statistics[7], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_ATTACK_DAMAGE, statistics[6], statisticDifferences[6]),
+                getStatisticComponent(LoreComponents.STATISTICS_ATTACK_SPEED, statistics[7], statisticDifferences[7]),
                 Component.empty(),
-                LoreComponents.STATISTICS_LUCK.append(Component.text(statistics[8], TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                getStatisticComponent(LoreComponents.STATISTICS_LUCK, statistics[8], statisticDifferences[8]),
                 Component.empty(),
                 clickComponent
         ));
@@ -236,6 +237,36 @@ public class ProfileGui extends UnmodifiableGui {
         }
 
         return statistics;
+    }
+
+    private double[] getStatisticDifferences() {
+        double[] statistics = new double[9];
+
+        statistics[0] = this.player.getHealth() - this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        statistics[1] = this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        statistics[2] = this.player.getAttribute(Attribute.GENERIC_ARMOR).getValue() - this.player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
+        statistics[3] = this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getValue() - this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue();
+        statistics[4] = this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue() - this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getBaseValue();
+        statistics[5] = this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue() - this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
+        statistics[6] = this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() - this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
+        statistics[7] = this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue() - this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue();
+        statistics[8] = this.player.getAttribute(Attribute.GENERIC_LUCK).getValue() - this.player.getAttribute(Attribute.GENERIC_LUCK).getBaseValue();
+
+        for (int i = 0; i < statistics.length; i++) {
+            statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;
+        }
+
+        return statistics;
+    }
+
+    private Component getStatisticComponent(Component text, double statistic, double statisticDifference) {
+        Component component = text.append(Component.text(statistic, TextColor.color(0xFFFF55), TextDecoration.BOLD));
+        if (!this.baseStatistics && statisticDifference != 0) {
+            TextColor diffColor = statisticDifference > 0 ? TextColor.color(0x55FF55) : TextColor.color(0xFF5555);
+            // if the difference is positive, add a plus sign
+            component = component.append(Component.text(" (" + (statisticDifference > 0 ? "+" : "") + statisticDifference + ")", diffColor));
+        }
+        return component;
     }
 
     @Override
