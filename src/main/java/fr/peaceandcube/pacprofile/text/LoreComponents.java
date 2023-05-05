@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 
 public class LoreComponents {
     public static Component PROFILE_RANK = Component.text(Messages.PROFILE_RANK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component PROFILE_RANK_EXPIRATION = Component.text(Messages.PROFILE_RANK_EXPIRATION, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_NICKNAME = Component.text(Messages.PROFILE_NICKNAME, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -103,6 +104,7 @@ public class LoreComponents {
 
     public static void init() {
         PROFILE_RANK = Component.text(Messages.PROFILE_RANK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        PROFILE_RANK_EXPIRATION = Component.text(Messages.PROFILE_RANK_EXPIRATION, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_NICKNAME = Component.text(Messages.PROFILE_NICKNAME, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_BIRTHDAY = Component.text(Messages.PROFILE_BIRTHDAY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         PROFILE_JOIN_DATE = Component.text(Messages.PROFILE_JOIN_DATE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

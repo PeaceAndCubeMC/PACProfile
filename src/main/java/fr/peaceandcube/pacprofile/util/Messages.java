@@ -19,6 +19,7 @@ public class Messages {
 
     public static String PROFILE = PACProfile.getInstance().lang.translate("profile");
     public static String PROFILE_RANK = PACProfile.getInstance().lang.translate("profile_rank");
+    public static String PROFILE_RANK_EXPIRATION = PACProfile.getInstance().lang.translate("profile_rank_expiration");
     public static String PROFILE_NICKNAME = PACProfile.getInstance().lang.translate("profile_nickname");
     public static String PROFILE_BIRTHDAY = PACProfile.getInstance().lang.translate("profile_birthday");
     public static String PROFILE_JOIN_DATE = PACProfile.getInstance().lang.translate("profile_join_date");
@@ -147,6 +148,7 @@ public class Messages {
 
         PROFILE = PACProfile.getInstance().lang.translate("profile");
         PROFILE_RANK = PACProfile.getInstance().lang.translate("profile_rank");
+        PROFILE_RANK_EXPIRATION = PACProfile.getInstance().lang.translate("profile_rank_expiration");
         PROFILE_NICKNAME = PACProfile.getInstance().lang.translate("profile_nickname");
         PROFILE_BIRTHDAY = PACProfile.getInstance().lang.translate("profile_birthday");
         PROFILE_JOIN_DATE = PACProfile.getInstance().lang.translate("profile_join_date");

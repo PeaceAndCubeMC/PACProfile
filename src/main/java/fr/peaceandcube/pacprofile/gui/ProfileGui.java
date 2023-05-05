@@ -12,6 +12,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -21,6 +22,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.scoreboard.Objective;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,18 +45,22 @@ public class ProfileGui extends UnmodifiableGui {
     @Override
     protected void fillInventory() {
         String rank = this.getRank();
+        String rankExpiration = this.getRankExpiration();
         String nickname = this.user.getNickname() != null ? this.user.getNickname() : Messages.NOT_DEFINED;
         String birthday = this.getBirthday();
         String joinDate = this.getFirstPlayed();
-        this.setPlayerHead(4, this.player, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
-                Component.empty(),
-                LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD))
-        ));
+        List<Component> components = new ArrayList<>();
+        components.add(Component.empty());
+        components.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        if (rankExpiration != null) {
+            components.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        }
+        components.add(Component.empty());
+        components.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        components.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        components.add(Component.empty());
+        components.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        this.setPlayerHead(4, this.player, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), components);
 
         double[] statistics = this.getStatistics();
         double[] statisticDifferences = this.getStatisticDifferences();
@@ -202,6 +208,22 @@ public class ProfileGui extends UnmodifiableGui {
             }
         }
         return Messages.NOT_DEFINED;
+    }
+
+    private String getRankExpiration() {
+        User user = PACProfile.getLuckPerms().getUserManager().getUser(this.player.getUniqueId());
+        if (user != null) {
+            for (Node node : user.getNodes()) {
+                if (node.getKey().equals("group." + user.getPrimaryGroup())) {
+                    if (node.getExpiry() != null) {
+                        long timestamp = node.getExpiry().toEpochMilli();
+                        SimpleDateFormat formatter = new SimpleDateFormat(PACProfile.getInstance().config.getDateFormat());
+                        return formatter.format(new Date(timestamp));
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private String getBirthday() {
