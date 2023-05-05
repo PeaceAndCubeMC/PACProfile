@@ -197,11 +197,14 @@ public class ClaimsGui extends UnmodifiableGui {
                     .title(Messages.CLAIM_NAME_TITLE)
                     .text(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)))
                     .itemLeft(new ItemStack(Material.PAPER))
-                    .onComplete((completion -> {
-                        PACProfile.getInstance().playerData.setClaimName(completion.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), completion.getText());
+                    .onClick((anvilSlot, stateSnapshot) -> {
+                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
+                            return List.of();
+                        }
+                        PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), stateSnapshot.getText());
                         new ClaimsGui(this.viewer, this.player, this.page, this.maxPages).open();
                         return List.of(AnvilGUI.ResponseAction.close());
-                    }))
+                    })
                     .open(this.viewer);
         }
     }

@@ -16,7 +16,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OnlinePlayersGui extends UnmodifiableGui {
@@ -147,11 +150,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .title(Messages.ONLINE_PLAYER_NOTES_TITLE)
                     .text(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
                     .itemLeft(new ItemStack(Material.PAPER))
-                    .onComplete((completion -> {
-                        PACProfile.getInstance().playerData.setPlayerNotes(completion.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), completion.getText());
+                    .onClick((anvilSlot, stateSnapshot) -> {
+                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
+                            return List.of();
+                        }
+                        PACProfile.getInstance().playerData.setPlayerNotes(stateSnapshot.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), stateSnapshot.getText());
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages).open();
                         return List.of(AnvilGUI.ResponseAction.close());
-                    }))
+                    })
                     .open(this.viewer);
         }
     }

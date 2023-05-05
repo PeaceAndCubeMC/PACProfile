@@ -15,7 +15,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomesGui extends UnmodifiableGui {
     private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
@@ -166,11 +168,14 @@ public class HomesGui extends UnmodifiableGui {
                     .title(Messages.HOME_NOTES_TITLE)
                     .text(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
                     .itemLeft(new ItemStack(Material.PAPER))
-                    .onComplete((completion -> {
-                        PACProfile.getInstance().playerData.setHomeNotes(completion.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), completion.getText());
+                    .onClick((anvilSlot, stateSnapshot) -> {
+                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
+                            return List.of();
+                        }
+                        PACProfile.getInstance().playerData.setHomeNotes(stateSnapshot.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), stateSnapshot.getText());
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();
                         return List.of(AnvilGUI.ResponseAction.close());
-                    }))
+                    })
                     .open(this.viewer);
         }
 

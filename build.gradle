@@ -3,8 +3,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_18
+targetCompatibility = JavaVersion.VERSION_18
 
 group = project.pacprofile_group
 archivesBaseName = project.pacprofile_name
@@ -26,7 +26,6 @@ repositories {
 }
 
 configurations {
-    include
     include.canBeResolved = true
     compileOnly.extendsFrom(include)
 }
@@ -40,7 +39,6 @@ dependencies {
     compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
     compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
 
-    compileOnly name: "pAcPI-${pacpi_version}"
     compileOnly name: "pacutilities-${pacutilities_version}"
     compileOnly name: "PACBirthday-${pacbirthday_version}"
 }
@@ -51,12 +49,11 @@ build {
 
 shadowJar {
     configurations = [project.configurations.include]
-    classifier(null)
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = 17
+    it.options.release = 18
 }
 
 processResources {

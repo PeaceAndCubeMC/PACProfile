@@ -1,16 +1,17 @@
 package fr.peaceandcube.pacprofile.command;
 
-import fr.peaceandcube.pacpi.player.PlayerSuggestionProviders;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.util.Messages;
+import fr.peaceandcube.pacprofile.util.SuggestionProviders;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileCommand implements CommandExecutor, TabExecutor {
@@ -18,7 +19,7 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
     private static final String PERM_PROFILE_OTHERS = "pacprofile.profile.others";
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player viewer) {
             if (args.length == 0) {
                 if (sender.hasPermission(PERM_PROFILE)) {
@@ -47,11 +48,11 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1 && sender.hasPermission(PERM_PROFILE_OTHERS)) {
-            return PlayerSuggestionProviders.getOnlinePlayers(args[0]);
+            return SuggestionProviders.getOnlinePlayers(args[0]);
         }
 
-        return new ArrayList<>();
+        return List.of();
     }
 }

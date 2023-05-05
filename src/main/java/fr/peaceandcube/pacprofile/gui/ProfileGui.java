@@ -1,7 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
-import fr.peaceandcube.pacbirthday.data.BirthdayData;
-import fr.peaceandcube.pacpi.date.LocalizedMonth;
+import fr.peaceandcube.pacbirthday.PACBirthday;
+import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ProfileGui extends UnmodifiableGui {
-    private PlayerData playerData;
+    private final PlayerData playerData;
     private int maxHomePages;
     private int maxClaimPages;
     private int maxOnlinePlayersPages;
@@ -204,7 +204,7 @@ public class ProfileGui extends UnmodifiableGui {
     }
 
     private String getBirthday() {
-        String birthday = BirthdayData.getBirthday(this.player.getUniqueId().toString());
+        String birthday = PACBirthday.birthdaysFile.getBirthday(this.player.getUniqueId().toString());
         if (birthday != null) {
             String day = birthday.substring(0, 2);
             String month = LocalizedMonth.fromNumber(Integer.parseInt(birthday.substring(3, 5))).getLocalizedName();

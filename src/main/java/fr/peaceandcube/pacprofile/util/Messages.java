@@ -1,12 +1,14 @@
 package fr.peaceandcube.pacprofile.util;
 
 import fr.peaceandcube.pacprofile.PACProfile;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextColor;
 
 public class Messages {
-    public static String SENDER_NOT_PLAYER = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_sender_not_player");
-    public static String PLAYER_NOT_FOUND = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_player_not_found");
-    public static String RELOAD_SUCCESS = ChatColor.GREEN + PACProfile.getInstance().lang.translate("command_reload_success");
+    public static TextComponent SENDER_NOT_PLAYER = error(PACProfile.getInstance().lang.translate("command_profile_sender_not_player"));
+    public static TextComponent PLAYER_NOT_FOUND = error(PACProfile.getInstance().lang.translate("command_profile_player_not_found"));
+    public static TextComponent RELOAD_SUCCESS = success(PACProfile.getInstance().lang.translate("command_reload_success"));
 
     public static String NOT_DEFINED = PACProfile.getInstance().lang.translate("not_defined");
     public static String INVALID = PACProfile.getInstance().lang.translate("invalid");
@@ -132,9 +134,9 @@ public class Messages {
     public static String ORDER_CLICK = PACProfile.getInstance().lang.translate("order_click");
 
     public static void init() {
-        SENDER_NOT_PLAYER = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_sender_not_player");
-        PLAYER_NOT_FOUND = ChatColor.RED + PACProfile.getInstance().lang.translate("command_profile_player_not_found");
-        RELOAD_SUCCESS = ChatColor.GREEN + PACProfile.getInstance().lang.translate("command_reload_success");
+        SENDER_NOT_PLAYER = error(PACProfile.getInstance().lang.translate("command_profile_sender_not_player"));
+        PLAYER_NOT_FOUND = error(PACProfile.getInstance().lang.translate("command_profile_player_not_found"));
+        RELOAD_SUCCESS = success(PACProfile.getInstance().lang.translate("command_reload_success"));
 
         NOT_DEFINED = PACProfile.getInstance().lang.translate("not_defined");
         INVALID = PACProfile.getInstance().lang.translate("invalid");
@@ -258,5 +260,13 @@ public class Messages {
         ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("order_category_az");
         ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("order_category_za");
         ORDER_CLICK = PACProfile.getInstance().lang.translate("order_click");
+    }
+
+    public static TextComponent error(String msg) {
+        return Component.text(msg, TextColor.color(0xFF5555));
+    }
+
+    public static TextComponent success(String msg) {
+        return Component.text(msg, TextColor.color(0x55FF55));
     }
 }
