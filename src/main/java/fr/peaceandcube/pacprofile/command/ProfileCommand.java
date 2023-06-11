@@ -1,9 +1,12 @@
 package fr.peaceandcube.pacprofile.command;
 
+import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacprofile.util.SuggestionProviders;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.advancement.Advancement;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,6 +28,16 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
                 if (sender.hasPermission(PERM_PROFILE)) {
                     ProfileGui gui = new ProfileGui(viewer, viewer);
                     gui.open();
+
+                    // Give first time advancement
+                    if (!PACProfile.getInstance().config.getFirstTimeAdvancementName().equals("")) {
+                        NamespacedKey key = NamespacedKey.fromString(PACProfile.getInstance().config.getFirstTimeAdvancementName());
+                        Advancement advancement = Bukkit.getAdvancement(key);
+                        if (advancement != null && !viewer.getAdvancementProgress(advancement).isDone()) {
+                            viewer.getAdvancementProgress(advancement).getRemainingCriteria().forEach(criterion -> viewer.getAdvancementProgress(advancement).awardCriteria(criterion));
+                        }
+                    }
+
                     return true;
                 }
             } else if (args.length == 1) {
