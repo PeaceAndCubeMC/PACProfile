@@ -46,6 +46,12 @@ public class Messages {
     public static String SETTINGS_MSGTOGGLE_CLICK = PACProfile.getInstance().lang.translate("settings_msgtoggle_click");
     public static String SETTINGS_TOGGLEMSGSOUND = PACProfile.getInstance().lang.translate("settings_togglemsgsound");
     public static String SETTINGS_TOGGLEMSGSOUND_CLICK = PACProfile.getInstance().lang.translate("settings_togglemsgsound_click");
+    public static String SETTINGS_PTIME = PACProfile.getInstance().lang.translate("settings_ptime");
+    public static String SETTINGS_PTIME_CLICK_LEFT = PACProfile.getInstance().lang.translate("settings_ptime_click_left");
+    public static String SETTINGS_PTIME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("settings_ptime_click_right");
+    public static String SETTINGS_PWEATHER = PACProfile.getInstance().lang.translate("settings_pweather");
+    public static String SETTINGS_PWEATHER_CLICK_LEFT = PACProfile.getInstance().lang.translate("settings_pweather_click_left");
+    public static String SETTINGS_PWEATHER_CLICK_RIGHT = PACProfile.getInstance().lang.translate("settings_pweather_click_right");
     public static String COINS = PACProfile.getInstance().lang.translate("coins");
     public static String COINS_NUMBER = PACProfile.getInstance().lang.translate("coins_total");
     public static String COINS_CLICK = PACProfile.getInstance().lang.translate("coins_click");
@@ -176,6 +182,12 @@ public class Messages {
         SETTINGS_MSGTOGGLE_CLICK = PACProfile.getInstance().lang.translate("settings_msgtoggle_click");
         SETTINGS_TOGGLEMSGSOUND = PACProfile.getInstance().lang.translate("settings_togglemsgsound");
         SETTINGS_TOGGLEMSGSOUND_CLICK = PACProfile.getInstance().lang.translate("settings_togglemsgsound_click");
+        SETTINGS_PTIME = PACProfile.getInstance().lang.translate("settings_ptime");
+        SETTINGS_PTIME_CLICK_LEFT = PACProfile.getInstance().lang.translate("settings_ptime_click_left");
+        SETTINGS_PTIME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("settings_ptime_click_right");
+        SETTINGS_PWEATHER = PACProfile.getInstance().lang.translate("settings_pweather");
+        SETTINGS_PWEATHER_CLICK_LEFT = PACProfile.getInstance().lang.translate("settings_pweather_click_left");
+        SETTINGS_PWEATHER_CLICK_RIGHT = PACProfile.getInstance().lang.translate("settings_pweather_click_right");
         COINS = PACProfile.getInstance().lang.translate("coins");
         COINS_NUMBER = PACProfile.getInstance().lang.translate("coins_total");
         COINS_CLICK = PACProfile.getInstance().lang.translate("coins_click");

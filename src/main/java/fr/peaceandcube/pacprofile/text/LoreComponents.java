@@ -31,6 +31,10 @@ public class LoreComponents {
     public static Component SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_MSGTOGGLE_CLICK = Component.text(Messages.SETTINGS_MSGTOGGLE_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component SETTINGS_TOGGLEMSGSOUND_CLICK = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_PTIME_CLICK_LEFT = Component.text(Messages.SETTINGS_PTIME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_PTIME_CLICK_RIGHT = Component.text(Messages.SETTINGS_PTIME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_PWEATHER_CLICK_LEFT = Component.text(Messages.SETTINGS_PWEATHER_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component SETTINGS_PWEATHER_CLICK_RIGHT = Component.text(Messages.SETTINGS_PWEATHER_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component COINS_NUMBER = Component.text(Messages.COINS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -129,6 +133,10 @@ public class LoreComponents {
         SETTINGS_DISABLED = Component.text(Messages.SETTINGS_DISABLED, TextColor.color(0xFF5555), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         SETTINGS_MSGTOGGLE_CLICK = Component.text(Messages.SETTINGS_MSGTOGGLE_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         SETTINGS_TOGGLEMSGSOUND_CLICK = Component.text(Messages.SETTINGS_TOGGLEMSGSOUND_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_PTIME_CLICK_LEFT = Component.text(Messages.SETTINGS_PTIME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_PTIME_CLICK_RIGHT = Component.text(Messages.SETTINGS_PTIME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_PWEATHER_CLICK_LEFT = Component.text(Messages.SETTINGS_PWEATHER_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        SETTINGS_PWEATHER_CLICK_RIGHT = Component.text(Messages.SETTINGS_PWEATHER_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         COINS_NUMBER = Component.text(Messages.COINS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
