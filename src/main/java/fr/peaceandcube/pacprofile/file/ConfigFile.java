@@ -12,6 +12,7 @@ public class ConfigFile extends YamlFile {
 
     static {
         DEFAULT_CONFIGS.add(new ConfigEntry("date_format", "yyyy-MM-dd HH:mm:ss", null));
+        DEFAULT_CONFIGS.add(new ConfigEntry("first_time_advancement_name", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("default_home_color", "red", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets_scoreboard", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("coins", "", "commands_on_click"));
@@ -54,6 +55,10 @@ public class ConfigFile extends YamlFile {
 
     public String getDateFormat() {
         return this.config.getString("date_format");
+    }
+
+    public String getFirstTimeAdvancementName() {
+        return this.config.getString("first_time_advancement_name");
     }
 
     public String getDefaultHomeColor() {
