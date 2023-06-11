@@ -51,6 +51,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("coins_click", "⇒ Click to see more about coins");
         DEFAULT_TRANSLATIONS.put("head_tickets", "Head Tickets");
         DEFAULT_TRANSLATIONS.put("head_tickets_total", "Total: ");
+        DEFAULT_TRANSLATIONS.put("head_tickets_click", "⇒ Click to see more about head tickets");
         DEFAULT_TRANSLATIONS.put("mails", "Mails");
         DEFAULT_TRANSLATIONS.put("mails_total", "Total: ");
         DEFAULT_TRANSLATIONS.put("mails_unread", "Unread: ");
