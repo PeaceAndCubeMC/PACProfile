@@ -1,5 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
+import fr.peaceandcube.pacbirthday.PACBirthday;
+import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
@@ -58,21 +60,23 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
             Player player = this.playerList.get(index);
             String playerUuid = player.getUniqueId().toString();
+            String birthday = getBirthday(playerUuid);
             int trustCount = getTrustCount(playerUuid);
 
             PLAYERS_SLOTS.put(slot, player);
 
-            List<Component> components = new ArrayList<>();
-            components.add(Component.empty());
+            List<Component> lore = new ArrayList<>();
+            lore.add(Component.empty());
+            lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
             if (!player.getUniqueId().equals(this.player.getUniqueId())) {
-                components.add(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_1
+                lore.add(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_1
                         .append(Component.text(trustCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
                         .append(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_2)
                 );
-                components.add(Component.empty());
-                components.add(LoreComponents.ONLINE_PLAYER_CLICK);
+                lore.add(Component.empty());
+                lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
             }
-            this.setPlayerHead(slot, player, 3030, Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), components);
+            this.setPlayerHead(slot, player, 3030, Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), lore);
 
             this.setItem(slot + 1, Material.PAPER, 3031, NameComponents.HOME_NOTES, List.of(
                     Component.empty(),
@@ -88,6 +92,16 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         if (playerCount > maxPlayersOnPage) {
             this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
         }
+    }
+
+    private String getBirthday(String playerUuid) {
+        String birthday = PACBirthday.birthdaysFile.getBirthday(playerUuid);
+        if (birthday != null) {
+            String day = birthday.substring(0, 2);
+            String month = LocalizedMonth.fromNumber(Integer.parseInt(birthday.substring(3, 5))).getLocalizedName();
+            return day + " " + month;
+        }
+        return Messages.NOT_DEFINED;
     }
 
     private int getTrustCount(String playerUuid) {
