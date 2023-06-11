@@ -46,7 +46,7 @@ public class ProfileGui extends UnmodifiableGui {
     protected void fillInventory() {
         String rank = this.getRank();
         String rankExpiration = this.getRankExpiration();
-        String nickname = this.user.getNickname() != null ? this.user.getNickname() : Messages.NOT_DEFINED;
+        String nickname = this.user.getNickname();
         String birthday = this.getBirthday();
         String joinDate = this.getFirstPlayed();
         List<Component> components = new ArrayList<>();
@@ -56,7 +56,9 @@ public class ProfileGui extends UnmodifiableGui {
             components.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         }
         components.add(Component.empty());
-        components.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        if (nickname != null) {
+            components.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        }
         components.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         components.add(Component.empty());
         components.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
