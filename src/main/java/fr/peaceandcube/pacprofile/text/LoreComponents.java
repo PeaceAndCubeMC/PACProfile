@@ -36,6 +36,7 @@ public class LoreComponents {
     public static Component COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component HEAD_TICKETS_NUMBER = Component.text(Messages.HEAD_TICKETS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component HEAD_TICKETS_CLICK = Component.text(Messages.HEAD_TICKETS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component MAILS_TOTAL = Component.text(Messages.MAILS_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component MAILS_UNREAD = Component.text(Messages.MAILS_UNREAD, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -133,6 +134,7 @@ public class LoreComponents {
         COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         HEAD_TICKETS_NUMBER = Component.text(Messages.HEAD_TICKETS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HEAD_TICKETS_CLICK = Component.text(Messages.HEAD_TICKETS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         MAILS_TOTAL = Component.text(Messages.MAILS_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         MAILS_UNREAD = Component.text(Messages.MAILS_UNREAD, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

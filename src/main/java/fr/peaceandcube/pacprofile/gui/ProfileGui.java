@@ -95,29 +95,37 @@ public class ProfileGui extends UnmodifiableGui {
         ));
 
         double coinCount = this.user.getMoney().doubleValue();
-        this.setItem(20, Material.SUNFLOWER, 3004, NameComponents.COINS, List.of(
-                Component.empty(),
-                LoreComponents.COINS_NUMBER.append(Component.text(coinCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.COINS_CLICK
-        ));
+        List<Component> coinLore = new ArrayList<>();
+        coinLore.add(Component.empty());
+        coinLore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
+            coinLore.add(Component.empty());
+            coinLore.add(LoreComponents.COINS_CLICK);
+        }
+        this.setItem(20, Material.SUNFLOWER, 3004, NameComponents.COINS, coinLore);
 
         Objective objective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
         int headTicketCount = objective != null ? objective.getScore(this.player.getName()).getScore() : 0;
-        this.setItem(22, Material.NAME_TAG, 3004, NameComponents.HEAD_TICKETS, List.of(
-                Component.empty(),
-                LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
-        ));
+        List<Component> headTicketLore = new ArrayList<>();
+        headTicketLore.add(Component.empty());
+        headTicketLore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
+            headTicketLore.add(Component.empty());
+            headTicketLore.add(LoreComponents.HEAD_TICKETS_CLICK);
+        }
+        this.setItem(22, Material.NAME_TAG, 3004, NameComponents.HEAD_TICKETS, headTicketLore);
 
         int mailCount = this.user.getMailAmount();
         int unreadMailCount = this.user.getUnreadMailAmount();
-        this.setItem(24, Material.WRITABLE_BOOK, 3004, NameComponents.MAILS, List.of(
-                Component.empty(),
-                LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.MAILS_CLICK
-        ));
+        List<Component> mailLore = new ArrayList<>();
+        mailLore.add(Component.empty());
+        mailLore.add(LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        mailLore.add(LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
+            mailLore.add(Component.empty());
+            mailLore.add(LoreComponents.MAILS_CLICK);
+        }
+        this.setItem(24, Material.WRITABLE_BOOK, 3004, NameComponents.MAILS, mailLore);
 
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
@@ -303,6 +311,10 @@ public class ProfileGui extends UnmodifiableGui {
             case 17 -> new SettingsGui(this.viewer, this.player).open();
             case 20 -> {
                 this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
+                this.inv.close();
+            }
+            case 22 -> {
+                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
                 this.inv.close();
             }
             case 24 -> {

@@ -15,6 +15,7 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("default_home_color", "red", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets_scoreboard", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("coins", "", "commands_on_click"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("mails", "mail read", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
@@ -65,6 +66,10 @@ public class ConfigFile extends YamlFile {
 
     public String getCommandOnClickCoins() {
         return this.config.getConfigurationSection("commands_on_click").getString("coins");
+    }
+
+    public String getCommandOnClickHeadTickets() {
+        return this.config.getConfigurationSection("commands_on_click").getString("head_tickets");
     }
 
     public String getCommandOnClickMails() {
