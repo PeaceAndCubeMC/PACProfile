@@ -202,7 +202,7 @@ public class ClaimsGui extends UnmodifiableGui {
                             return List.of();
                         }
                         PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), stateSnapshot.getText());
-                        new ClaimsGui(this.viewer, this.player, this.page, this.maxPages).open();
+                        new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);

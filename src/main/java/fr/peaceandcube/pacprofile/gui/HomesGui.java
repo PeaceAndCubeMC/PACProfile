@@ -173,7 +173,7 @@ public class HomesGui extends UnmodifiableGui {
                             return List.of();
                         }
                         PACProfile.getInstance().playerData.setHomeNotes(stateSnapshot.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), stateSnapshot.getText());
-                        new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();
+                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);
