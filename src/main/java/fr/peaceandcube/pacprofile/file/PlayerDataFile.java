@@ -52,12 +52,20 @@ public class PlayerDataFile extends YamlFile {
         this.setNotes(player, HOMES, home, notes, NOTES);
     }
 
+    public void removeHomeNotes(UUID player, String home) {
+        this.removeNotes(player, HOMES, home);
+    }
+
     public void setClaimName(UUID player, String claimId, String notes) {
         this.setNotes(player, CLAIMS, claimId, notes, NAME);
     }
 
     public void setPlayerNotes(UUID player, String target, String notes) {
         this.setNotes(player, PLAYERS, target, notes, NOTES);
+    }
+
+    public void removePlayerNotes(UUID player, String target) {
+        this.removeNotes(player, PLAYERS, target);
     }
 
     private void setNotes(UUID player, String sectionName, String subsectionName, String notes, String key) {
@@ -84,6 +92,20 @@ public class PlayerDataFile extends YamlFile {
 
         subsection.set(key, notes);
         this.save();
+    }
+
+    private void removeNotes(UUID player, String sectionName, String subsectionName) {
+        ConfigurationSection playerSection = this.config.getConfigurationSection(player.toString());
+        if (playerSection != null) {
+            ConfigurationSection section = playerSection.getConfigurationSection(sectionName);
+            if (section != null) {
+                ConfigurationSection subsection = section.getConfigurationSection(subsectionName);
+                if (subsection != null) {
+                    subsection.set(NOTES, null);
+                    this.save();
+                }
+            }
+        }
     }
 
     public String getHomeColor(UUID player, String home) {

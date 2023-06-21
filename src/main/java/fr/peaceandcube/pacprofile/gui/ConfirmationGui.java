@@ -9,13 +9,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ConfirmationGui extends UnmodifiableGui {
-    private final String command;
     private final UnmodifiableGui previousGui;
+    private final Action action;
 
-    public ConfirmationGui(Player viewer, Player player, String command, UnmodifiableGui previousGui) {
+    public ConfirmationGui(Player viewer, Player player, UnmodifiableGui previousGui, Action action) {
         super(1, Component.text(Messages.CONFIRMATION_TITLE), viewer, player);
-        this.command = command;
         this.previousGui = previousGui;
+        this.action = action;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -30,12 +30,13 @@ public class ConfirmationGui extends UnmodifiableGui {
     protected void onSlotLeftClick(int slot) {
         switch (slot) {
             // yes
-            case 3 -> {
-                this.dispatchCommand(this.command);
-                this.inv.close();
-            }
+            case 3 -> this.action.onConfirm();
             // no
             case 5 -> this.previousGui.open();
         }
+    }
+
+    public interface Action {
+        void onConfirm();
     }
 }

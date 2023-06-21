@@ -76,7 +76,8 @@ public class Messages {
     public static String HOME_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_click_left");
     public static String HOME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_click_right");
     public static String HOME_NOTES = PACProfile.getInstance().lang.translate("home_notes");
-    public static String HOME_NOTES_CLICK = PACProfile.getInstance().lang.translate("home_notes_click");
+    public static String HOME_NOTES_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_notes_click_left");
+    public static String HOME_NOTES_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_notes_click_right");
     public static String HOME_NOTES_TITLE = PACProfile.getInstance().lang.translate("home_notes_title");
     public static String HOME_COLOR = PACProfile.getInstance().lang.translate("home_color");
     public static String HOME_COLOR_CLICK = PACProfile.getInstance().lang.translate("home_color_click");
@@ -113,7 +114,8 @@ public class Messages {
     public static String ONLINE_PLAYER_TRUST_COUNT_1 = PACProfile.getInstance().lang.translate("online_player_trust_count_1");
     public static String ONLINE_PLAYER_TRUST_COUNT_2 = PACProfile.getInstance().lang.translate("online_player_trust_count_2");
     public static String ONLINE_PLAYER_CLICK = PACProfile.getInstance().lang.translate("online_player_click");
-    public static String ONLINE_PLAYER_NOTES_CLICK = PACProfile.getInstance().lang.translate("online_player_notes_click");
+    public static String ONLINE_PLAYER_NOTES_CLICK_LEFT = PACProfile.getInstance().lang.translate("online_player_notes_click_left");
+    public static String ONLINE_PLAYER_NOTES_CLICK_RIGHT = PACProfile.getInstance().lang.translate("online_player_notes_click_right");
     public static String ONLINE_PLAYER_NOTES_TITLE = PACProfile.getInstance().lang.translate("online_player_notes_title");
     public static String WARPS = PACProfile.getInstance().lang.translate("warps");
     public static String WARPS_CLICK = PACProfile.getInstance().lang.translate("warps_click");
@@ -212,7 +214,8 @@ public class Messages {
         HOME_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_click_left");
         HOME_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_click_right");
         HOME_NOTES = PACProfile.getInstance().lang.translate("home_notes");
-        HOME_NOTES_CLICK = PACProfile.getInstance().lang.translate("home_notes_click");
+        HOME_NOTES_CLICK_LEFT = PACProfile.getInstance().lang.translate("home_notes_click_left");
+        HOME_NOTES_CLICK_RIGHT = PACProfile.getInstance().lang.translate("home_notes_click_right");
         HOME_NOTES_TITLE = PACProfile.getInstance().lang.translate("home_notes_title");
         HOME_COLOR = PACProfile.getInstance().lang.translate("home_color");
         HOME_COLOR_CLICK = PACProfile.getInstance().lang.translate("home_color_click");
@@ -249,7 +252,8 @@ public class Messages {
         ONLINE_PLAYER_TRUST_COUNT_1 = PACProfile.getInstance().lang.translate("online_player_trust_count_1");
         ONLINE_PLAYER_TRUST_COUNT_2 = PACProfile.getInstance().lang.translate("online_player_trust_count_2");
         ONLINE_PLAYER_CLICK = PACProfile.getInstance().lang.translate("online_player_click");
-        ONLINE_PLAYER_NOTES_CLICK = PACProfile.getInstance().lang.translate("online_player_notes_click");
+        ONLINE_PLAYER_NOTES_CLICK_LEFT = PACProfile.getInstance().lang.translate("online_player_notes_click_left");
+        ONLINE_PLAYER_NOTES_CLICK_RIGHT = PACProfile.getInstance().lang.translate("online_player_notes_click_right");
         ONLINE_PLAYER_NOTES_TITLE = PACProfile.getInstance().lang.translate("online_player_notes_title");
         WARPS = PACProfile.getInstance().lang.translate("warps");
         WARPS_CLICK = PACProfile.getInstance().lang.translate("warps_click");

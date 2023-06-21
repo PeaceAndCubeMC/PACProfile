@@ -90,7 +90,8 @@ public class HomesGui extends UnmodifiableGui {
                     Component.empty(),
                     this.getNotesLore(name),
                     Component.empty(),
-                    LoreComponents.HOME_NOTES_CLICK
+                    LoreComponents.HOME_NOTES_CLICK_LEFT,
+                    LoreComponents.HOME_NOTES_CLICK_RIGHT
             ));
 
             this.setItem(slot + 2, color.getDye(), 3012, NameComponents.HOME_COLOR, List.of(
@@ -195,7 +196,18 @@ public class HomesGui extends UnmodifiableGui {
             } else {
                 command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
             }
-            new ConfirmationGui(this.viewer, this.player, command, this).open();
+            new ConfirmationGui(this.viewer, this.player, this, () -> {
+                dispatchCommand(command);
+                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+            }).open();
+        }
+
+        // home notes
+        else if (HOME_SLOTS.containsKey(slot - 1)) {
+            new ConfirmationGui(this.viewer, this.player, this, () -> {
+                PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1));
+                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+            }).open();
         }
     }
 

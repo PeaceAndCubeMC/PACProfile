@@ -56,7 +56,8 @@ public class LoreComponents {
     public static Component HOME_Z = Component.text(Messages.HOME_Z, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_CLICK_LEFT = Component.text(Messages.HOME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_CLICK_RIGHT = Component.text(Messages.HOME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-    public static Component HOME_NOTES_CLICK = Component.text(Messages.HOME_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component HOME_NOTES_CLICK_LEFT = Component.text(Messages.HOME_NOTES_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component HOME_NOTES_CLICK_RIGHT = Component.text(Messages.HOME_NOTES_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component HOME_COLOR_CLICK = Component.text(Messages.HOME_COLOR_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component CLAIMS_TOTAL = Component.text(Messages.CLAIMS_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -84,7 +85,8 @@ public class LoreComponents {
     public static Component ONLINE_PLAYER_TRUST_COUNT_1 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_1, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component ONLINE_PLAYER_TRUST_COUNT_2 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-    public static Component ONLINE_PLAYER_NOTES_CLICK = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component ONLINE_PLAYER_NOTES_CLICK_LEFT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+    public static Component ONLINE_PLAYER_NOTES_CLICK_RIGHT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
     public static Component WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     public static Component WARP_COMMAND = Component.text(Messages.WARP_COMMAND, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -158,7 +160,8 @@ public class LoreComponents {
         HOME_Z = Component.text(Messages.HOME_Z, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_CLICK_LEFT = Component.text(Messages.HOME_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_CLICK_RIGHT = Component.text(Messages.HOME_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        HOME_NOTES_CLICK = Component.text(Messages.HOME_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HOME_NOTES_CLICK_LEFT = Component.text(Messages.HOME_NOTES_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HOME_NOTES_CLICK_RIGHT = Component.text(Messages.HOME_NOTES_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HOME_COLOR_CLICK = Component.text(Messages.HOME_COLOR_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         CLAIMS_TOTAL = Component.text(Messages.CLAIMS_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
@@ -186,7 +189,8 @@ public class LoreComponents {
         ONLINE_PLAYER_TRUST_COUNT_1 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_1, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_TRUST_COUNT_2 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        ONLINE_PLAYER_NOTES_CLICK = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        ONLINE_PLAYER_NOTES_CLICK_LEFT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        ONLINE_PLAYER_NOTES_CLICK_RIGHT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         WARPS_CLICK = Component.text(Messages.WARPS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         WARP_COMMAND = Component.text(Messages.WARP_COMMAND, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

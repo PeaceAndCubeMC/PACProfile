@@ -82,7 +82,8 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     Component.empty(),
                     this.getNotesLore(playerUuid),
                     Component.empty(),
-                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK
+                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT,
+                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT
             ));
         }
 
@@ -173,6 +174,17 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);
+        }
+    }
+
+    @Override
+    protected void onSlotRightClick(int slot) {
+        // player notes
+        if (PLAYERS_SLOTS.containsKey(slot - 1)) {
+            new ConfirmationGui(this.viewer, this.player, this, () -> {
+                PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString());
+                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages).open();
+            }).open();
         }
     }
 }
