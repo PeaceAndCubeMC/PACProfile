@@ -86,7 +86,8 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("home_click_left", "⇒ Left click to go to this home");
         DEFAULT_TRANSLATIONS.put("home_click_right", "⇒ Right click to delete this home");
         DEFAULT_TRANSLATIONS.put("home_notes", "Notes");
-        DEFAULT_TRANSLATIONS.put("home_notes_click", "⇒ Click to edit notes");
+        DEFAULT_TRANSLATIONS.put("home_notes_click_left", "⇒ Left click to edit notes");
+        DEFAULT_TRANSLATIONS.put("home_notes_click_right", "⇒ Right click to clear notes");
         DEFAULT_TRANSLATIONS.put("home_notes_title", "Edit notes");
         DEFAULT_TRANSLATIONS.put("home_color", "Color");
         DEFAULT_TRANSLATIONS.put("home_color_click", "⇒ Click to change color");
@@ -123,7 +124,8 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_1", "Trusted in ");
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_2", " claim(s)");
         DEFAULT_TRANSLATIONS.put("online_player_click", "⇒ Click to ask for a teleportation");
-        DEFAULT_TRANSLATIONS.put("online_player_notes_click", "⇒ Click to edit notes");
+        DEFAULT_TRANSLATIONS.put("online_player_notes_click_left", "⇒ Left click to edit notes");
+        DEFAULT_TRANSLATIONS.put("online_player_notes_click_right", "⇒ Right click to clear notes");
         DEFAULT_TRANSLATIONS.put("online_player_notes_title", "Edit notes");
         DEFAULT_TRANSLATIONS.put("warps", "Warps");
         DEFAULT_TRANSLATIONS.put("warps_click", "⇒ Click to see warps");
