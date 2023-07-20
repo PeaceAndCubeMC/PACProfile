@@ -20,11 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SettingsGui extends UnmodifiableGui {
-    private final boolean philanthrope;
 
     public SettingsGui(Player viewer, Player player) {
         super(1, Component.text(Messages.SETTINGS_TITLE), viewer, player);
-        this.philanthrope = this.isPhilanthrope();
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -50,7 +48,7 @@ public class SettingsGui extends UnmodifiableGui {
                 LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK
         ));
 
-        if (this.philanthrope) {
+        if (hasPermission("essentials.ptime")) {
             // ptime
             PTimeType currentTime = PTimeType.fromTicks(this.player.getPlayerTime() % 24000);
             List<Component> ptimeLore = new ArrayList<>();
@@ -67,7 +65,9 @@ public class SettingsGui extends UnmodifiableGui {
             ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_LEFT);
             ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_RIGHT);
             this.setItem(5, Material.CLOCK, 3050, NameComponents.SETTINGS_PTIME, ptimeLore);
+        }
 
+        if (hasPermission("essentials.pweather")) {
             // pweather
             PWeatherType currentWeather = PWeatherType.fromWeatherType(this.player.getPlayerWeather());
             List<Component> pweatherLore = new ArrayList<>();
@@ -90,12 +90,9 @@ public class SettingsGui extends UnmodifiableGui {
         this.setItem(8, Material.BARRIER, 3002, NameComponents.EXIT);
     }
 
-    private boolean isPhilanthrope() {
+    private boolean hasPermission(String permission) {
         User user = PACProfile.getLuckPerms().getUserManager().getUser(this.player.getUniqueId());
-        if (user != null) {
-            return user.getPrimaryGroup().equalsIgnoreCase("philanthrope");
-        }
-        return false;
+        return user != null && user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
 
     @Override
@@ -117,7 +114,7 @@ public class SettingsGui extends UnmodifiableGui {
             }
             // ptime
             case 5 -> {
-                if (this.philanthrope) {
+                if (hasPermission("essentials.ptime")) {
                     PTimeType currentTime = PTimeType.fromTicks(this.player.getPlayerTime() % 24000);
                     PTimeType newTime = currentTime.next();
                     if (this.player.equals(this.viewer)) {
@@ -130,7 +127,7 @@ public class SettingsGui extends UnmodifiableGui {
             }
             // pweather
             case 6 -> {
-                if (this.philanthrope) {
+                if (hasPermission("essentials.pweather")) {
                     PWeatherType currentWeather = PWeatherType.fromWeatherType(this.player.getPlayerWeather());
                     PWeatherType newWeather = currentWeather.next();
                     if (this.player.equals(this.viewer)) {
@@ -151,7 +148,7 @@ public class SettingsGui extends UnmodifiableGui {
         switch (slot) {
             // ptime
             case 5 -> {
-                if (this.philanthrope) {
+                if (hasPermission("essentials.ptime")) {
                     if (this.player.equals(this.viewer)) {
                         this.dispatchCommand("ptime reset");
                     } else {
@@ -162,7 +159,7 @@ public class SettingsGui extends UnmodifiableGui {
             }
             // pweather
             case 6 -> {
-                if (this.philanthrope) {
+                if (hasPermission("essentials.pweather")) {
                     if (this.player.equals(this.viewer)) {
                         this.dispatchCommand("pweather reset");
                     } else {
