@@ -23,7 +23,15 @@ repositories {
     // GriefPrevention
     maven { url "https://jitpack.io" }
 
-    flatDir { dirs 'libs' }
+    ["PACUtilities", "PACBirthday"].each {
+        maven {
+            url "https://maven.pkg.github.com/PeaceAndCubeMC/${it}"
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 configurations {
@@ -40,8 +48,8 @@ dependencies {
     compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
     compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
 
-    compileOnly name: "pacutilities-${pacutilities_version}"
-    compileOnly name: "pacbirthday-${pacbirthday_version}"
+    compileOnly "fr.peaceandcube:pacutilities:${pacutilities_version}"
+    compileOnly "fr.peaceandcube:pacbirthday:${pacbirthday_version}"
 }
 
 build {
