@@ -23,9 +23,9 @@ repositories {
     // GriefPrevention
     maven { url "https://jitpack.io" }
 
-    ["PACUtilities", "PACBirthday"].each {
+    ["PACUtilities", "PACBirthday"].forEach { dep ->
         maven {
-            url "https://maven.pkg.github.com/PeaceAndCubeMC/${it}"
+            url "https://maven.pkg.github.com/PeaceAndCubeMC/${dep}"
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
                 password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
