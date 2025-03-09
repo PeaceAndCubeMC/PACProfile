@@ -147,21 +147,21 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("page_previous", "Previous Page");
         DEFAULT_TRANSLATIONS.put("page_next", "Next Page");
         DEFAULT_TRANSLATIONS.put("color_white", "White");
+        DEFAULT_TRANSLATIONS.put("color_light_gray", "Light Gray");
+        DEFAULT_TRANSLATIONS.put("color_gray", "Gray");
+        DEFAULT_TRANSLATIONS.put("color_black", "Black");
+        DEFAULT_TRANSLATIONS.put("color_brown", "Brown");
+        DEFAULT_TRANSLATIONS.put("color_red", "Red");
         DEFAULT_TRANSLATIONS.put("color_orange", "Orange");
-        DEFAULT_TRANSLATIONS.put("color_magenta", "Magenta");
-        DEFAULT_TRANSLATIONS.put("color_light_blue", "Light Blue");
         DEFAULT_TRANSLATIONS.put("color_yellow", "Yellow");
         DEFAULT_TRANSLATIONS.put("color_lime", "Lime");
-        DEFAULT_TRANSLATIONS.put("color_pink", "Pink");
-        DEFAULT_TRANSLATIONS.put("color_gray", "Gray");
-        DEFAULT_TRANSLATIONS.put("color_light_gray", "Light Gray");
-        DEFAULT_TRANSLATIONS.put("color_cyan", "Cyan");
-        DEFAULT_TRANSLATIONS.put("color_purple", "Purple");
-        DEFAULT_TRANSLATIONS.put("color_blue", "Blue");
-        DEFAULT_TRANSLATIONS.put("color_brown", "Brown");
         DEFAULT_TRANSLATIONS.put("color_green", "Green");
-        DEFAULT_TRANSLATIONS.put("color_red", "Red");
-        DEFAULT_TRANSLATIONS.put("color_black", "Black");
+        DEFAULT_TRANSLATIONS.put("color_cyan", "Cyan");
+        DEFAULT_TRANSLATIONS.put("color_light_blue", "Light Blue");
+        DEFAULT_TRANSLATIONS.put("color_blue", "Blue");
+        DEFAULT_TRANSLATIONS.put("color_purple", "Purple");
+        DEFAULT_TRANSLATIONS.put("color_magenta", "Magenta");
+        DEFAULT_TRANSLATIONS.put("color_pink", "Pink");
         DEFAULT_TRANSLATIONS.put("order_by", "Order by: ");
         DEFAULT_TRANSLATIONS.put("order_default", "Default");
         DEFAULT_TRANSLATIONS.put("order_name_az", "Name (A-Z)");
@@ -170,6 +170,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("order_area_desc", "Area (Descending)");
         DEFAULT_TRANSLATIONS.put("order_category_az", "Category (A-Z)");
         DEFAULT_TRANSLATIONS.put("order_category_za", "Category (Z-A)");
+        DEFAULT_TRANSLATIONS.put("order_color", "Color");
         DEFAULT_TRANSLATIONS.put("order_click", "⇒ Click to toggle order");
     }
 

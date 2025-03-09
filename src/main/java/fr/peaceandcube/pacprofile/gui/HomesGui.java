@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ public class HomesGui extends UnmodifiableGui {
             this.homes.sort(String::compareToIgnoreCase);
         } else if (this.order == Order.NAME_ZA) {
             this.homes.sort((home1, home2) -> home2.compareToIgnoreCase(home1));
+        } else if (this.order == Order.COLOR) {
+            this.homes.sort(Comparator.comparingInt(home -> Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), home)).ordinal()));
         }
 
         int homeCount = this.homes.size();
@@ -214,7 +217,8 @@ public class HomesGui extends UnmodifiableGui {
     enum Order {
         DEFAULT(LoreComponents.ORDER_DEFAULT),
         NAME_AZ(LoreComponents.ORDER_NAME_AZ),
-        NAME_ZA(LoreComponents.ORDER_NAME_ZA);
+        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
+        COLOR(LoreComponents.ORDER_COLOR);
 
         private final Component text;
 
@@ -230,7 +234,8 @@ public class HomesGui extends UnmodifiableGui {
             return switch (this) {
                 case DEFAULT -> NAME_AZ;
                 case NAME_AZ -> NAME_ZA;
-                case NAME_ZA -> DEFAULT;
+                case NAME_ZA -> COLOR;
+                case COLOR -> DEFAULT;
             };
         }
     }

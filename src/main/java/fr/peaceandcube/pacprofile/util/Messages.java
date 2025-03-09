@@ -132,6 +132,7 @@ public class Messages {
     public static String ORDER_AREA_DESC;
     public static String ORDER_CATEGORY_AZ;
     public static String ORDER_CATEGORY_ZA;
+    public static String ORDER_COLOR;
     public static String ORDER_CLICK;
 
     static {
@@ -265,6 +266,7 @@ public class Messages {
         ORDER_AREA_DESC = PACProfile.getInstance().lang.translate("order_area_desc");
         ORDER_CATEGORY_AZ = PACProfile.getInstance().lang.translate("order_category_az");
         ORDER_CATEGORY_ZA = PACProfile.getInstance().lang.translate("order_category_za");
+        ORDER_COLOR = PACProfile.getInstance().lang.translate("order_color");
         ORDER_CLICK = PACProfile.getInstance().lang.translate("order_click");
     }
 

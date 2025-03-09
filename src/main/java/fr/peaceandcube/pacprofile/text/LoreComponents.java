@@ -98,6 +98,7 @@ public class LoreComponents {
     public static Component ORDER_AREA_DESC;
     public static Component ORDER_CATEGORY_AZ;
     public static Component ORDER_CATEGORY_ZA;
+    public static Component ORDER_COLOR;
     public static Component ORDER_CLICK;
 
     static {
@@ -197,6 +198,7 @@ public class LoreComponents {
         ORDER_AREA_DESC = Component.text(Messages.ORDER_AREA_DESC, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         ORDER_CATEGORY_AZ = Component.text(Messages.ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         ORDER_CATEGORY_ZA = Component.text(Messages.ORDER_CATEGORY_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        ORDER_COLOR = Component.text(Messages.ORDER_COLOR, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         ORDER_CLICK = Component.text(Messages.ORDER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     }
 }
