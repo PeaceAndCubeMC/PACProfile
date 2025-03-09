@@ -28,12 +28,15 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("statistics_current", "Current statistics");
         DEFAULT_TRANSLATIONS.put("statistics_health", "❤ Health: ");
         DEFAULT_TRANSLATIONS.put("statistics_max_health", "❤ Max health: ");
+        DEFAULT_TRANSLATIONS.put("statistics_oxygen_bonus", "🫧 Oxygen bonus: ");
         DEFAULT_TRANSLATIONS.put("statistics_armor", "\uD83D\uDEE1 Armor: ");
         DEFAULT_TRANSLATIONS.put("statistics_armor_toughness", "\uD83D\uDEE1 Armor toughness: ");
         DEFAULT_TRANSLATIONS.put("statistics_knockback_resistance", "❄ Knockback resistance: ");
-        DEFAULT_TRANSLATIONS.put("statistics_speed", "✈ Speed: ");
+        DEFAULT_TRANSLATIONS.put("statistics_speed", "👟 Speed: ");
+        DEFAULT_TRANSLATIONS.put("statistics_sneaking_speed", "👟 Sneaking speed: ");
         DEFAULT_TRANSLATIONS.put("statistics_attack_damage", "\uD83D\uDDE1 Attack damage: ");
         DEFAULT_TRANSLATIONS.put("statistics_attack_speed", "\uD83D\uDDE1 Attack speed: ");
+        DEFAULT_TRANSLATIONS.put("statistics_mining_efficiency", "⛏ Mining efficiency: ");
         DEFAULT_TRANSLATIONS.put("statistics_luck", "☘ Luck: ");
         DEFAULT_TRANSLATIONS.put("statistics_click_base", "⇒ Click to show base statistics");
         DEFAULT_TRANSLATIONS.put("statistics_click_current", "⇒ Click to show current statistics");
