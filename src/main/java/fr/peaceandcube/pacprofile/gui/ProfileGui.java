@@ -254,15 +254,15 @@ public class ProfileGui extends UnmodifiableGui {
     private double[] getStatistics() {
         double[] statistics = new double[9];
 
-        statistics[0] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : this.player.getHealth();
-        statistics[1] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-        statistics[2] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ARMOR).getValue();
-        statistics[3] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getValue();
-        statistics[4] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue();
-        statistics[5] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
-        statistics[6] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue();
-        statistics[7] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue();
-        statistics[8] = this.baseStatistics ? this.player.getAttribute(Attribute.GENERIC_LUCK).getBaseValue() : this.player.getAttribute(Attribute.GENERIC_LUCK).getValue();
+        statistics[0] = this.baseStatistics ? this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue() : this.player.getHealth();
+        statistics[1] = this.baseStatistics ? this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue() : this.player.getAttribute(Attribute.MAX_HEALTH).getValue();
+        statistics[2] = this.baseStatistics ? this.player.getAttribute(Attribute.ARMOR).getBaseValue() : this.player.getAttribute(Attribute.ARMOR).getValue();
+        statistics[3] = this.baseStatistics ? this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue() : this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getValue();
+        statistics[4] = this.baseStatistics ? this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getBaseValue() : this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getValue();
+        statistics[5] = this.baseStatistics ? this.player.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue() : this.player.getAttribute(Attribute.MOVEMENT_SPEED).getValue();
+        statistics[6] = this.baseStatistics ? this.player.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue() : this.player.getAttribute(Attribute.ATTACK_DAMAGE).getValue();
+        statistics[7] = this.baseStatistics ? this.player.getAttribute(Attribute.ATTACK_SPEED).getBaseValue() : this.player.getAttribute(Attribute.ATTACK_SPEED).getValue();
+        statistics[8] = this.baseStatistics ? this.player.getAttribute(Attribute.LUCK).getBaseValue() : this.player.getAttribute(Attribute.LUCK).getValue();
 
         for (int i = 0; i < statistics.length; i++) {
             statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;
@@ -274,15 +274,15 @@ public class ProfileGui extends UnmodifiableGui {
     private double[] getStatisticDifferences() {
         double[] statistics = new double[9];
 
-        statistics[0] = this.player.getHealth() - this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-        statistics[1] = this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() - this.player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-        statistics[2] = this.player.getAttribute(Attribute.GENERIC_ARMOR).getValue() - this.player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
-        statistics[3] = this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getValue() - this.player.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue();
-        statistics[4] = this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getValue() - this.player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getBaseValue();
-        statistics[5] = this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue() - this.player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-        statistics[6] = this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() - this.player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
-        statistics[7] = this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue() - this.player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue();
-        statistics[8] = this.player.getAttribute(Attribute.GENERIC_LUCK).getValue() - this.player.getAttribute(Attribute.GENERIC_LUCK).getBaseValue();
+        statistics[0] = this.player.getHealth() - this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
+        statistics[1] = this.player.getAttribute(Attribute.MAX_HEALTH).getValue() - this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
+        statistics[2] = this.player.getAttribute(Attribute.ARMOR).getValue() - this.player.getAttribute(Attribute.ARMOR).getBaseValue();
+        statistics[3] = this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getValue() - this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue();
+        statistics[4] = this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getValue() - this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getBaseValue();
+        statistics[5] = this.player.getAttribute(Attribute.MOVEMENT_SPEED).getValue() - this.player.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue();
+        statistics[6] = this.player.getAttribute(Attribute.ATTACK_DAMAGE).getValue() - this.player.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue();
+        statistics[7] = this.player.getAttribute(Attribute.ATTACK_SPEED).getValue() - this.player.getAttribute(Attribute.ATTACK_SPEED).getBaseValue();
+        statistics[8] = this.player.getAttribute(Attribute.LUCK).getValue() - this.player.getAttribute(Attribute.LUCK).getBaseValue();
 
         for (int i = 0; i < statistics.length; i++) {
             statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;

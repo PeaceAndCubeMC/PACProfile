@@ -55,7 +55,7 @@ public abstract class UnmodifiableGui implements Listener {
         meta.setCustomModelData(customModelData);
         stack.setItemMeta(meta);
         if (glint) {
-            stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+            stack.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
         }
         this.inv.setItem(slot, stack);
     }

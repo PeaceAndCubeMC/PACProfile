@@ -1,11 +1,10 @@
+import java.nio.charset.StandardCharsets
+
 plugins {
     id 'java'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
 
 group = project.pacprofile_group
 archivesBaseName = project.pacprofile_name
@@ -54,9 +53,15 @@ shadowJar {
     archiveFileName = "${archivesBaseName}-${version}.jar"
 }
 
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    it.options.release = 17
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+tasks {
+    compileJava {
+        options.release = 21
+        options.encoding = StandardCharsets.UTF_8.name()
+    }
 }
 
 processResources {
