@@ -168,20 +168,26 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.WARPS_CLICK
         ));
 
-        this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
-                Component.empty(),
-                LoreComponents.RULES_CLICK
-        ));
+        if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
+            this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
+                    Component.empty(),
+                    LoreComponents.RULES_CLICK
+            ));
+        }
 
-        this.setItem(46, Material.CHAIN, 3004, NameComponents.LINKS, List.of(
-                Component.empty(),
-                LoreComponents.LINKS_CLICK
-        ));
+        if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
+            this.setItem(46, Material.CHAIN, 3004, NameComponents.LINKS, List.of(
+                    Component.empty(),
+                    LoreComponents.LINKS_CLICK
+            ));
+        }
 
-        this.setItem(47, Material.MAP, 3004, NameComponents.DYNMAP, List.of(
-                Component.empty(),
-                LoreComponents.DYNMAP_CLICK
-        ));
+        if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
+            this.setItem(47, Material.MAP, 3004, NameComponents.DYNMAP, List.of(
+                    Component.empty(),
+                    LoreComponents.DYNMAP_CLICK
+            ));
+        }
 
         this.setItem(53, Material.BARRIER, 3002, NameComponents.EXIT);
 
@@ -262,32 +268,44 @@ public class ProfileGui extends UnmodifiableGui {
             }
             case 17 -> new SettingsGui(this.viewer, this.player).open();
             case 20 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
+                    this.inv.close();
+                }
             }
             case 22 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
+                    this.inv.close();
+                }
             }
             case 24 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
+                    this.inv.close();
+                }
             }
             case 28 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
             case 30 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
             case 32 -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open();
             case 34 -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open();
             case 45 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
+                    this.inv.close();
+                }
             }
             case 46 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
+                    this.inv.close();
+                }
             }
             case 47 -> {
-                this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
-                this.inv.close();
+                if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
+                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
+                    this.inv.close();
+                }
             }
             case 53 -> this.inv.close();
         }
