@@ -14,15 +14,6 @@ public class LoreComponents {
 
     public static Component STATISTICS_BASE;
     public static Component STATISTICS_CURRENT;
-    public static Component STATISTICS_HEALTH;
-    public static Component STATISTICS_MAX_HEALTH;
-    public static Component STATISTICS_ARMOR;
-    public static Component STATISTICS_ARMOR_TOUGHNESS;
-    public static Component STATISTICS_KNOCKBACK_RESISTANCE;
-    public static Component STATISTICS_SPEED;
-    public static Component STATISTICS_ATTACK_DAMAGE;
-    public static Component STATISTICS_ATTACK_SPEED;
-    public static Component STATISTICS_LUCK;
     public static Component STATISTICS_CLICK_BASE;
     public static Component STATISTICS_CLICK_CURRENT;
 
@@ -122,15 +113,6 @@ public class LoreComponents {
 
         STATISTICS_BASE = Component.text(Messages.STATISTICS_BASE, TextColor.color(0xFF5555)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_CURRENT = Component.text(Messages.STATISTICS_CURRENT, TextColor.color(0x55FF55)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_HEALTH = Component.text(Messages.STATISTICS_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_MAX_HEALTH = Component.text(Messages.STATISTICS_MAX_HEALTH, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_ARMOR = Component.text(Messages.STATISTICS_ARMOR, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_ARMOR_TOUGHNESS = Component.text(Messages.STATISTICS_ARMOR_TOUGHNESS, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_KNOCKBACK_RESISTANCE = Component.text(Messages.STATISTICS_KNOCKBACK_RESISTANCE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_SPEED = Component.text(Messages.STATISTICS_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_ATTACK_DAMAGE = Component.text(Messages.STATISTICS_ATTACK_DAMAGE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_ATTACK_SPEED = Component.text(Messages.STATISTICS_ATTACK_SPEED, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        STATISTICS_LUCK = Component.text(Messages.STATISTICS_LUCK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_CLICK_BASE = Component.text(Messages.STATISTICS_CLICK_BASE, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         STATISTICS_CLICK_CURRENT = Component.text(Messages.STATISTICS_CLICK_CURRENT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 

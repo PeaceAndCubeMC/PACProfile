@@ -3,6 +3,8 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.statistic.Statistic;
+import fr.peaceandcube.pacprofile.statistic.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -15,7 +17,6 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -64,30 +65,19 @@ public class ProfileGui extends UnmodifiableGui {
         components.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         this.setPlayerHead(4, this.player, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), components);
 
-        double[] statistics = this.getStatistics();
-        double[] statisticDifferences = this.getStatisticDifferences();
         Component statisticsComponent = this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT;
         Component clickComponent = this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE;
-        this.setItem(9, Material.ENCHANTED_BOOK, 3004, NameComponents.STATISTICS, List.of(
-                statisticsComponent,
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_HEALTH, statistics[0], statisticDifferences[0]),
-                getStatisticComponent(LoreComponents.STATISTICS_MAX_HEALTH, statistics[1], statisticDifferences[1]),
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_ARMOR, statistics[2], statisticDifferences[2]),
-                getStatisticComponent(LoreComponents.STATISTICS_ARMOR_TOUGHNESS, statistics[3], statisticDifferences[3]),
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_KNOCKBACK_RESISTANCE, statistics[4], statisticDifferences[4]),
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_SPEED, statistics[5], statisticDifferences[5]),
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_ATTACK_DAMAGE, statistics[6], statisticDifferences[6]),
-                getStatisticComponent(LoreComponents.STATISTICS_ATTACK_SPEED, statistics[7], statisticDifferences[7]),
-                Component.empty(),
-                getStatisticComponent(LoreComponents.STATISTICS_LUCK, statistics[8], statisticDifferences[8]),
-                Component.empty(),
-                clickComponent
-        ));
+        List<Component> statsLore = new ArrayList<>();
+        statsLore.add(statisticsComponent);
+        statsLore.add(Component.empty());
+        for (Statistic statistic : Statistics.ALL) {
+            if (PACProfile.getInstance().config.isStatisticEnabled(statistic.getName())) {
+                statsLore.add(getStatisticComponent(statistic));
+            }
+        }
+        statsLore.add(Component.empty());
+        statsLore.add(clickComponent);
+        this.setItem(9, Material.ENCHANTED_BOOK, 3004, NameComponents.STATISTICS, statsLore);
 
         this.setItem(17, Material.COMPARATOR, 3004, NameComponents.SETTINGS, List.of(
                 Component.empty(),
@@ -251,52 +241,14 @@ public class ProfileGui extends UnmodifiableGui {
         return new SimpleDateFormat(PACProfile.getInstance().config.getDateFormat()).format(new Date(timestamp));
     }
 
-    private double[] getStatistics() {
-        double[] statistics = new double[9];
-
-        statistics[0] = this.baseStatistics ? this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue() : this.player.getHealth();
-        statistics[1] = this.baseStatistics ? this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue() : this.player.getAttribute(Attribute.MAX_HEALTH).getValue();
-        statistics[2] = this.baseStatistics ? this.player.getAttribute(Attribute.ARMOR).getBaseValue() : this.player.getAttribute(Attribute.ARMOR).getValue();
-        statistics[3] = this.baseStatistics ? this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue() : this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getValue();
-        statistics[4] = this.baseStatistics ? this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getBaseValue() : this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getValue();
-        statistics[5] = this.baseStatistics ? this.player.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue() : this.player.getAttribute(Attribute.MOVEMENT_SPEED).getValue();
-        statistics[6] = this.baseStatistics ? this.player.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue() : this.player.getAttribute(Attribute.ATTACK_DAMAGE).getValue();
-        statistics[7] = this.baseStatistics ? this.player.getAttribute(Attribute.ATTACK_SPEED).getBaseValue() : this.player.getAttribute(Attribute.ATTACK_SPEED).getValue();
-        statistics[8] = this.baseStatistics ? this.player.getAttribute(Attribute.LUCK).getBaseValue() : this.player.getAttribute(Attribute.LUCK).getValue();
-
-        for (int i = 0; i < statistics.length; i++) {
-            statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;
-        }
-
-        return statistics;
-    }
-
-    private double[] getStatisticDifferences() {
-        double[] statistics = new double[9];
-
-        statistics[0] = this.player.getHealth() - this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
-        statistics[1] = this.player.getAttribute(Attribute.MAX_HEALTH).getValue() - this.player.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
-        statistics[2] = this.player.getAttribute(Attribute.ARMOR).getValue() - this.player.getAttribute(Attribute.ARMOR).getBaseValue();
-        statistics[3] = this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getValue() - this.player.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue();
-        statistics[4] = this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getValue() - this.player.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getBaseValue();
-        statistics[5] = this.player.getAttribute(Attribute.MOVEMENT_SPEED).getValue() - this.player.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue();
-        statistics[6] = this.player.getAttribute(Attribute.ATTACK_DAMAGE).getValue() - this.player.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue();
-        statistics[7] = this.player.getAttribute(Attribute.ATTACK_SPEED).getValue() - this.player.getAttribute(Attribute.ATTACK_SPEED).getBaseValue();
-        statistics[8] = this.player.getAttribute(Attribute.LUCK).getValue() - this.player.getAttribute(Attribute.LUCK).getBaseValue();
-
-        for (int i = 0; i < statistics.length; i++) {
-            statistics[i] = Math.round(statistics[i] * 100.0) / 100.0;
-        }
-
-        return statistics;
-    }
-
-    private Component getStatisticComponent(Component text, double statistic, double statisticDifference) {
-        Component component = text.append(Component.text(statistic, TextColor.color(0xFFFF55), TextDecoration.BOLD));
-        if (!this.baseStatistics && statisticDifference != 0) {
-            TextColor diffColor = statisticDifference > 0 ? TextColor.color(0x55FF55) : TextColor.color(0xFF5555);
+    private Component getStatisticComponent(Statistic statistic) {
+        double value = this.baseStatistics ? statistic.getBaseValue(player) : statistic.getCurrentValue(player);
+        double diff = Math.round((statistic.getCurrentValue(player) - statistic.getBaseValue(player)) * 100.0) / 100.0;
+        Component component = statistic.getTextComponent().append(Component.text(value, TextColor.color(0xFFFF55), TextDecoration.BOLD));
+        if (!this.baseStatistics && diff != 0) {
+            TextColor diffColor = diff > 0 ? TextColor.color(0x55FF55) : TextColor.color(0xFF5555);
             // if the difference is positive, add a plus sign
-            component = component.append(Component.text(" (" + (statisticDifference > 0 ? "+" : "") + statisticDifference + ")", diffColor));
+            component = component.append(Component.text(" (" + (diff > 0 ? "+" : "") + diff + ")", diffColor));
         }
         return component;
     }

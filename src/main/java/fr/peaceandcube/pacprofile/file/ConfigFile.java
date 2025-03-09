@@ -1,5 +1,7 @@
 package fr.peaceandcube.pacprofile.file;
 
+import fr.peaceandcube.pacprofile.statistic.Statistic;
+import fr.peaceandcube.pacprofile.statistic.Statistics;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
@@ -50,6 +52,25 @@ public class ConfigFile extends YamlFile {
                 }
             }
         });
+
+        // config for statistics
+        ConfigurationSection statsSection = this.config.getConfigurationSection("statistics");
+        if (statsSection == null) {
+            statsSection = this.config.createSection("statistics");
+        }
+        this.config.setComments("statistics", List.of("Toggles specific statistics"));
+
+        for (Statistic statistic : Statistics.ALL) {
+            ConfigurationSection statSection = statsSection.getConfigurationSection(statistic.getName());
+            if (statSection == null) {
+                statSection = statsSection.createSection(statistic.getName());
+            }
+
+            if (!statSection.isSet("enabled")) {
+                statSection.set("enabled", true);
+            }
+        }
+
         this.save();
     }
 
@@ -106,5 +127,9 @@ public class ConfigFile extends YamlFile {
             }
         }
         return warps;
+    }
+
+    public boolean isStatisticEnabled(String name) {
+        return this.config.getConfigurationSection("statistics").getConfigurationSection(name).getBoolean("enabled", true);
     }
 }
