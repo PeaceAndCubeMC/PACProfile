@@ -40,6 +40,8 @@ public class NameComponents {
     public static Component CLAIM_PERMISSIONS;
     public static Component CLAIM_NAME;
 
+    public static Component ONLINE_PLAYERS_ORDER;
+
     public static Component WARPS_ORDER;
 
     static {
@@ -80,6 +82,8 @@ public class NameComponents {
         CLAIMS_ORDER = Component.text(Messages.CLAIMS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIM_PERMISSIONS = Component.text(Messages.CLAIM_PERMISSIONS, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         CLAIM_NAME = Component.text(Messages.CLAIM_NAME, TextColor.color(0x00AAAA), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+
+        ONLINE_PLAYERS_ORDER = Component.text(Messages.ONLINE_PLAYERS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
 
         WARPS_ORDER = Component.text(Messages.WARPS_ORDER, TextColor.color(0x00AA00), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     }

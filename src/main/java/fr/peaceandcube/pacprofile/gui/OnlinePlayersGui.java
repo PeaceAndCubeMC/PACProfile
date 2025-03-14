@@ -3,6 +3,8 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.order.Order;
+import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -18,10 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OnlinePlayersGui extends UnmodifiableGui {
@@ -29,20 +28,33 @@ public class OnlinePlayersGui extends UnmodifiableGui {
     private final PlayerData playerData;
     private final int page;
     private final int maxPages;
-    private final List<Player> playerList;
+    private List<Player> playerList;
+    private final OrderSet orderSet;
 
     public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages) {
+        this(viewer, player, page, maxPages, Order.DEFAULT);
+    }
+
+    public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages, Order order) {
         super(6, Component.text(String.format(Messages.ONLINE_PLAYERS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
+        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
+        switch (this.orderSet.currentOrder()) {
+            case DEFAULT ->
+                    this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
+            case NAME_AZ -> this.playerList.sort(Comparator.comparing(Player::getName));
+            case NAME_ZA -> this.playerList.sort(Comparator.comparing(Player::getName).reversed());
+        }
+
         int playerCount = this.playerList.size();
         int maxPlayersOnPage = this.page * 10;
         int playersOnPage = playerCount >= maxPlayersOnPage ? maxPlayersOnPage : (playerCount - (this.page - 1) * 10);
@@ -86,6 +98,13 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT
             ));
         }
+
+        this.setItem(51, Material.HOPPER, 3013, NameComponents.ONLINE_PLAYERS_ORDER, List.of(
+                Component.empty(),
+                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
+                Component.empty(),
+                LoreComponents.ORDER_CLICK
+        ));
 
         this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
         this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
@@ -133,7 +152,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new OnlinePlayersGui(this.viewer, this.player, this.page - 1, this.maxPages).open();
+                new OnlinePlayersGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
@@ -147,8 +166,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             int playerCount = this.playerList.size();
             int maxPlayerOnPage = this.page * 10;
             if (playerCount > maxPlayerOnPage) {
-                new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages).open();
+                new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
+        }
+
+        // order
+        else if (slot == 51) {
+            this.orderSet.next();
+            this.fillInventory();
         }
 
         // players
@@ -170,7 +195,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                             return List.of();
                         }
                         PACProfile.getInstance().playerData.setPlayerNotes(stateSnapshot.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), stateSnapshot.getText());
-                        new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages).open();
+                        new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);
@@ -183,7 +208,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         if (PLAYERS_SLOTS.containsKey(slot - 1)) {
             new ConfirmationGui(this.viewer, this.player, this, () -> {
                 PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString());
-                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages).open();
+                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
             }).open();
         }
     }
