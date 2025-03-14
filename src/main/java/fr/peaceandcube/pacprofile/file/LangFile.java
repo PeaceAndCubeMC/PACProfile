@@ -127,6 +127,8 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("online_players_order", "Order players");
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_1", "Trusted in ");
         DEFAULT_TRANSLATIONS.put("online_player_trust_count_2", " claim(s)");
+        DEFAULT_TRANSLATIONS.put("online_player_mail_sent_1", "Has sent ");
+        DEFAULT_TRANSLATIONS.put("online_player_mail_sent_2", " mail(s)");
         DEFAULT_TRANSLATIONS.put("online_player_click", "⇒ Click to ask for a teleportation");
         DEFAULT_TRANSLATIONS.put("online_player_notes_click_left", "⇒ Left click to edit notes");
         DEFAULT_TRANSLATIONS.put("online_player_notes_click_right", "⇒ Right click to clear notes");

@@ -75,6 +75,8 @@ public class LoreComponents {
     public static Component ONLINE_PLAYERS_CLICK;
     public static Component ONLINE_PLAYER_TRUST_COUNT_1;
     public static Component ONLINE_PLAYER_TRUST_COUNT_2;
+    public static Component ONLINE_PLAYER_MAIL_SENT_1;
+    public static Component ONLINE_PLAYER_MAIL_SENT_2;
     public static Component ONLINE_PLAYER_CLICK;
     public static Component ONLINE_PLAYER_NOTES_CLICK_LEFT;
     public static Component ONLINE_PLAYER_NOTES_CLICK_RIGHT;
@@ -167,6 +169,8 @@ public class LoreComponents {
         ONLINE_PLAYERS_CLICK = Component.text(Messages.ONLINE_PLAYERS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_TRUST_COUNT_1 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_1, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_TRUST_COUNT_2 = Component.text(Messages.ONLINE_PLAYER_TRUST_COUNT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        ONLINE_PLAYER_MAIL_SENT_1 = Component.text(Messages.ONLINE_PLAYER_MAIL_SENT_1, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        ONLINE_PLAYER_MAIL_SENT_2 = Component.text(Messages.ONLINE_PLAYER_MAIL_SENT_2, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_CLICK = Component.text(Messages.ONLINE_PLAYER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_NOTES_CLICK_LEFT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_LEFT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         ONLINE_PLAYER_NOTES_CLICK_RIGHT = Component.text(Messages.ONLINE_PLAYER_NOTES_CLICK_RIGHT, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

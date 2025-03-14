@@ -105,6 +105,8 @@ public class Messages {
     public static String ONLINE_PLAYERS_ORDER;
     public static String ONLINE_PLAYER_TRUST_COUNT_1;
     public static String ONLINE_PLAYER_TRUST_COUNT_2;
+    public static String ONLINE_PLAYER_MAIL_SENT_1;
+    public static String ONLINE_PLAYER_MAIL_SENT_2;
     public static String ONLINE_PLAYER_CLICK;
     public static String ONLINE_PLAYER_NOTES_CLICK_LEFT;
     public static String ONLINE_PLAYER_NOTES_CLICK_RIGHT;
@@ -232,6 +234,8 @@ public class Messages {
         ONLINE_PLAYERS_ORDER = PACProfile.getInstance().lang.translate("online_players_order");
         ONLINE_PLAYER_TRUST_COUNT_1 = PACProfile.getInstance().lang.translate("online_player_trust_count_1");
         ONLINE_PLAYER_TRUST_COUNT_2 = PACProfile.getInstance().lang.translate("online_player_trust_count_2");
+        ONLINE_PLAYER_MAIL_SENT_1 = PACProfile.getInstance().lang.translate("online_player_mail_sent_1");
+        ONLINE_PLAYER_MAIL_SENT_2 = PACProfile.getInstance().lang.translate("online_player_mail_sent_2");
         ONLINE_PLAYER_CLICK = PACProfile.getInstance().lang.translate("online_player_click");
         ONLINE_PLAYER_NOTES_CLICK_LEFT = PACProfile.getInstance().lang.translate("online_player_notes_click_left");
         ONLINE_PLAYER_NOTES_CLICK_RIGHT = PACProfile.getInstance().lang.translate("online_player_notes_click_right");

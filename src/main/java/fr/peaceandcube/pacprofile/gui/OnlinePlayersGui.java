@@ -74,6 +74,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             String playerUuid = player.getUniqueId().toString();
             String birthday = getBirthday(playerUuid);
             int trustCount = getTrustCount(playerUuid);
+            long mailSentCount = getMailSentCount(playerUuid);
 
             PLAYERS_SLOTS.put(slot, player);
 
@@ -84,6 +85,10 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                 lore.add(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_1
                         .append(Component.text(trustCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
                         .append(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_2)
+                );
+                lore.add(LoreComponents.ONLINE_PLAYER_MAIL_SENT_1
+                        .append(Component.text(mailSentCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
+                        .append(LoreComponents.ONLINE_PLAYER_MAIL_SENT_2)
                 );
                 lore.add(Component.empty());
                 lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
@@ -135,6 +140,12 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             }
         }
         return trustCount;
+    }
+
+    private long getMailSentCount(String playerUuid) {
+        return this.user.getMailMessages().stream()
+                .filter(mailMessage -> Objects.equals(mailMessage.getSenderUUID().toString(), playerUuid))
+                .count();
     }
 
     private Component getNotesLore(String playerUuid) {
