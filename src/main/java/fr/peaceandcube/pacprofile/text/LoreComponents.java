@@ -91,14 +91,6 @@ public class LoreComponents {
     public static Component DYNMAP_CLICK;
 
     public static Component ORDER_BY;
-    public static Component ORDER_DEFAULT;
-    public static Component ORDER_NAME_AZ;
-    public static Component ORDER_NAME_ZA;
-    public static Component ORDER_AREA_ASC;
-    public static Component ORDER_AREA_DESC;
-    public static Component ORDER_CATEGORY_AZ;
-    public static Component ORDER_CATEGORY_ZA;
-    public static Component ORDER_COLOR;
     public static Component ORDER_CLICK;
 
     static {
@@ -191,14 +183,6 @@ public class LoreComponents {
         DYNMAP_CLICK = Component.text(Messages.DYNMAP_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         ORDER_BY = Component.text(Messages.ORDER_BY, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
-        ORDER_DEFAULT = Component.text(Messages.ORDER_DEFAULT, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_NAME_AZ = Component.text(Messages.ORDER_NAME_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_NAME_ZA = Component.text(Messages.ORDER_NAME_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_AREA_ASC = Component.text(Messages.ORDER_AREA_ASC, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_AREA_DESC = Component.text(Messages.ORDER_AREA_DESC, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_CATEGORY_AZ = Component.text(Messages.ORDER_CATEGORY_AZ, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_CATEGORY_ZA = Component.text(Messages.ORDER_CATEGORY_ZA, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-        ORDER_COLOR = Component.text(Messages.ORDER_COLOR, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
         ORDER_CLICK = Component.text(Messages.ORDER_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
     }
 }

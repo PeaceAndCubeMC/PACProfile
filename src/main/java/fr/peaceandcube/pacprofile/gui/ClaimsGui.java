@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.order.Order;
+import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -25,7 +27,7 @@ public class ClaimsGui extends UnmodifiableGui {
     private final int page;
     private final int maxPages;
     private Vector<Claim> claims;
-    private Order order;
+    private final OrderSet orderSet;
 
     public ClaimsGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
@@ -37,23 +39,23 @@ public class ClaimsGui extends UnmodifiableGui {
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.claims = this.playerData.getClaims();
-        this.order = order;
+        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.AREA_ASC, Order.AREA_DESC);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        if (this.order == Order.DEFAULT) {
-            this.claims = this.playerData.getClaims();
-        } else if (this.order == Order.NAME_AZ) {
-            this.claims.sort((claim1, claim2) -> this.getName(claim1.getID().toString()).compareToIgnoreCase(this.getName(claim2.getID().toString())));
-        } else if (this.order == Order.NAME_ZA) {
-            this.claims.sort((claim1, claim2) -> this.getName(claim2.getID().toString()).compareToIgnoreCase(this.getName(claim1.getID().toString())));
-        } else if (this.order == Order.AREA_ASC) {
-            this.claims.sort(Comparator.comparingInt(Claim::getArea));
-        } else if (this.order == Order.AREA_DESC) {
-            this.claims.sort(Comparator.comparingInt(Claim::getArea).reversed());
+        switch (this.orderSet.currentOrder()) {
+            case DEFAULT -> this.claims = this.playerData.getClaims();
+            case NAME_AZ -> this.claims.sort((claim1, claim2) ->
+                    this.getName(claim1.getID().toString()).compareToIgnoreCase(this.getName(claim2.getID().toString()))
+            );
+            case NAME_ZA -> this.claims.sort((claim1, claim2) ->
+                    this.getName(claim2.getID().toString()).compareToIgnoreCase(this.getName(claim1.getID().toString()))
+            );
+            case AREA_ASC -> this.claims.sort(Comparator.comparingInt(Claim::getArea));
+            case AREA_DESC -> this.claims.sort(Comparator.comparingInt(Claim::getArea).reversed());
         }
 
         int claimCount = this.claims.size();
@@ -117,7 +119,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
         this.setItem(51, Material.HOPPER, 3024, NameComponents.CLAIMS_ORDER, List.of(
                 Component.empty(),
-                LoreComponents.ORDER_BY.append(this.order.getText()),
+                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
                 Component.empty(),
                 LoreComponents.ORDER_CLICK
         ));
@@ -167,7 +169,7 @@ public class ClaimsGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
+                new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
@@ -181,13 +183,13 @@ public class ClaimsGui extends UnmodifiableGui {
             int claimCount = this.playerData.getClaims().size();
             int maxClaimOnPage = this.page * 10;
             if (claimCount > maxClaimOnPage) {
-                new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
+                new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
         // order
         else if (slot == 51) {
-            this.order = this.order.next();
+            this.orderSet.next();
             this.fillInventory();
         }
 
@@ -202,38 +204,10 @@ public class ClaimsGui extends UnmodifiableGui {
                             return List.of();
                         }
                         PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), stateSnapshot.getText());
-                        new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+                        new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);
-        }
-    }
-
-    enum Order {
-        DEFAULT(LoreComponents.ORDER_DEFAULT),
-        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
-        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
-        AREA_ASC(LoreComponents.ORDER_AREA_ASC),
-        AREA_DESC(LoreComponents.ORDER_AREA_DESC);
-
-        private final Component text;
-
-        Order(Component text) {
-            this.text = text;
-        }
-
-        public Component getText() {
-            return this.text;
-        }
-
-        public Order next() {
-            return switch (this) {
-                case DEFAULT -> NAME_AZ;
-                case NAME_AZ -> NAME_ZA;
-                case NAME_ZA -> AREA_ASC;
-                case AREA_ASC -> AREA_DESC;
-                case AREA_DESC -> DEFAULT;
-            };
         }
     }
 }

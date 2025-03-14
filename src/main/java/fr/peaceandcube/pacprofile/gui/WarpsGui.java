@@ -2,6 +2,8 @@ package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.file.WarpEntry;
+import fr.peaceandcube.pacprofile.order.Order;
+import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -21,7 +23,7 @@ public class WarpsGui extends UnmodifiableGui {
     private final int page;
     private final int maxPages;
     private List<WarpEntry> warps;
-    private Order order;
+    private final OrderSet orderSet;
 
     public WarpsGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
@@ -32,23 +34,19 @@ public class WarpsGui extends UnmodifiableGui {
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.warps = PACProfile.getInstance().config.getWarps();
-        this.order = order;
+        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.CATEGORY_AZ, Order.CATEGORY_ZA);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        if (this.order == Order.DEFAULT) {
-            this.warps = PACProfile.getInstance().config.getWarps();
-        } else if (this.order == Order.NAME_AZ) {
-            this.warps.sort((warp1, warp2) -> warp1.name().compareToIgnoreCase(warp2.name()));
-        } else if (this.order == Order.NAME_ZA) {
-            this.warps.sort((warp1, warp2) -> warp2.name().compareToIgnoreCase(warp1.name()));
-        } else if (this.order == Order.CATEGORY_AZ) {
-            this.warps.sort((warp1, warp2) -> warp1.category().compareToIgnoreCase(warp2.category()));
-        } else if (this.order == Order.CATEGORY_ZA) {
-            this.warps.sort((warp1, warp2) -> warp2.category().compareToIgnoreCase(warp1.category()));
+        switch (this.orderSet.currentOrder()) {
+            case DEFAULT -> this.warps = PACProfile.getInstance().config.getWarps();
+            case NAME_AZ -> this.warps.sort((warp1, warp2) -> warp1.name().compareToIgnoreCase(warp2.name()));
+            case NAME_ZA -> this.warps.sort((warp1, warp2) -> warp2.name().compareToIgnoreCase(warp1.name()));
+            case CATEGORY_AZ -> this.warps.sort((warp1, warp2) -> warp1.category().compareToIgnoreCase(warp2.category()));
+            case CATEGORY_ZA -> this.warps.sort((warp1, warp2) -> warp2.category().compareToIgnoreCase(warp1.category()));
         }
 
         int warpCount = this.warps.size();
@@ -76,7 +74,7 @@ public class WarpsGui extends UnmodifiableGui {
 
         this.setItem(51, Material.HOPPER, 3041, NameComponents.WARPS_ORDER, List.of(
                 Component.empty(),
-                LoreComponents.ORDER_BY.append(this.order.getText()),
+                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
                 Component.empty(),
                 LoreComponents.ORDER_CLICK
         ));
@@ -96,7 +94,7 @@ public class WarpsGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
+                new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
@@ -110,13 +108,13 @@ public class WarpsGui extends UnmodifiableGui {
             int warpCount = this.warps.size();
             int maxWarpsOnPage = this.page * 35;
             if (warpCount > maxWarpsOnPage) {
-                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
+                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
         // order
         else if (slot == 51) {
-            this.order = this.order.next();
+            this.orderSet.next();
             this.fillInventory();
         }
 
@@ -124,34 +122,6 @@ public class WarpsGui extends UnmodifiableGui {
         else if (WARPS_SLOTS.containsKey(slot)) {
             this.dispatchCommand("warp " + WARPS_SLOTS.get(slot).name());
             this.inv.close();
-        }
-    }
-
-    enum Order {
-        DEFAULT(LoreComponents.ORDER_DEFAULT),
-        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
-        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
-        CATEGORY_AZ(LoreComponents.ORDER_CATEGORY_AZ),
-        CATEGORY_ZA(LoreComponents.ORDER_CATEGORY_ZA);
-
-        private final Component text;
-
-        Order(Component text) {
-            this.text = text;
-        }
-
-        public Component getText() {
-            return this.text;
-        }
-
-        public Order next() {
-            return switch (this) {
-                case DEFAULT -> NAME_AZ;
-                case NAME_AZ -> NAME_ZA;
-                case NAME_ZA -> CATEGORY_AZ;
-                case CATEGORY_AZ -> CATEGORY_ZA;
-                case CATEGORY_ZA -> DEFAULT;
-            };
         }
     }
 }

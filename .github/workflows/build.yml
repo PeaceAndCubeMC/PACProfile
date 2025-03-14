@@ -3,7 +3,7 @@
 # certain platforms or Java versions, and provides a first line of defence
 # against bad commits.
 
-name: Java CI
+name: Build Java
 on: [pull_request, push]
 
 jobs:
@@ -27,3 +27,5 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+      - name: Run tests
+        run: ./gradlew clean test

@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.order.Order;
+import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Color;
@@ -25,7 +27,7 @@ public class HomesGui extends UnmodifiableGui {
     private final int page;
     private final int maxPages;
     private List<String> homes;
-    private Order order;
+    private final OrderSet orderSet;
 
     public HomesGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
@@ -36,21 +38,20 @@ public class HomesGui extends UnmodifiableGui {
         this.page = Math.max(1, page);
         this.maxPages = maxPages;
         this.homes = this.user.getHomes();
-        this.order = order;
+        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.COLOR);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
 
     @Override
     protected void fillInventory() {
-        if (this.order == Order.DEFAULT) {
-            this.homes = this.user.getHomes();
-        } else if (this.order == Order.NAME_AZ) {
-            this.homes.sort(String::compareToIgnoreCase);
-        } else if (this.order == Order.NAME_ZA) {
-            this.homes.sort((home1, home2) -> home2.compareToIgnoreCase(home1));
-        } else if (this.order == Order.COLOR) {
-            this.homes.sort(Comparator.comparingInt(home -> Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), home)).ordinal()));
+        switch (this.orderSet.currentOrder()) {
+            case DEFAULT -> this.homes = this.user.getHomes();
+            case NAME_AZ -> this.homes.sort(String::compareToIgnoreCase);
+            case NAME_ZA -> this.homes.sort((home1, home2) -> home2.compareToIgnoreCase(home1));
+            case COLOR -> this.homes.sort(Comparator.comparingInt(home ->
+                    Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), home)).ordinal()
+            ));
         }
 
         int homeCount = this.homes.size();
@@ -105,7 +106,7 @@ public class HomesGui extends UnmodifiableGui {
 
         this.setItem(51, Material.HOPPER, 3013, NameComponents.HOMES_ORDER, List.of(
                 Component.empty(),
-                LoreComponents.ORDER_BY.append(this.order.getText()),
+                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
                 Component.empty(),
                 LoreComponents.ORDER_CLICK
         ));
@@ -133,7 +134,7 @@ public class HomesGui extends UnmodifiableGui {
             if (this.page == 1) {
                 new ProfileGui(this.viewer, this.player).open();
             } else {
-                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages, this.order).open();
+                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
@@ -147,13 +148,13 @@ public class HomesGui extends UnmodifiableGui {
             int homeCount = this.user.getHomes().size();
             int maxHomeOnPage = this.page * 10;
             if (homeCount > maxHomeOnPage) {
-                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages, this.order).open();
+                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
             }
         }
 
         // order
         else if (slot == 51) {
-            this.order = this.order.next();
+            this.orderSet.next();
             this.fillInventory();
         }
 
@@ -177,7 +178,7 @@ public class HomesGui extends UnmodifiableGui {
                             return List.of();
                         }
                         PACProfile.getInstance().playerData.setHomeNotes(stateSnapshot.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), stateSnapshot.getText());
-                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                         return List.of(AnvilGUI.ResponseAction.close());
                     })
                     .open(this.viewer);
@@ -201,7 +202,7 @@ public class HomesGui extends UnmodifiableGui {
             }
             new ConfirmationGui(this.viewer, this.player, this, () -> {
                 dispatchCommand(command);
-                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
             }).open();
         }
 
@@ -209,34 +210,8 @@ public class HomesGui extends UnmodifiableGui {
         else if (HOME_SLOTS.containsKey(slot - 1)) {
             new ConfirmationGui(this.viewer, this.player, this, () -> {
                 PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1));
-                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.order).open();
+                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
             }).open();
-        }
-    }
-
-    enum Order {
-        DEFAULT(LoreComponents.ORDER_DEFAULT),
-        NAME_AZ(LoreComponents.ORDER_NAME_AZ),
-        NAME_ZA(LoreComponents.ORDER_NAME_ZA),
-        COLOR(LoreComponents.ORDER_COLOR);
-
-        private final Component text;
-
-        Order(Component text) {
-            this.text = text;
-        }
-
-        public Component getText() {
-            return this.text;
-        }
-
-        public Order next() {
-            return switch (this) {
-                case DEFAULT -> NAME_AZ;
-                case NAME_AZ -> NAME_ZA;
-                case NAME_ZA -> COLOR;
-                case COLOR -> DEFAULT;
-            };
         }
     }
 }
