@@ -195,14 +195,14 @@ public class ProfileGui extends UnmodifiableGui {
     }
 
     private void fillStainedGlassPanes() {
-        this.setItem(0, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(1, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(2, Material.RED_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(3, Material.ORANGE_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(5, Material.ORANGE_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(6, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(7, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
-        this.setItem(8, Material.LIME_STAINED_GLASS_PANE, 3001, Component.empty());
+        this.setItemWithoutTooltip(0, Material.RED_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(1, Material.RED_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(2, Material.RED_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(3, Material.ORANGE_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(5, Material.ORANGE_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(6, Material.LIME_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(7, Material.LIME_STAINED_GLASS_PANE, 3001);
+        this.setItemWithoutTooltip(8, Material.LIME_STAINED_GLASS_PANE, 3001);
     }
 
     private String getRank() {

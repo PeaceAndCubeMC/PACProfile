@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,17 +46,29 @@ public abstract class UnmodifiableGui implements Listener {
     }
 
     protected void setItem(int slot, Material material, int customModelData, boolean glint, Component name, List<Component> lore) {
+        this.setItem(slot, material, customModelData, glint, false, name, lore);
+    }
+
+    protected void setItem(int slot, Material material, int customModelData, boolean glint, boolean hideTooltip, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         meta.displayName(name);
         meta.lore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         meta.setCustomModelData(customModelData);
-        stack.setItemMeta(meta);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         if (glint) {
-            stack.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
+            meta.setEnchantmentGlintOverride(true);
         }
+        if (hideTooltip) {
+            meta.setHideTooltip(true);
+        }
+        stack.setItemMeta(meta);
+
         this.inv.setItem(slot, stack);
+    }
+
+    protected void setItemWithoutTooltip(int slot, Material material, int customModelData) {
+        this.setItem(slot, material, customModelData, false, true, Component.empty(), List.of());
     }
 
     protected void setPlayerHead(int slot, Player player, int customModelData, Component name, List<Component> lore) {
