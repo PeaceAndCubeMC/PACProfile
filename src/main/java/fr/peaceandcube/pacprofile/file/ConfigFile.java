@@ -53,6 +53,19 @@ public class ConfigFile extends YamlFile {
             }
         });
 
+        // config for homes
+        ConfigurationSection homesSection = this.config.getConfigurationSection("homes");
+        if (homesSection == null) {
+            homesSection = this.config.createSection("homes");
+        }
+
+        if (!homesSection.isBoolean("enable_teleportation")) {
+            homesSection.set("enable_teleportation", true);
+        }
+        if (!homesSection.isBoolean("enable_deletion")) {
+            homesSection.set("enable_deletion", true);
+        }
+
         // config for statistics
         ConfigurationSection statsSection = this.config.getConfigurationSection("statistics");
         if (statsSection == null) {
@@ -127,6 +140,14 @@ public class ConfigFile extends YamlFile {
             }
         }
         return warps;
+    }
+
+    public boolean isHomeTeleportationEnabled() {
+        return this.config.getConfigurationSection("homes").getBoolean("enable_teleportation", true);
+    }
+
+    public boolean isHomeDeletionEnabled() {
+        return this.config.getConfigurationSection("homes").getBoolean("enable_deletion", true);
     }
 
     public boolean isStatisticEnabled(String name) {

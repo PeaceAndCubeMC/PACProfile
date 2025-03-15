@@ -17,10 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HomesGui extends UnmodifiableGui {
     private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
@@ -79,16 +76,23 @@ public class HomesGui extends UnmodifiableGui {
 
             HOME_SLOTS.put(slot, name);
 
-            this.setItem(slot, color.getBed(), 3010, Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), List.of(
-                    Component.empty(),
-                    LoreComponents.HOME_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.HOME_X.append(Component.text(x, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.HOME_Y.append(Component.text(y, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.HOME_Z.append(Component.text(z, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    Component.empty(),
-                    LoreComponents.HOME_CLICK_LEFT,
-                    LoreComponents.HOME_CLICK_RIGHT
-            ));
+            List<Component> bedLore = new ArrayList<>();
+            bedLore.add(Component.empty());
+            bedLore.add(LoreComponents.HOME_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_X.append(Component.text(x, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_Y.append(Component.text(y, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_Z.append(Component.text(z, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            bedLore.add(Component.empty());
+            if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
+                bedLore.add(LoreComponents.HOME_CLICK_LEFT);
+            }
+            if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
+                bedLore.add(LoreComponents.HOME_CLICK_RIGHT);
+            }
+            this.setItem(slot, color.getBed(), 3010,
+                    Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false),
+                    bedLore
+            );
 
             this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, List.of(
                     Component.empty(),
@@ -160,10 +164,12 @@ public class HomesGui extends UnmodifiableGui {
 
         // home beds
         else if (HOME_SLOTS.containsKey(slot)) {
-            if (this.player.equals(this.viewer)) {
-                this.dispatchCommand("home " + HOME_SLOTS.get(slot));
-            } else {
-                this.dispatchCommand("home " + this.player.getName() + ":" + HOME_SLOTS.get(slot));
+            if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
+                if (this.player.equals(this.viewer)) {
+                    this.dispatchCommand("home " + HOME_SLOTS.get(slot));
+                } else {
+                    this.dispatchCommand("home " + this.player.getName() + ":" + HOME_SLOTS.get(slot));
+                }
             }
         }
 
@@ -194,16 +200,18 @@ public class HomesGui extends UnmodifiableGui {
     protected void onSlotRightClick(int slot) {
         // home beds
         if (HOME_SLOTS.containsKey(slot)) {
-            String command;
-            if (this.player.equals(this.viewer)) {
-                command = "delhome " + HOME_SLOTS.get(slot);
-            } else {
-                command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
+            if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
+                String command;
+                if (this.player.equals(this.viewer)) {
+                    command = "delhome " + HOME_SLOTS.get(slot);
+                } else {
+                    command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
+                }
+                new ConfirmationGui(this.viewer, this.player, this, () -> {
+                    dispatchCommand(command);
+                    new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                }).open();
             }
-            new ConfirmationGui(this.viewer, this.player, this, () -> {
-                dispatchCommand(command);
-                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-            }).open();
         }
 
         // home notes
