@@ -29,24 +29,27 @@ public class SettingsGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        if (hasPermission("essentials.msgtoggle")) {
+            boolean msgtoggleEnabled = !PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
+            Component msgtoggle = msgtoggleEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
+            this.setItem(2, Material.PAPER, 3050, msgtoggleEnabled, NameComponents.SETTINGS_MSGTOGGLE, List.of(
+                    Component.empty(),
+                    msgtoggle,
+                    Component.empty(),
+                    LoreComponents.SETTINGS_MSGTOGGLE_CLICK
+            ));
+        }
 
-        boolean msgtoggleEnabled = !PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
-        Component msgtoggle = msgtoggleEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
-        this.setItem(2, Material.PAPER, 3050, msgtoggleEnabled, NameComponents.SETTINGS_MSGTOGGLE, List.of(
-                Component.empty(),
-                msgtoggle,
-                Component.empty(),
-                LoreComponents.SETTINGS_MSGTOGGLE_CLICK
-        ));
-
-        boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
-        Component togglemsgsound = togglemsgsoundEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
-        this.setItem(3, Material.JUKEBOX, 3050, togglemsgsoundEnabled, NameComponents.SETTINGS_TOGGLEMSGSOUND, List.of(
-                Component.empty(),
-                togglemsgsound,
-                Component.empty(),
-                LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK
-        ));
+        if (hasPermission("pacutilities.togglemsgsound")) {
+            boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
+            Component togglemsgsound = togglemsgsoundEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
+            this.setItem(3, Material.JUKEBOX, 3050, togglemsgsoundEnabled, NameComponents.SETTINGS_TOGGLEMSGSOUND, List.of(
+                    Component.empty(),
+                    togglemsgsound,
+                    Component.empty(),
+                    LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK
+            ));
+        }
 
         if (hasPermission("essentials.ptime")) {
             // ptime
@@ -102,15 +105,19 @@ public class SettingsGui extends UnmodifiableGui {
             case 0 -> new ProfileGui(this.viewer, this.player).open();
             // msgtoggle
             case 2 -> {
-                boolean msgtoggleEnabled = PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
-                PACProfile.getEssentials().getUser(this.player).setIgnoreMsg(!msgtoggleEnabled);
-                this.fillInventory();
+                if (hasPermission("essentials.msgtoggle")) {
+                    boolean msgtoggleEnabled = PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
+                    PACProfile.getEssentials().getUser(this.player).setIgnoreMsg(!msgtoggleEnabled);
+                    this.fillInventory();
+                }
             }
             // togglemsgsound
             case 3 -> {
-                boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
-                PACUtilities.playersFile.setMsgSound(this.player.getUniqueId().toString(), !togglemsgsoundEnabled);
-                this.fillInventory();
+                if (hasPermission("pacutilities.togglemsgsound")) {
+                    boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
+                    PACUtilities.playersFile.setMsgSound(this.player.getUniqueId().toString(), !togglemsgsoundEnabled);
+                    this.fillInventory();
+                }
             }
             // ptime
             case 5 -> {
