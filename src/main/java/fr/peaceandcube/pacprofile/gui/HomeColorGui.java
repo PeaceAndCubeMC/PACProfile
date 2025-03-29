@@ -5,8 +5,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.util.Color;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -30,10 +28,9 @@ public class HomeColorGui extends UnmodifiableGui {
 
         for (int i = 0; i < Color.values().length; i++) {
             Color color = Color.values()[i];
-            Component name = Component.text(color.translate(), TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
             this.setItem(GuiItem.builder().slot(i).material(color.getDye())
                     .customModelData(3012)
-                    .name(name)
+                    .name(color.translate(), 0xFF55FF)
                     .onLeftClick(() -> {
                         PACProfile.getInstance().playerData.setHomeColor(this.player.getUniqueId(), this.name, color.getName());
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();

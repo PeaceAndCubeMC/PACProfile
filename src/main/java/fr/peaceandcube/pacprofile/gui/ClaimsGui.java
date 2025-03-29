@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.PlayerData;
@@ -95,7 +94,7 @@ public class ClaimsGui extends UnmodifiableGui {
             );
             this.setItem(GuiItem.builder().slot(slot).material(Material.GOLDEN_SHOVEL)
                     .customModelData(world.equals("world_nether") ? 3021 : 3020)
-                    .name(getNameLore(claimId))
+                    .name(getName(claimId), 0xFFFF55)
                     .lore(claimLore)
                     .build());
 
@@ -113,13 +112,13 @@ public class ClaimsGui extends UnmodifiableGui {
             permissionsLore.add(Component.empty());
             this.setItem(GuiItem.builder().slot(slot + 1).material(Material.KNOWLEDGE_BOOK)
                     .customModelData(3022)
-                    .name(NameComponents.CLAIM_PERMISSIONS)
+                    .name(Messages.CLAIM_PERMISSIONS, 0x00AA00)
                     .lore(permissionsLore)
                     .build());
 
             this.setItem(GuiItem.builder().slot(slot + 2).material(Material.PAPER)
                     .customModelData(3023)
-                    .name(NameComponents.CLAIM_NAME)
+                    .name(Messages.CLAIM_NAME, 0x00AAAA)
                     .lore(Component.empty(), LoreComponents.CLAIM_NAME_CLICK)
                     .onLeftClick(() -> TextInputDialog.builder()
                             .player(this.viewer)
@@ -139,7 +138,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3024)
-                .name(NameComponents.CLAIMS_ORDER)
+                .name(Messages.CLAIMS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(() -> {
@@ -150,7 +149,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(NameComponents.PAGE_PREVIOUS)
+                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(() -> {
                     if (this.page == 1) {
                         new ProfileGui(this.viewer, this.player).open();
@@ -163,7 +162,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
 
@@ -171,7 +170,7 @@ public class ClaimsGui extends UnmodifiableGui {
         if (claimCount > maxClaimOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(NameComponents.PAGE_NEXT)
+                    .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
@@ -181,10 +180,6 @@ public class ClaimsGui extends UnmodifiableGui {
     private String getName(String claimId) {
         String name = PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId);
         return name.isEmpty() ? Messages.CLAIMS_DEFAULT_NAME.formatted(claimId) : name;
-    }
-
-    private Component getNameLore(String claimId) {
-        return Component.text(this.getName(claimId), TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
     }
 
     private void getPermissionLore(List<Component> components, Component baseComponent, List<String> list) {

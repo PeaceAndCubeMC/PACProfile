@@ -6,7 +6,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -59,7 +58,6 @@ public class WarpsGui extends UnmodifiableGui {
 
             WarpEntry warp = this.warps.get(index);
 
-            Component title = Component.text(warp.title(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
             String command = String.format("/warp %s", warp.name());
             List<Component> warpLore = List.of(
                     Component.empty(),
@@ -70,7 +68,7 @@ public class WarpsGui extends UnmodifiableGui {
             );
             this.setItem(GuiItem.builder().slot(slot).material(warp.icon())
                     .customModelData(3040)
-                    .name(title)
+                    .name(warp.title(), 0x5555FF)
                     .lore(warpLore)
                     .onLeftClick(() -> {
                         this.dispatchCommand("warp " + warp.name());
@@ -81,7 +79,7 @@ public class WarpsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3041)
-                .name(NameComponents.WARPS_ORDER)
+                .name(Messages.WARPS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(() -> {
@@ -92,7 +90,7 @@ public class WarpsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(NameComponents.PAGE_PREVIOUS)
+                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(() -> {
                     if (this.page == 1) {
                         new ProfileGui(this.viewer, this.player).open();
@@ -105,7 +103,7 @@ public class WarpsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
 
@@ -113,7 +111,7 @@ public class WarpsGui extends UnmodifiableGui {
         if (warpCount > maxWarpsOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(NameComponents.PAGE_NEXT)
+                    .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(() -> new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
