@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
@@ -24,18 +25,17 @@ public class ConfirmationGui extends UnmodifiableGui {
     protected void fillInventory() {
         this.items.clear();
 
-        this.setItem(3, Material.GREEN_TERRACOTTA, 3006, NameComponents.CONFIRMATION_YES);
-        this.setItem(5, Material.RED_TERRACOTTA, 3006, NameComponents.CONFIRMATION_NO);
-    }
+        this.setItem(GuiItem.builder().slot(3).material(Material.GREEN_TERRACOTTA)
+                .customModelData(3006)
+                .name(NameComponents.CONFIRMATION_YES)
+                .onLeftClick(this.action::onConfirm)
+                .build());
 
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        switch (slot) {
-            // yes
-            case 3 -> this.action.onConfirm();
-            // no
-            case 5 -> this.previousGui.open();
-        }
+        this.setItem(GuiItem.builder().slot(5).material(Material.RED_TERRACOTTA)
+                .customModelData(3006)
+                .name(NameComponents.CONFIRMATION_NO)
+                .onLeftClick(this.previousGui::open)
+                .build());
     }
 
     public interface Action {
