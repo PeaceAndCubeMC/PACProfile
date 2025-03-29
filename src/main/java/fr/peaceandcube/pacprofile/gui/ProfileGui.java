@@ -53,25 +53,27 @@ public class ProfileGui extends UnmodifiableGui {
         String nickname = this.user.getNickname();
         String birthday = this.getBirthday();
         String joinDate = this.getFirstPlayed();
-        List<Component> components = new ArrayList<>();
-        components.add(Component.empty());
-        components.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        List<Component> playerLore = new ArrayList<>();
+        playerLore.add(Component.empty());
+        playerLore.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         if (rankExpiration != null) {
-            components.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            playerLore.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         }
-        components.add(Component.empty());
+        playerLore.add(Component.empty());
         if (nickname != null) {
-            components.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            playerLore.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         }
-        components.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-        components.add(Component.empty());
-        components.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-        this.setPlayerHead(4, this.player, 3004, Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), components);
+        playerLore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        playerLore.add(Component.empty());
+        playerLore.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        this.setItem(GuiItem.builder().slot(4).material(Material.PLAYER_HEAD).player(this.player)
+                .customModelData(3004)
+                .name(Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                .lore(playerLore)
+                .build());
 
-        Component statisticsComponent = this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT;
-        Component clickComponent = this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE;
         List<Component> statsLore = new ArrayList<>();
-        statsLore.add(statisticsComponent);
+        statsLore.add(this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT);
         statsLore.add(Component.empty());
         for (Statistic statistic : Statistics.ALL) {
             if (PACProfile.getInstance().config.isStatisticEnabled(statistic.getName())) {
@@ -79,13 +81,23 @@ public class ProfileGui extends UnmodifiableGui {
             }
         }
         statsLore.add(Component.empty());
-        statsLore.add(clickComponent);
-        this.setItem(9, Material.ENCHANTED_BOOK, 3004, NameComponents.STATISTICS, statsLore);
+        statsLore.add(this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE);
+        this.setItem(GuiItem.builder().slot(9).material(Material.ENCHANTED_BOOK)
+                .customModelData(3004)
+                .name(NameComponents.STATISTICS)
+                .lore(statsLore)
+                .onLeftClick(() -> {
+                    this.baseStatistics = !this.baseStatistics;
+                    this.fillInventory();
+                })
+                .build());
 
-        this.setItem(17, Material.COMPARATOR, 3004, NameComponents.SETTINGS, List.of(
-                Component.empty(),
-                LoreComponents.SETTINGS_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(17).material(Material.COMPARATOR)
+                .customModelData(3004)
+                .name(NameComponents.SETTINGS)
+                .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
+                .onLeftClick(() -> new SettingsGui(this.viewer, this.player).open())
+                .build());
 
         double coinCount = this.user.getMoney().doubleValue();
         List<Component> coinLore = new ArrayList<>();
@@ -95,7 +107,17 @@ public class ProfileGui extends UnmodifiableGui {
             coinLore.add(Component.empty());
             coinLore.add(LoreComponents.COINS_CLICK);
         }
-        this.setItem(20, Material.SUNFLOWER, 3004, NameComponents.COINS, coinLore);
+        this.setItem(GuiItem.builder().slot(20).material(Material.SUNFLOWER)
+                .customModelData(3004)
+                .name(NameComponents.COINS)
+                .lore(coinLore)
+                .onLeftClick(() -> {
+                    if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
+                        this.inv.close();
+                    }
+                })
+                .build());
 
         Objective objective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
         int headTicketCount = objective != null ? objective.getScore(this.player.getName()).getScore() : 0;
@@ -106,7 +128,17 @@ public class ProfileGui extends UnmodifiableGui {
             headTicketLore.add(Component.empty());
             headTicketLore.add(LoreComponents.HEAD_TICKETS_CLICK);
         }
-        this.setItem(22, Material.NAME_TAG, 3004, NameComponents.HEAD_TICKETS, headTicketLore);
+        this.setItem(GuiItem.builder().slot(22).material(Material.NAME_TAG)
+                .customModelData(3004)
+                .name(NameComponents.HEAD_TICKETS)
+                .lore(headTicketLore)
+                .onLeftClick(() -> {
+                    if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
+                        this.inv.close();
+                    }
+                })
+                .build());
 
         int mailCount = this.user.getMailAmount();
         int unreadMailCount = this.user.getUnreadMailAmount();
@@ -118,20 +150,36 @@ public class ProfileGui extends UnmodifiableGui {
             mailLore.add(Component.empty());
             mailLore.add(LoreComponents.MAILS_CLICK);
         }
-        this.setItem(24, Material.WRITABLE_BOOK, 3004, NameComponents.MAILS, mailLore);
+        this.setItem(GuiItem.builder().slot(24).material(Material.WRITABLE_BOOK)
+                .customModelData(3004)
+                .name(NameComponents.MAILS)
+                .lore(mailLore)
+                .onLeftClick(() -> {
+                    if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
+                        this.inv.close();
+                    }
+                })
+                .build());
 
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
         this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
-        this.setItem(28, Material.RED_BED, 3004, NameComponents.HOMES, List.of(
+        List<Component> homesLore = List.of(
                 Component.empty(),
                 LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.HOMES_MAX_AVAILABLE.append(Component.text(totalHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.HOMES_CLICK
-        ));
+        );
+        this.setItem(GuiItem.builder().slot(28).material(Material.RED_BED)
+                .customModelData(3004)
+                .name(NameComponents.HOMES)
+                .lore(homesLore)
+                .onLeftClick(() -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open())
+                .build());
 
         int totalClaimCount = this.playerData.getClaims().size();
         int remainingClaimBlocks = this.playerData.getRemainingClaimBlocks();
@@ -141,7 +189,7 @@ public class ProfileGui extends UnmodifiableGui {
         int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
         int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
         this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
-        this.setItem(30, Material.GOLDEN_SHOVEL, 3004, NameComponents.CLAIMS, List.of(
+        List<Component> claimsLore = List.of(
                 Component.empty(),
                 LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -154,45 +202,78 @@ public class ProfileGui extends UnmodifiableGui {
                 LoreComponents.CLAIMS_CB_PER_HOUR.append(Component.text(blocksAccruedPerHour, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.CLAIMS_CLICK
-        ));
+        );
+        this.setItem(GuiItem.builder().slot(30).material(Material.GOLDEN_SHOVEL)
+                .customModelData(3004)
+                .name(NameComponents.CLAIMS)
+                .lore(claimsLore)
+                .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open())
+                .build());
 
         int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).toList().size();
         this.maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
-        this.setItem(32, Material.PLAYER_HEAD, 3005, NameComponents.ONLINE_PLAYERS, List.of(
+        List<Component> onlinePlayersLore = List.of(
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_CLICK
-        ));
+        );
+        this.setItem(GuiItem.builder().slot(32).material(Material.PLAYER_HEAD)
+                .customModelData(3005)
+                .name(NameComponents.ONLINE_PLAYERS)
+                .lore(onlinePlayersLore)
+                .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open())
+                .build());
 
         this.maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
-        this.setItem(34, Material.ENDER_PEARL, 3004, NameComponents.WARPS, List.of(
-                Component.empty(),
-                LoreComponents.WARPS_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(34).material(Material.ENDER_PEARL)
+                .customModelData(3004)
+                .name(NameComponents.WARPS)
+                .lore(Component.empty(), LoreComponents.WARPS_CLICK)
+                .onLeftClick(() -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open())
+                .build());
 
         if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
-            this.setItem(45, Material.KNOWLEDGE_BOOK, 3004, NameComponents.RULES, List.of(
-                    Component.empty(),
-                    LoreComponents.RULES_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(45).material(Material.KNOWLEDGE_BOOK)
+                    .customModelData(3004)
+                    .name(NameComponents.RULES)
+                    .lore(Component.empty(), LoreComponents.RULES_CLICK)
+                    .onLeftClick(() -> {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
+                        this.inv.close();
+                    })
+                    .build());
         }
 
         if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
-            this.setItem(46, Material.CHAIN, 3004, NameComponents.LINKS, List.of(
-                    Component.empty(),
-                    LoreComponents.LINKS_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(46).material(Material.CHAIN)
+                    .customModelData(3004)
+                    .name(NameComponents.LINKS)
+                    .lore(Component.empty(), LoreComponents.LINKS_CLICK)
+                    .onLeftClick(() -> {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
+                        this.inv.close();
+                    })
+                    .build());
         }
 
         if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
-            this.setItem(47, Material.MAP, 3004, NameComponents.DYNMAP, List.of(
-                    Component.empty(),
-                    LoreComponents.DYNMAP_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(47).material(Material.MAP)
+                    .customModelData(3004)
+                    .name(NameComponents.DYNMAP)
+                    .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)
+                    .onLeftClick(() -> {
+                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
+                        this.inv.close();
+                    })
+                    .build());
         }
 
-        this.setItem(53, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
 
         this.fillStainedGlassPanes();
     }
@@ -261,58 +342,6 @@ public class ProfileGui extends UnmodifiableGui {
             component = component.append(Component.text(" (" + (diff > 0 ? "+" : "") + diff + ")", diffColor));
         }
         return component;
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        switch (slot) {
-            case 9 -> {
-                this.baseStatistics = !this.baseStatistics;
-                this.fillInventory();
-            }
-            case 17 -> new SettingsGui(this.viewer, this.player).open();
-            case 20 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
-                    this.inv.close();
-                }
-            }
-            case 22 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
-                    this.inv.close();
-                }
-            }
-            case 24 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
-                    this.inv.close();
-                }
-            }
-            case 28 -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open();
-            case 30 -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open();
-            case 32 -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open();
-            case 34 -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open();
-            case 45 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
-                    this.inv.close();
-                }
-            }
-            case 46 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
-                    this.inv.close();
-                }
-            }
-            case 47 -> {
-                if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
-                    this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
-                    this.inv.close();
-                }
-            }
-            case 53 -> this.inv.close();
-        }
     }
 
     @EventHandler
