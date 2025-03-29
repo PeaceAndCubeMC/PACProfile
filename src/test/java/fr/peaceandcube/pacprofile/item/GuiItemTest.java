@@ -2,19 +2,24 @@ package fr.peaceandcube.pacprofile.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 
 import java.util.List;
 
 public class GuiItemTest {
+    private PlayerMock playerMock;
 
     @BeforeEach
     void runBefore() {
-        MockBukkit.mock();
+        ServerMock serverMock = MockBukkit.mock();
+        playerMock = serverMock.addPlayer("Player name");
     }
 
     @AfterEach
@@ -67,5 +72,35 @@ public class GuiItemTest {
                 List.of(Component.text("Line 1 of item lore"), Component.text("Line 2 of item lore")),
                 item.getStack().getItemMeta().lore()
         );
+    }
+
+    @Test
+    void testCreateGuiItemWithPlayerAndHead() {
+        GuiItem item = GuiItem.builder()
+                .slot(1)
+                .material(Material.PLAYER_HEAD)
+                .player(playerMock)
+                .build();
+
+        Assertions.assertNotNull(item);
+        Assertions.assertEquals(Material.PLAYER_HEAD, item.getStack().getType());
+        Assertions.assertTrue(item.getStack().getItemMeta() instanceof SkullMeta);
+
+        SkullMeta skullMeta = (SkullMeta) item.getStack().getItemMeta();
+        Assertions.assertNotNull(skullMeta.getOwningPlayer());
+        Assertions.assertEquals("Player name", skullMeta.getOwningPlayer().getName());
+    }
+
+    @Test
+    void testCreateGuiItemWithPlayerButNotHead() {
+        GuiItem item = GuiItem.builder()
+                .slot(1)
+                .material(Material.DIAMOND_BLOCK)
+                .player(playerMock)
+                .build();
+
+        Assertions.assertNotNull(item);
+        Assertions.assertNotEquals(Material.PLAYER_HEAD, item.getStack().getType());
+        Assertions.assertFalse(item.getStack().getItemMeta() instanceof SkullMeta);
     }
 }
