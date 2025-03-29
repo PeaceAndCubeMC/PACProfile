@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.settings.PTimeType;
 import fr.peaceandcube.pacprofile.settings.PWeatherType;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -34,23 +35,33 @@ public class SettingsGui extends UnmodifiableGui {
         if (hasPermission("essentials.msgtoggle")) {
             boolean msgtoggleEnabled = !PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
             Component msgtoggle = msgtoggleEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
-            this.setItem(2, Material.PAPER, 3050, msgtoggleEnabled, NameComponents.SETTINGS_MSGTOGGLE, List.of(
-                    Component.empty(),
-                    msgtoggle,
-                    Component.empty(),
-                    LoreComponents.SETTINGS_MSGTOGGLE_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(2).material(Material.PAPER)
+                    .customModelData(3050)
+                    .glint(msgtoggleEnabled)
+                    .name(NameComponents.SETTINGS_MSGTOGGLE)
+                    .lore(Component.empty(), msgtoggle)
+                    .lore(Component.empty(), LoreComponents.SETTINGS_MSGTOGGLE_CLICK)
+                    .onLeftClick(() -> {
+                        PACProfile.getEssentials().getUser(this.player).setIgnoreMsg(msgtoggleEnabled);
+                        this.fillInventory();
+                    })
+                    .build());
         }
 
         if (hasPermission("pacutilities.togglemsgsound")) {
             boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
             Component togglemsgsound = togglemsgsoundEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
-            this.setItem(3, Material.JUKEBOX, 3050, togglemsgsoundEnabled, NameComponents.SETTINGS_TOGGLEMSGSOUND, List.of(
-                    Component.empty(),
-                    togglemsgsound,
-                    Component.empty(),
-                    LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(3).material(Material.JUKEBOX)
+                    .customModelData(3050)
+                    .glint(togglemsgsoundEnabled)
+                    .name(NameComponents.SETTINGS_TOGGLEMSGSOUND)
+                    .lore(Component.empty(), togglemsgsound)
+                    .lore(Component.empty(), LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK)
+                    .onLeftClick(() -> {
+                        PACUtilities.playersFile.setMsgSound(this.player.getUniqueId().toString(), !togglemsgsoundEnabled);
+                        this.fillInventory();
+                    })
+                    .build());
         }
 
         if (hasPermission("essentials.ptime")) {
@@ -69,7 +80,28 @@ public class SettingsGui extends UnmodifiableGui {
             ptimeLore.add(Component.empty());
             ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_LEFT);
             ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_RIGHT);
-            this.setItem(5, Material.CLOCK, 3050, NameComponents.SETTINGS_PTIME, ptimeLore);
+            this.setItem(GuiItem.builder().slot(5).material(Material.CLOCK)
+                    .customModelData(3050)
+                    .name(NameComponents.SETTINGS_PTIME)
+                    .lore(ptimeLore)
+                    .onLeftClick(() -> {
+                        PTimeType newTime = currentTime.next();
+                        if (this.player.equals(this.viewer)) {
+                            this.dispatchCommand("ptime " + newTime.name().toLowerCase());
+                        } else {
+                            this.dispatchCommand("ptime " + newTime.name().toLowerCase() + " " + this.player.getName());
+                        }
+                        this.fillInventory();
+                    })
+                    .onRightClick(() -> {
+                        if (this.player.equals(this.viewer)) {
+                            this.dispatchCommand("ptime reset");
+                        } else {
+                            this.dispatchCommand("ptime reset " + this.player.getName());
+                        }
+                        this.fillInventory();
+                    })
+                    .build());
         }
 
         if (hasPermission("essentials.pweather")) {
@@ -88,95 +120,45 @@ public class SettingsGui extends UnmodifiableGui {
             pweatherLore.add(Component.empty());
             pweatherLore.add(LoreComponents.SETTINGS_PWEATHER_CLICK_LEFT);
             pweatherLore.add(LoreComponents.SETTINGS_PWEATHER_CLICK_RIGHT);
-            this.setItem(6, Material.SUNFLOWER, 3050, NameComponents.SETTINGS_PWEATHER, pweatherLore);
+            this.setItem(GuiItem.builder().slot(6).material(Material.SUNFLOWER)
+                    .customModelData(3050)
+                    .name(NameComponents.SETTINGS_PWEATHER)
+                    .lore(pweatherLore)
+                    .onLeftClick(() -> {
+                        PWeatherType newWeather = currentWeather.next();
+                        if (this.player.equals(this.viewer)) {
+                            this.dispatchCommand("pweather " + newWeather.name().toLowerCase());
+                        } else {
+                            this.dispatchCommand("pweather " + newWeather.name().toLowerCase() + " " + this.player.getName());
+                        }
+                        this.fillInventory();
+                    })
+                    .onRightClick(() -> {
+                        if (this.player.equals(this.viewer)) {
+                            this.dispatchCommand("pweather reset");
+                        } else {
+                            this.dispatchCommand("pweather reset " + this.player.getName());
+                        }
+                        this.fillInventory();
+                    })
+                    .build());
         }
 
-        this.setItem(0, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
-        this.setItem(8, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(0).material(Material.ARROW)
+                .customModelData(3002)
+                .name(NameComponents.PAGE_PREVIOUS)
+                .onLeftClick(() -> new ProfileGui(this.viewer, this.player).open())
+                .build());
+
+        this.setItem(GuiItem.builder().slot(8).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
     }
 
     private boolean hasPermission(String permission) {
         User user = PACProfile.getLuckPerms().getUserManager().getUser(this.player.getUniqueId());
         return user != null && user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        switch (slot) {
-            // previous page
-            case 0 -> new ProfileGui(this.viewer, this.player).open();
-            // msgtoggle
-            case 2 -> {
-                if (hasPermission("essentials.msgtoggle")) {
-                    boolean msgtoggleEnabled = PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
-                    PACProfile.getEssentials().getUser(this.player).setIgnoreMsg(!msgtoggleEnabled);
-                    this.fillInventory();
-                }
-            }
-            // togglemsgsound
-            case 3 -> {
-                if (hasPermission("pacutilities.togglemsgsound")) {
-                    boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
-                    PACUtilities.playersFile.setMsgSound(this.player.getUniqueId().toString(), !togglemsgsoundEnabled);
-                    this.fillInventory();
-                }
-            }
-            // ptime
-            case 5 -> {
-                if (hasPermission("essentials.ptime")) {
-                    PTimeType currentTime = PTimeType.fromTicks(this.player.getPlayerTime() % 24000);
-                    PTimeType newTime = currentTime.next();
-                    if (this.player.equals(this.viewer)) {
-                        this.dispatchCommand("ptime " + newTime.name().toLowerCase());
-                    } else {
-                        this.dispatchCommand("ptime " + newTime.name().toLowerCase() + " " + this.player.getName());
-                    }
-                    this.fillInventory();
-                }
-            }
-            // pweather
-            case 6 -> {
-                if (hasPermission("essentials.pweather")) {
-                    PWeatherType currentWeather = PWeatherType.fromWeatherType(this.player.getPlayerWeather());
-                    PWeatherType newWeather = currentWeather.next();
-                    if (this.player.equals(this.viewer)) {
-                        this.dispatchCommand("pweather " + newWeather.name().toLowerCase());
-                    } else {
-                        this.dispatchCommand("pweather " + newWeather.name().toLowerCase() + " " + this.player.getName());
-                    }
-                    this.fillInventory();
-                }
-            }
-            // exit
-            case 8 -> this.inv.close();
-        }
-    }
-
-    @Override
-    protected void onSlotRightClick(int slot) {
-        switch (slot) {
-            // ptime
-            case 5 -> {
-                if (hasPermission("essentials.ptime")) {
-                    if (this.player.equals(this.viewer)) {
-                        this.dispatchCommand("ptime reset");
-                    } else {
-                        this.dispatchCommand("ptime reset " + this.player.getName());
-                    }
-                    this.fillInventory();
-                }
-            }
-            // pweather
-            case 6 -> {
-                if (hasPermission("essentials.pweather")) {
-                    if (this.player.equals(this.viewer)) {
-                        this.dispatchCommand("pweather reset");
-                    } else {
-                        this.dispatchCommand("pweather reset " + this.player.getName());
-                    }
-                    this.fillInventory();
-                }
-            }
-        }
     }
 }
