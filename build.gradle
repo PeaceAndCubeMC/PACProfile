@@ -42,6 +42,7 @@ dependencies {
     compileOnly name: "pacutilities-${pacutilities_version}"
     compileOnly name: "pacbirthday-${pacbirthday_version}"
 
+    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.42.1"
     testImplementation "org.junit.jupiter:junit-jupiter:5.13.4"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.13.4"
 }

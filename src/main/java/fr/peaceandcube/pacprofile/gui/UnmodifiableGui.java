@@ -2,6 +2,7 @@ package fr.peaceandcube.pacprofile.gui;
 
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class UnmodifiableGui implements Listener {
@@ -23,12 +25,14 @@ public abstract class UnmodifiableGui implements Listener {
     protected final Player viewer;
     protected final Player player;
     protected final User user;
+    protected final List<GuiItem> items;
 
     protected UnmodifiableGui(int rows, Component title, Player viewer, Player player) {
         this.inv = Bukkit.createInventory(null, 9 * rows, title);
         this.viewer = viewer;
         this.player = player;
         this.user = PACProfile.getEssentials().getUser(player);
+        this.items = new ArrayList<>();
     }
 
     protected abstract void fillInventory();
@@ -71,6 +75,11 @@ public abstract class UnmodifiableGui implements Listener {
         this.setItem(slot, material, customModelData, false, true, Component.empty(), List.of());
     }
 
+    protected void setItem(GuiItem item) {
+        this.items.add(item);
+        this.inv.setItem(item.getSlot(), item.getStack());
+    }
+
     protected void setPlayerHead(int slot, Player player, int customModelData, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
         if (stack.getItemMeta() instanceof SkullMeta meta) {
@@ -83,7 +92,7 @@ public abstract class UnmodifiableGui implements Listener {
         this.inv.setItem(slot, stack);
     }
 
-    protected abstract void onSlotLeftClick(int slot);
+    protected void onSlotLeftClick(int slot) {};
 
     protected void onSlotRightClick(int slot) {}
 
@@ -98,9 +107,19 @@ public abstract class UnmodifiableGui implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getInventory().equals(this.inv)) {
             if (!e.isShiftClick() && e.isLeftClick()) {
-                this.onSlotLeftClick(e.getSlot());
+                this.onSlotLeftClick(e.getSlot()); //TODO: remove when refactor is done
+                for (GuiItem item : this.items) {
+                    if (item.getLeftClickAction() != null && item.getSlot() == e.getSlot()) {
+                        item.getLeftClickAction().run();
+                    }
+                }
             } else if (!e.isShiftClick() && e.isRightClick()) {
-                this.onSlotRightClick(e.getSlot());
+                this.onSlotRightClick(e.getSlot()); //TODO: remove when refactor is done
+                for (GuiItem item : this.items) {
+                    if (item.getRightClickAction() != null && item.getSlot() == e.getSlot()) {
+                        item.getRightClickAction().run();
+                    }
+                }
             }
             e.setCancelled(true);
         }
