@@ -2,7 +2,6 @@ package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -27,13 +26,13 @@ public class ConfirmationGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(3).material(Material.GREEN_TERRACOTTA)
                 .customModelData(3006)
-                .name(NameComponents.CONFIRMATION_YES)
+                .name(Messages.CONFIRMATION_YES, 0x55FF55)
                 .onLeftClick(this.action::onConfirm)
                 .build());
 
         this.setItem(GuiItem.builder().slot(5).material(Material.RED_TERRACOTTA)
                 .customModelData(3006)
-                .name(NameComponents.CONFIRMATION_NO)
+                .name(Messages.CONFIRMATION_NO, 0xFF5555)
                 .onLeftClick(this.previousGui::open)
                 .build());
     }

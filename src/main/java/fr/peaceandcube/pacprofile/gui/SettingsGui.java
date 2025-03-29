@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.settings.PTimeType;
 import fr.peaceandcube.pacprofile.settings.PWeatherType;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacutilities.PACUtilities;
 import net.kyori.adventure.text.Component;
@@ -38,7 +37,7 @@ public class SettingsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(2).material(Material.PAPER)
                     .customModelData(3050)
                     .glint(msgtoggleEnabled)
-                    .name(NameComponents.SETTINGS_MSGTOGGLE)
+                    .name(Messages.SETTINGS_MSGTOGGLE, 0x5555FF)
                     .lore(Component.empty(), msgtoggle)
                     .lore(Component.empty(), LoreComponents.SETTINGS_MSGTOGGLE_CLICK)
                     .onLeftClick(() -> {
@@ -54,7 +53,7 @@ public class SettingsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(3).material(Material.JUKEBOX)
                     .customModelData(3050)
                     .glint(togglemsgsoundEnabled)
-                    .name(NameComponents.SETTINGS_TOGGLEMSGSOUND)
+                    .name(Messages.SETTINGS_TOGGLEMSGSOUND, 0x5555FF)
                     .lore(Component.empty(), togglemsgsound)
                     .lore(Component.empty(), LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK)
                     .onLeftClick(() -> {
@@ -82,7 +81,7 @@ public class SettingsGui extends UnmodifiableGui {
             ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_RIGHT);
             this.setItem(GuiItem.builder().slot(5).material(Material.CLOCK)
                     .customModelData(3050)
-                    .name(NameComponents.SETTINGS_PTIME)
+                    .name(Messages.SETTINGS_PTIME, 0x5555FF)
                     .lore(ptimeLore)
                     .onLeftClick(() -> {
                         PTimeType newTime = currentTime.next();
@@ -122,7 +121,7 @@ public class SettingsGui extends UnmodifiableGui {
             pweatherLore.add(LoreComponents.SETTINGS_PWEATHER_CLICK_RIGHT);
             this.setItem(GuiItem.builder().slot(6).material(Material.SUNFLOWER)
                     .customModelData(3050)
-                    .name(NameComponents.SETTINGS_PWEATHER)
+                    .name(Messages.SETTINGS_PWEATHER, 0x5555FF)
                     .lore(pweatherLore)
                     .onLeftClick(() -> {
                         PWeatherType newWeather = currentWeather.next();
@@ -146,13 +145,13 @@ public class SettingsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(0).material(Material.ARROW)
                 .customModelData(3002)
-                .name(NameComponents.PAGE_PREVIOUS)
+                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(() -> new ProfileGui(this.viewer, this.player).open())
                 .build());
 
         this.setItem(GuiItem.builder().slot(8).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
     }

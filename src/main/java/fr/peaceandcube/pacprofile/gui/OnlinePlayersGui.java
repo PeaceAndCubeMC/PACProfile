@@ -7,7 +7,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
@@ -102,7 +101,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             }
             this.setItem(GuiItem.builder().slot(slot).material(Material.PLAYER_HEAD).player(player)
                     .customModelData(3030)
-                    .name(Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                    .name(player.getName(), 0x5555FF)
                     .lore(lore)
                     .onLeftClick(() -> {
                         if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
@@ -122,7 +121,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             notesLore.add(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT);
             this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
                     .customModelData(3031)
-                    .name(NameComponents.HOME_NOTES)
+                    .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(notesLore)
                     .onLeftClick(() -> {
                         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
@@ -157,7 +156,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
-                .name(NameComponents.ONLINE_PLAYERS_ORDER)
+                .name(Messages.ONLINE_PLAYERS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(() -> {
@@ -168,7 +167,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(NameComponents.PAGE_PREVIOUS)
+                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(() -> {
                     if (this.page == 1) {
                         new ProfileGui(this.viewer, this.player).open();
@@ -181,7 +180,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
 
@@ -189,7 +188,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         if (playerCount > maxPlayersOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(NameComponents.PAGE_NEXT)
+                    .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());

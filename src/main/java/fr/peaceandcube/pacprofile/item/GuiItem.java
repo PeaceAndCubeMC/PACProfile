@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.item;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -51,7 +53,7 @@ public class GuiItem {
         private int customModelData;
         private boolean glint;
         private boolean hideTooltip;
-        private Component name;
+        private GuiItemName name;
         private final List<Component> lore;
         private Runnable leftClickAction;
         private Runnable rightClickAction;
@@ -90,8 +92,8 @@ public class GuiItem {
             return this;
         }
 
-        public Builder name(Component name) {
-            this.name = name;
+        public Builder name(String text, int color) {
+            this.name = new GuiItemName(text, color);
             return this;
         }
 
@@ -122,7 +124,11 @@ public class GuiItem {
 
             ItemStack stack = new ItemStack(material);
             ItemMeta meta = stack.getItemMeta();
-            meta.displayName(name);
+            if (name != null) {
+                meta.displayName(Component
+                        .text(name.text(), TextColor.color(name.color()), TextDecoration.BOLD)
+                        .decoration(TextDecoration.ITALIC, false));
+            }
             meta.lore(lore);
             meta.setCustomModelData(customModelData);
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
