@@ -71,10 +71,6 @@ public abstract class UnmodifiableGui implements Listener {
         this.inv.setItem(slot, stack);
     }
 
-    protected void setItemWithoutTooltip(int slot, Material material, int customModelData) {
-        this.setItem(slot, material, customModelData, false, true, Component.empty(), List.of());
-    }
-
     protected void setItem(GuiItem item) {
         this.items.add(item);
         this.inv.setItem(item.getSlot(), item.getStack());
@@ -110,14 +106,14 @@ public abstract class UnmodifiableGui implements Listener {
                 this.onSlotLeftClick(e.getSlot()); //TODO: remove when refactor is done
                 for (GuiItem item : this.items) {
                     if (item.getLeftClickAction() != null && item.getSlot() == e.getSlot()) {
-                        item.getLeftClickAction().run();
+                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), item.getLeftClickAction());
                     }
                 }
             } else if (!e.isShiftClick() && e.isRightClick()) {
                 this.onSlotRightClick(e.getSlot()); //TODO: remove when refactor is done
                 for (GuiItem item : this.items) {
                     if (item.getRightClickAction() != null && item.getSlot() == e.getSlot()) {
-                        item.getRightClickAction().run();
+                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), item.getRightClickAction());
                     }
                 }
             }

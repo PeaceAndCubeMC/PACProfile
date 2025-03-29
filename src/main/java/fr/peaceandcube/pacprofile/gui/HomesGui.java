@@ -42,6 +42,8 @@ public class HomesGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         switch (this.orderSet.currentOrder()) {
             case DEFAULT -> this.homes = this.user.getHomes();
             case NAME_AZ -> this.homes.sort(String::compareToIgnoreCase);

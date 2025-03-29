@@ -41,6 +41,8 @@ public class WarpsGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         switch (this.orderSet.currentOrder()) {
             case DEFAULT -> this.warps = PACProfile.getInstance().config.getWarps();
             case NAME_AZ -> this.warps.sort((warp1, warp2) -> warp1.name().compareToIgnoreCase(warp2.name()));
