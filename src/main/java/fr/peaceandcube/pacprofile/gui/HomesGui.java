@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -20,7 +21,6 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class HomesGui extends UnmodifiableGui {
-    private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
     private final int page;
     private final int maxPages;
     private List<String> homes;
@@ -76,8 +76,6 @@ public class HomesGui extends UnmodifiableGui {
             String z = location != null ? String.valueOf(location.getBlockZ()) : Messages.INVALID;
             Color color = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), name));
 
-            HOME_SLOTS.put(slot, name);
-
             List<Component> bedLore = new ArrayList<>();
             bedLore.add(Component.empty());
             bedLore.add(LoreComponents.HOME_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
@@ -91,10 +89,34 @@ public class HomesGui extends UnmodifiableGui {
             if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
                 bedLore.add(LoreComponents.HOME_CLICK_RIGHT);
             }
-            this.setItem(slot, color.getBed(), 3010,
-                    Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false),
-                    bedLore
-            );
+            this.setItem(GuiItem.builder().slot(slot).material(color.getBed())
+                    .customModelData(3010)
+                    .name(Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                    .lore(bedLore)
+                    .onLeftClick(() -> {
+                        if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
+                            if (this.player.equals(this.viewer)) {
+                                this.dispatchCommand("home " + name);
+                            } else {
+                                this.dispatchCommand("home " + this.player.getName() + ":" + name);
+                            }
+                        }
+                    })
+                    .onRightClick(() -> {
+                        if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
+                            String command;
+                            if (this.player.equals(this.viewer)) {
+                                command = "delhome " + name;
+                            } else {
+                                command = "delhome " + this.player.getName() + ":" + name;
+                            }
+                            new ConfirmationGui(this.viewer, this.player, this, () -> {
+                                dispatchCommand(command);
+                                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                            }).open();
+                        }
+                    })
+                    .build());
 
             List<Component> notesLore = new ArrayList<>();
             notesLore.add(Component.empty());
@@ -102,26 +124,79 @@ public class HomesGui extends UnmodifiableGui {
             notesLore.add(Component.empty());
             notesLore.add(LoreComponents.HOME_NOTES_CLICK_LEFT);
             notesLore.add(LoreComponents.HOME_NOTES_CLICK_RIGHT);
-            this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, notesLore);
+            this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
+                    .customModelData(3011)
+                    .name(NameComponents.HOME_NOTES)
+                    .lore(notesLore)
+                    .onLeftClick(() -> {
+                        Color homeColor = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)));
+                        TextInputDialog.builder()
+                                .player(this.viewer)
+                                .title(NameComponents.HOMES)
+                                .bodyItem(homeColor.getBed())
+                                .bodyText(HOME_SLOTS.get(slot - 1))
+                                .inputLabel(Messages.HOME_NOTES_TITLE)
+                                .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
+                                .inputSize(8, 80)
+                                .onConfirm(newValue -> {
+                                    PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1), newValue);
+                                    new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                })
+                                .build()
+                                .show()
+                    })
+                    .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
+                        PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), name);
+                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                    }).open())
+                    .build());
 
-            this.setItem(slot + 2, color.getDye(), 3012, NameComponents.HOME_COLOR, List.of(
-                    Component.empty(),
-                    LoreComponents.HOME_COLOR_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(slot + 2).material(color.getDye())
+                    .customModelData(3012)
+                    .name(NameComponents.HOME_COLOR)
+                    .lore(Component.empty(), LoreComponents.HOME_COLOR_CLICK)
+                    .onLeftClick(() -> new HomeColorGui(this.viewer, this.player, name, this.page, this.maxPages).open())
+                    .build());
         }
 
-        this.setItem(51, Material.HOPPER, 3013, NameComponents.HOMES_ORDER, List.of(
-                Component.empty(),
-                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
-                Component.empty(),
-                LoreComponents.ORDER_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
+                .customModelData(3013)
+                .name(NameComponents.HOMES_ORDER)
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .onLeftClick(() -> {
+                    this.orderSet.next();
+                    this.fillInventory();
+                })
+                .build());
 
-        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
+                .customModelData(3002)
+                .name(NameComponents.PAGE_PREVIOUS)
+                .onLeftClick(() -> {
+                    if (this.page == 1) {
+                        new ProfileGui(this.viewer, this.player).open();
+                    } else {
+                        new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                                this.orderSet.currentOrder()).open();
+                    }
+                })
+                .build());
+
+        this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
+
         // if it's not the last page
         if (homeCount > maxHomeOnPage) {
-            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
+            this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
+                    .customModelData(3003)
+                    .name(NameComponents.PAGE_NEXT)
+                    .onLeftClick(() -> new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                            this.orderSet.currentOrder()).open())
+                    .build());
         }
     }
 
@@ -133,99 +208,5 @@ public class HomesGui extends UnmodifiableGui {
                     .toList();
         }
         return List.of(Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        // previous page
-        if (slot == 45) {
-            if (this.page == 1) {
-                new ProfileGui(this.viewer, this.player).open();
-            } else {
-                new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // exit
-        else if (slot == 49) {
-            this.inv.close();
-        }
-
-        // next page
-        else if (slot == 53) {
-            int homeCount = this.user.getHomes().size();
-            int maxHomeOnPage = this.page * 10;
-            if (homeCount > maxHomeOnPage) {
-                new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // order
-        else if (slot == 51) {
-            this.orderSet.next();
-            this.fillInventory();
-        }
-
-        // home beds
-        else if (HOME_SLOTS.containsKey(slot)) {
-            if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
-                if (this.player.equals(this.viewer)) {
-                    this.dispatchCommand("home " + HOME_SLOTS.get(slot));
-                } else {
-                    this.dispatchCommand("home " + this.player.getName() + ":" + HOME_SLOTS.get(slot));
-                }
-            }
-        }
-
-        // home notes
-        else if (HOME_SLOTS.containsKey(slot - 1)) {
-            Color homeColor = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)));
-            TextInputDialog.builder()
-                    .player(this.viewer)
-                    .title(NameComponents.HOMES)
-                    .bodyItem(homeColor.getBed())
-                    .bodyText(HOME_SLOTS.get(slot - 1))
-                    .inputLabel(Messages.HOME_NOTES_TITLE)
-                    .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
-                    .inputSize(8, 80)
-                    .onConfirm(newValue -> {
-                        PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1), newValue);
-                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                    })
-                    .build()
-                    .show();
-        }
-
-        // home colors
-        else if (HOME_SLOTS.containsKey(slot - 2)) {
-            new HomeColorGui(this.viewer, this.player, HOME_SLOTS.get(slot - 2), this.page, this.maxPages).open();
-        }
-    }
-
-    @Override
-    protected void onSlotRightClick(int slot) {
-        // home beds
-        if (HOME_SLOTS.containsKey(slot)) {
-            if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
-                String command;
-                if (this.player.equals(this.viewer)) {
-                    command = "delhome " + HOME_SLOTS.get(slot);
-                } else {
-                    command = "delhome " + this.player.getName() + ":" + HOME_SLOTS.get(slot);
-                }
-                new ConfirmationGui(this.viewer, this.player, this, () -> {
-                    dispatchCommand(command);
-                    new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                }).open();
-            }
-        }
-
-        // home notes
-        else if (HOME_SLOTS.containsKey(slot - 1)) {
-            new ConfirmationGui(this.viewer, this.player, this, () -> {
-                PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1));
-                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-            }).open();
-        }
     }
 }
