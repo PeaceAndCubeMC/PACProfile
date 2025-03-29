@@ -2,6 +2,7 @@ package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.file.WarpEntry;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -14,12 +15,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WarpsGui extends UnmodifiableGui {
-    private final Map<Integer, WarpEntry> WARPS_SLOTS = new LinkedHashMap<>();
     private final int page;
     private final int maxPages;
     private List<WarpEntry> warps;
@@ -61,69 +59,64 @@ public class WarpsGui extends UnmodifiableGui {
 
             WarpEntry warp = this.warps.get(index);
 
-            WARPS_SLOTS.put(slot, warp);
-
             Component title = Component.text(warp.title(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
             String command = String.format("/warp %s", warp.name());
-            this.setItem(slot, warp.icon(), 3040, title, List.of(
+            List<Component> warpLore = List.of(
                     Component.empty(),
                     LoreComponents.WARP_COMMAND.append(Component.text(command, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.WARP_CATEGORY.append(Component.text(warp.category(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     Component.empty(),
                     LoreComponents.WARP_CLICK
-            ));
+            );
+            this.setItem(GuiItem.builder().slot(slot).material(warp.icon())
+                    .customModelData(3040)
+                    .name(title)
+                    .lore(warpLore)
+                    .onLeftClick(() -> {
+                        this.dispatchCommand("warp " + warp.name());
+                        this.inv.close();
+                    })
+                    .build());
         }
 
-        this.setItem(51, Material.HOPPER, 3041, NameComponents.WARPS_ORDER, List.of(
-                Component.empty(),
-                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
-                Component.empty(),
-                LoreComponents.ORDER_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
+                .customModelData(3041)
+                .name(NameComponents.WARPS_ORDER)
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .onLeftClick(() -> {
+                    this.orderSet.next();
+                    this.fillInventory();
+                })
+                .build());
 
-        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
+                .customModelData(3002)
+                .name(NameComponents.PAGE_PREVIOUS)
+                .onLeftClick(() -> {
+                    if (this.page == 1) {
+                        new ProfileGui(this.viewer, this.player).open();
+                    } else {
+                        new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                                this.orderSet.currentOrder()).open();
+                    }
+                })
+                .build());
+
+        this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
+
         // if it's not the last page
         if (warpCount > maxWarpsOnPage) {
-            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
-        }
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        // previous page
-        if (slot == 45) {
-            if (this.page == 1) {
-                new ProfileGui(this.viewer, this.player).open();
-            } else {
-                new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // exit
-        else if (slot == 49) {
-            this.inv.close();
-        }
-
-        // next page
-        else if (slot == 53) {
-            int warpCount = this.warps.size();
-            int maxWarpsOnPage = this.page * 35;
-            if (warpCount > maxWarpsOnPage) {
-                new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // order
-        else if (slot == 51) {
-            this.orderSet.next();
-            this.fillInventory();
-        }
-
-        // warps
-        else if (WARPS_SLOTS.containsKey(slot)) {
-            this.dispatchCommand("warp " + WARPS_SLOTS.get(slot).name());
-            this.inv.close();
+            this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
+                    .customModelData(3003)
+                    .name(NameComponents.PAGE_NEXT)
+                    .onLeftClick(() -> new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                            this.orderSet.currentOrder()).open())
+                    .build());
         }
     }
 }

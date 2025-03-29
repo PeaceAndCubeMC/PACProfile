@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -22,7 +23,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class ClaimsGui extends UnmodifiableGui {
-    private final Map<Integer, String> CLAIM_SLOTS = new LinkedHashMap<>();
     private final PlayerData playerData;
     private final int page;
     private final int maxPages;
@@ -84,10 +84,7 @@ public class ClaimsGui extends UnmodifiableGui {
             int length = claim.getHeight();
             int area = claim.getArea();
 
-            CLAIM_SLOTS.put(slot, claimId);
-
-            int customModelData = world.equals("world_nether") ? 3021 : 3020;
-            this.setItem(slot, Material.GOLDEN_SHOVEL, customModelData, this.getNameLore(claimId), List.of(
+            List<Component> claimLore = List.of(
                     Component.empty(),
                     LoreComponents.CLAIM_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.CLAIM_GREATER_CORNER.append(Component.text(greaterCorner.getBlockX() + " " + greaterCorner.getBlockY() + " " + greaterCorner.getBlockZ(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -97,40 +94,90 @@ public class ClaimsGui extends UnmodifiableGui {
                     LoreComponents.CLAIM_LENGTH.append(Component.text(length, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     LoreComponents.CLAIM_AREA.append(Component.text(area, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
                     Component.empty()
-            ));
+            );
+            this.setItem(GuiItem.builder().slot(slot).material(Material.GOLDEN_SHOVEL)
+                    .customModelData(world.equals("world_nether") ? 3021 : 3020)
+                    .name(getNameLore(claimId))
+                    .lore(claimLore)
+                    .build());
 
             ArrayList<String> builders = new ArrayList<>();
             ArrayList<String> containers = new ArrayList<>();
             ArrayList<String> accessors = new ArrayList<>();
             ArrayList<String> managers = new ArrayList<>();
             claim.getPermissions(builders, containers, accessors, managers);
-            List<Component> components = new ArrayList<>();
-            components.add(Component.empty());
-            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_BUILDERS, builders);
-            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_CONTAINERS, containers);
-            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_ACCESSORS, accessors);
-            this.getPermissionLore(components, LoreComponents.CLAIM_PERMISSIONS_MANAGERS, managers);
-            components.add(Component.empty());
-            this.setItem(slot + 1, Material.KNOWLEDGE_BOOK, 3022, NameComponents.CLAIM_PERMISSIONS, components);
+            List<Component> permissionsLore = new ArrayList<>();
+            permissionsLore.add(Component.empty());
+            this.getPermissionLore(permissionsLore, LoreComponents.CLAIM_PERMISSIONS_BUILDERS, builders);
+            this.getPermissionLore(permissionsLore, LoreComponents.CLAIM_PERMISSIONS_CONTAINERS, containers);
+            this.getPermissionLore(permissionsLore, LoreComponents.CLAIM_PERMISSIONS_ACCESSORS, accessors);
+            this.getPermissionLore(permissionsLore, LoreComponents.CLAIM_PERMISSIONS_MANAGERS, managers);
+            permissionsLore.add(Component.empty());
+            this.setItem(GuiItem.builder().slot(slot + 1).material(Material.KNOWLEDGE_BOOK)
+                    .customModelData(3022)
+                    .name(NameComponents.CLAIM_PERMISSIONS)
+                    .lore(permissionsLore)
+                    .build());
 
-            this.setItem(slot + 2, Material.PAPER, 3023, NameComponents.CLAIM_NAME, List.of(
-                    Component.empty(),
-                    LoreComponents.CLAIM_NAME_CLICK
-            ));
+            this.setItem(GuiItem.builder().slot(slot + 2).material(Material.PAPER)
+                    .customModelData(3023)
+                    .name(NameComponents.CLAIM_NAME)
+                    .lore(Component.empty(), LoreComponents.CLAIM_NAME_CLICK)
+                    .onLeftClick(() -> new AnvilGUI.Builder().plugin(PACProfile.getInstance())
+                            .title(Messages.CLAIM_NAME_TITLE)
+                            .text(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId))
+                            .itemLeft(new ItemStack(Material.PAPER))
+                            .onClick((anvilSlot, stateSnapshot) -> {
+                                if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
+                                    return List.of();
+                                }
+                                PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), claimId, stateSnapshot.getText());
+                                new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                return List.of(AnvilGUI.ResponseAction.close());
+                            })
+                            .open(this.viewer)
+                    )
+                    .build());
         }
 
-        this.setItem(51, Material.HOPPER, 3024, NameComponents.CLAIMS_ORDER, List.of(
-                Component.empty(),
-                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
-                Component.empty(),
-                LoreComponents.ORDER_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
+                .customModelData(3024)
+                .name(NameComponents.CLAIMS_ORDER)
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .onLeftClick(() -> {
+                    this.orderSet.next();
+                    this.fillInventory();
+                })
+                .build());
 
-        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
+                .customModelData(3002)
+                .name(NameComponents.PAGE_PREVIOUS)
+                .onLeftClick(() -> {
+                    if (this.page == 1) {
+                        new ProfileGui(this.viewer, this.player).open();
+                    } else {
+                        new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                                this.orderSet.currentOrder()).open();
+                    }
+                })
+                .build());
+
+        this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
+
         // if it's not the last page
         if (claimCount > maxClaimOnPage) {
-            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
+            this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
+                    .customModelData(3003)
+                    .name(NameComponents.PAGE_NEXT)
+                    .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                            this.orderSet.currentOrder()).open())
+                    .build());
         }
     }
 
@@ -161,55 +208,6 @@ public class ClaimsGui extends UnmodifiableGui {
         for (var subList : subLists) {
             String subListStr = String.join(" ", subList);
             components.add(Component.text(subListStr, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
-        }
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        // previous page
-        if (slot == 45) {
-            if (this.page == 1) {
-                new ProfileGui(this.viewer, this.player).open();
-            } else {
-                new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // exit
-        else if (slot == 49) {
-            this.inv.close();
-        }
-
-        // next page
-        else if (slot == 53) {
-            int claimCount = this.playerData.getClaims().size();
-            int maxClaimOnPage = this.page * 10;
-            if (claimCount > maxClaimOnPage) {
-                new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // order
-        else if (slot == 51) {
-            this.orderSet.next();
-            this.fillInventory();
-        }
-
-        // claim names
-        else if (CLAIM_SLOTS.containsKey(slot - 2)) {
-            new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.CLAIM_NAME_TITLE)
-                    .text(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)))
-                    .itemLeft(new ItemStack(Material.PAPER))
-                    .onClick((anvilSlot, stateSnapshot) -> {
-                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
-                            return List.of();
-                        }
-                        PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), stateSnapshot.getText());
-                        new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                        return List.of(AnvilGUI.ResponseAction.close());
-                    })
-                    .open(this.viewer);
         }
     }
 }
