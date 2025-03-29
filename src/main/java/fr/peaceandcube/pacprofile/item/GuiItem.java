@@ -2,9 +2,11 @@ package fr.peaceandcube.pacprofile.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class GuiItem {
     public static class Builder {
         private Integer slot;
         private Material material;
+        private Player player;
         private int customModelData;
         private boolean glint;
         private boolean hideTooltip;
@@ -64,6 +67,11 @@ public class GuiItem {
 
         public Builder material(Material material) {
             this.material = material;
+            return this;
+        }
+
+        public Builder player(Player player) {
+            this.player = player;
             return this;
         }
 
@@ -120,6 +128,9 @@ public class GuiItem {
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
             meta.setEnchantmentGlintOverride(glint);
             meta.setHideTooltip(hideTooltip);
+            if (meta instanceof SkullMeta skullMeta) {
+                skullMeta.setOwningPlayer(player);
+            }
             stack.setItemMeta(meta);
 
             return new GuiItem(slot, stack, leftClickAction, rightClickAction);
