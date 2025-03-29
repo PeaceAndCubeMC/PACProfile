@@ -3,6 +3,7 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -20,11 +21,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class OnlinePlayersGui extends UnmodifiableGui {
-    private final Map<Integer, Player> PLAYERS_SLOTS = new LinkedHashMap<>();
     private final PlayerData playerData;
     private final int page;
     private final int maxPages;
@@ -78,8 +81,6 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             int trustCount = getTrustCount(playerUuid);
             long mailSentCount = getMailSentCount(playerUuid);
 
-            PLAYERS_SLOTS.put(slot, player);
-
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
             lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
@@ -97,29 +98,83 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
                 }
             }
-            this.setPlayerHead(slot, player, 3030, Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), lore);
+            this.setItem(GuiItem.builder().slot(slot).material(Material.PLAYER_HEAD).player(player)
+                    .customModelData(3030)
+                    .name(Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                    .lore(lore)
+                    .onLeftClick(() -> {
+                        if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
+                            if (!player.getUniqueId().equals(this.player.getUniqueId())) {
+                                this.dispatchCommand("tpa " + player.getName());
+                                this.inv.close();
+                            }
+                        }
+                    })
+                    .build());
 
-            this.setItem(slot + 1, Material.PAPER, 3031, NameComponents.HOME_NOTES, List.of(
-                    Component.empty(),
-                    this.getNotesLore(playerUuid),
-                    Component.empty(),
-                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT,
-                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT
-            ));
+            this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
+                    .customModelData(3031)
+                    .name(NameComponents.HOME_NOTES)
+                    .lore(Component.empty(), this.getNotesLore(playerUuid), Component.empty())
+                    .lore(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT, LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT)
+                    .onLeftClick(() -> new AnvilGUI.Builder().plugin(PACProfile.getInstance())
+                            .title(Messages.ONLINE_PLAYER_NOTES_TITLE)
+                            .text(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), player.getUniqueId().toString()))
+                            .itemLeft(new ItemStack(Material.PAPER))
+                            .onClick((anvilSlot, stateSnapshot) -> {
+                                if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
+                                    return List.of();
+                                }
+                                PACProfile.getInstance().playerData.setPlayerNotes(stateSnapshot.getPlayer().getUniqueId(), player.getUniqueId().toString(), stateSnapshot.getText());
+                                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                return List.of(AnvilGUI.ResponseAction.close());
+                            })
+                            .open(this.viewer))
+                    .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
+                        PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), player.getUniqueId().toString());
+                        new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                    }).open())
+                    .build());
         }
 
-        this.setItem(51, Material.HOPPER, 3013, NameComponents.ONLINE_PLAYERS_ORDER, List.of(
-                Component.empty(),
-                LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()),
-                Component.empty(),
-                LoreComponents.ORDER_CLICK
-        ));
+        this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
+                .customModelData(3013)
+                .name(NameComponents.ONLINE_PLAYERS_ORDER)
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .onLeftClick(() -> {
+                    this.orderSet.next();
+                    this.fillInventory();
+                })
+                .build());
 
-        this.setItem(45, Material.ARROW, 3002, NameComponents.PAGE_PREVIOUS);
-        this.setItem(49, Material.BARRIER, 3002, NameComponents.EXIT);
+        this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
+                .customModelData(3002)
+                .name(NameComponents.PAGE_PREVIOUS)
+                .onLeftClick(() -> {
+                    if (this.page == 1) {
+                        new ProfileGui(this.viewer, this.player).open();
+                    } else {
+                        new OnlinePlayersGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                                this.orderSet.currentOrder()).open();
+                    }
+                })
+                .build());
+
+        this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
+                .customModelData(3002)
+                .name(NameComponents.EXIT)
+                .onLeftClick(this.inv::close)
+                .build());
+
         // if it's not the last page
         if (playerCount > maxPlayersOnPage) {
-            this.setItem(53, Material.ARROW, 3003, NameComponents.PAGE_NEXT);
+            this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
+                    .customModelData(3003)
+                    .name(NameComponents.PAGE_NEXT)
+                    .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                            this.orderSet.currentOrder()).open())
+                    .build());
         }
     }
 
@@ -158,75 +213,5 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             return Component.text(notes, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false);
         }
         return Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
-    }
-
-    @Override
-    protected void onSlotLeftClick(int slot) {
-        // previous page
-        if (slot == 45) {
-            if (this.page == 1) {
-                new ProfileGui(this.viewer, this.player).open();
-            } else {
-                new OnlinePlayersGui(this.viewer, this.player, this.page - 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // exit
-        else if (slot == 49) {
-            this.inv.close();
-        }
-
-        // next page
-        else if (slot == 53) {
-            int playerCount = this.playerList.size();
-            int maxPlayerOnPage = this.page * 10;
-            if (playerCount > maxPlayerOnPage) {
-                new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages, this.orderSet.currentOrder()).open();
-            }
-        }
-
-        // order
-        else if (slot == 51) {
-            this.orderSet.next();
-            this.fillInventory();
-        }
-
-        // players
-        else if (PLAYERS_SLOTS.containsKey(slot)) {
-            if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
-                if (!PLAYERS_SLOTS.get(slot).getUniqueId().equals(this.player.getUniqueId())) {
-                    this.dispatchCommand("tpa " + PLAYERS_SLOTS.get(slot).getName());
-                    this.inv.close();
-                }
-            }
-        }
-
-        // player notes
-        else if (PLAYERS_SLOTS.containsKey(slot - 1)) {
-            new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.ONLINE_PLAYER_NOTES_TITLE)
-                    .text(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
-                    .itemLeft(new ItemStack(Material.PAPER))
-                    .onClick((anvilSlot, stateSnapshot) -> {
-                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
-                            return List.of();
-                        }
-                        PACProfile.getInstance().playerData.setPlayerNotes(stateSnapshot.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), stateSnapshot.getText());
-                        new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                        return List.of(AnvilGUI.ResponseAction.close());
-                    })
-                    .open(this.viewer);
-        }
-    }
-
-    @Override
-    protected void onSlotRightClick(int slot) {
-        // player notes
-        if (PLAYERS_SLOTS.containsKey(slot - 1)) {
-            new ConfirmationGui(this.viewer, this.player, this, () -> {
-                PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString());
-                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-            }).open();
-        }
     }
 }
