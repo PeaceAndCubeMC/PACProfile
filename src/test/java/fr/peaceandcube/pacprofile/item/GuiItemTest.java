@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.item;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +34,7 @@ public class GuiItemTest {
         GuiItem item = GuiItem.builder()
                 .material(Material.COBBLESTONE)
                 .customModelData(123)
-                .name(Component.text("Item name"))
+                .name("Item name", 0xFF55FF)
                 .lore(Component.text("Line 1 of item lore"), Component.text("Line 2 of item lore"))
                 .build();
 
@@ -44,7 +46,7 @@ public class GuiItemTest {
         GuiItem item = GuiItem.builder()
                 .slot(1)
                 .customModelData(123)
-                .name(Component.text("Item name"))
+                .name("Item name", 0xFF55FF)
                 .lore(Component.text("Line 1 of item lore"), Component.text("Line 2 of item lore"))
                 .build();
 
@@ -57,7 +59,7 @@ public class GuiItemTest {
                 .slot(1)
                 .material(Material.COBBLESTONE)
                 .customModelData(123)
-                .name(Component.text("Item name"))
+                .name("Item name", 0xFF55FF)
                 .lore(Component.text("Line 1 of item lore"), Component.text("Line 2 of item lore"))
                 .build();
 
@@ -67,7 +69,15 @@ public class GuiItemTest {
         Assertions.assertEquals(123, item.getStack().getItemMeta().getCustomModelData());
         Assertions.assertFalse(item.getStack().getItemMeta().getEnchantmentGlintOverride());
         Assertions.assertFalse(item.getStack().getItemMeta().isHideTooltip());
-        Assertions.assertEquals(Component.text("Item name"), item.getStack().getItemMeta().customName());
+        Assertions.assertTrue(item.getStack().getItemMeta().customName() instanceof TextComponent);
+
+        TextComponent customName = (TextComponent) item.getStack().getItemMeta().customName();
+        Assertions.assertNotNull(customName);
+        Assertions.assertEquals("Item name", customName.content());
+        Assertions.assertEquals(0xFF55FF, customName.color().value());
+        Assertions.assertEquals(TextDecoration.State.TRUE, customName.decorations().get(TextDecoration.BOLD));
+        Assertions.assertEquals(TextDecoration.State.FALSE, customName.decorations().get(TextDecoration.ITALIC));
+
         Assertions.assertEquals(
                 List.of(Component.text("Line 1 of item lore"), Component.text("Line 2 of item lore")),
                 item.getStack().getItemMeta().lore()
@@ -84,6 +94,7 @@ public class GuiItemTest {
 
         Assertions.assertNotNull(item);
         Assertions.assertEquals(Material.PLAYER_HEAD, item.getStack().getType());
+        Assertions.assertNull(item.getStack().getItemMeta().customName());
         Assertions.assertTrue(item.getStack().getItemMeta() instanceof SkullMeta);
 
         SkullMeta skullMeta = (SkullMeta) item.getStack().getItemMeta();
@@ -101,6 +112,7 @@ public class GuiItemTest {
 
         Assertions.assertNotNull(item);
         Assertions.assertNotEquals(Material.PLAYER_HEAD, item.getStack().getType());
+        Assertions.assertNull(item.getStack().getItemMeta().customName());
         Assertions.assertFalse(item.getStack().getItemMeta() instanceof SkullMeta);
     }
 }

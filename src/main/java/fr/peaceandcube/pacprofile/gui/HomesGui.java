@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Color;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
@@ -93,7 +92,7 @@ public class HomesGui extends UnmodifiableGui {
             }
             this.setItem(GuiItem.builder().slot(slot).material(color.getBed())
                     .customModelData(3010)
-                    .name(Component.text(name, TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                    .name(name, 0x5555FF)
                     .lore(bedLore)
                     .onLeftClick(() -> {
                         if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
@@ -122,7 +121,7 @@ public class HomesGui extends UnmodifiableGui {
 
             this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
                     .customModelData(3011)
-                    .name(NameComponents.HOME_NOTES)
+                    .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(Component.empty(), this.getNotesLore(name), Component.empty())
                     .lore(LoreComponents.HOME_NOTES_CLICK_LEFT, LoreComponents.HOME_NOTES_CLICK_RIGHT)
                     .onLeftClick(() -> new AnvilGUI.Builder().plugin(PACProfile.getInstance())
@@ -146,7 +145,7 @@ public class HomesGui extends UnmodifiableGui {
 
             this.setItem(GuiItem.builder().slot(slot + 2).material(color.getDye())
                     .customModelData(3012)
-                    .name(NameComponents.HOME_COLOR)
+                    .name(Messages.HOME_COLOR, 0x00AAAA)
                     .lore(Component.empty(), LoreComponents.HOME_COLOR_CLICK)
                     .onLeftClick(() -> new HomeColorGui(this.viewer, this.player, name, this.page, this.maxPages).open())
                     .build());
@@ -154,7 +153,7 @@ public class HomesGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
-                .name(NameComponents.HOMES_ORDER)
+                .name(Messages.HOMES_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(() -> {
@@ -165,7 +164,7 @@ public class HomesGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(NameComponents.PAGE_PREVIOUS)
+                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(() -> {
                     if (this.page == 1) {
                         new ProfileGui(this.viewer, this.player).open();
@@ -178,7 +177,7 @@ public class HomesGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
 
@@ -186,7 +185,7 @@ public class HomesGui extends UnmodifiableGui {
         if (homeCount > maxHomeOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(NameComponents.PAGE_NEXT)
+                    .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(() -> new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());

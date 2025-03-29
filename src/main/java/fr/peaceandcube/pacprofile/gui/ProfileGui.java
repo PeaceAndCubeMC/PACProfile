@@ -7,7 +7,6 @@ import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.statistic.Statistic;
 import fr.peaceandcube.pacprofile.statistic.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
@@ -68,7 +67,7 @@ public class ProfileGui extends UnmodifiableGui {
         playerLore.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         this.setItem(GuiItem.builder().slot(4).material(Material.PLAYER_HEAD).player(this.player)
                 .customModelData(3004)
-                .name(Component.text(this.player.getName(), TextColor.color(0x55FFFF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false))
+                .name(this.player.getName(), 0x55FFFF)
                 .lore(playerLore)
                 .build());
 
@@ -84,7 +83,7 @@ public class ProfileGui extends UnmodifiableGui {
         statsLore.add(this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE);
         this.setItem(GuiItem.builder().slot(9).material(Material.ENCHANTED_BOOK)
                 .customModelData(3004)
-                .name(NameComponents.STATISTICS)
+                .name(Messages.STATISTICS, 0xFF55FF)
                 .lore(statsLore)
                 .onLeftClick(() -> {
                     this.baseStatistics = !this.baseStatistics;
@@ -94,7 +93,7 @@ public class ProfileGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(17).material(Material.COMPARATOR)
                 .customModelData(3004)
-                .name(NameComponents.SETTINGS)
+                .name(Messages.SETTINGS, 0x555555)
                 .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
                 .onLeftClick(() -> new SettingsGui(this.viewer, this.player).open())
                 .build());
@@ -109,7 +108,7 @@ public class ProfileGui extends UnmodifiableGui {
         }
         this.setItem(GuiItem.builder().slot(20).material(Material.SUNFLOWER)
                 .customModelData(3004)
-                .name(NameComponents.COINS)
+                .name(Messages.COINS, 0xFFAA00)
                 .lore(coinLore)
                 .onLeftClick(() -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
@@ -130,7 +129,7 @@ public class ProfileGui extends UnmodifiableGui {
         }
         this.setItem(GuiItem.builder().slot(22).material(Material.NAME_TAG)
                 .customModelData(3004)
-                .name(NameComponents.HEAD_TICKETS)
+                .name(Messages.HEAD_TICKETS, 0x00AAAA)
                 .lore(headTicketLore)
                 .onLeftClick(() -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
@@ -152,7 +151,7 @@ public class ProfileGui extends UnmodifiableGui {
         }
         this.setItem(GuiItem.builder().slot(24).material(Material.WRITABLE_BOOK)
                 .customModelData(3004)
-                .name(NameComponents.MAILS)
+                .name(Messages.MAILS, 0xAA00AA)
                 .lore(mailLore)
                 .onLeftClick(() -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
@@ -176,7 +175,7 @@ public class ProfileGui extends UnmodifiableGui {
         );
         this.setItem(GuiItem.builder().slot(28).material(Material.RED_BED)
                 .customModelData(3004)
-                .name(NameComponents.HOMES)
+                .name(Messages.HOMES, 0x5555FF)
                 .lore(homesLore)
                 .onLeftClick(() -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open())
                 .build());
@@ -205,7 +204,7 @@ public class ProfileGui extends UnmodifiableGui {
         );
         this.setItem(GuiItem.builder().slot(30).material(Material.GOLDEN_SHOVEL)
                 .customModelData(3004)
-                .name(NameComponents.CLAIMS)
+                .name(Messages.CLAIMS, 0x00AA00)
                 .lore(claimsLore)
                 .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open())
                 .build());
@@ -220,7 +219,7 @@ public class ProfileGui extends UnmodifiableGui {
         );
         this.setItem(GuiItem.builder().slot(32).material(Material.PLAYER_HEAD)
                 .customModelData(3005)
-                .name(NameComponents.ONLINE_PLAYERS)
+                .name(Messages.ONLINE_PLAYERS, 0x55FF55)
                 .lore(onlinePlayersLore)
                 .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open())
                 .build());
@@ -228,7 +227,7 @@ public class ProfileGui extends UnmodifiableGui {
         this.maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
         this.setItem(GuiItem.builder().slot(34).material(Material.ENDER_PEARL)
                 .customModelData(3004)
-                .name(NameComponents.WARPS)
+                .name(Messages.WARPS, 0xFFFF55)
                 .lore(Component.empty(), LoreComponents.WARPS_CLICK)
                 .onLeftClick(() -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open())
                 .build());
@@ -236,7 +235,7 @@ public class ProfileGui extends UnmodifiableGui {
         if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
             this.setItem(GuiItem.builder().slot(45).material(Material.KNOWLEDGE_BOOK)
                     .customModelData(3004)
-                    .name(NameComponents.RULES)
+                    .name(Messages.RULES, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.RULES_CLICK)
                     .onLeftClick(() -> {
                         this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
@@ -248,7 +247,7 @@ public class ProfileGui extends UnmodifiableGui {
         if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
             this.setItem(GuiItem.builder().slot(46).material(Material.CHAIN)
                     .customModelData(3004)
-                    .name(NameComponents.LINKS)
+                    .name(Messages.LINKS, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.LINKS_CLICK)
                     .onLeftClick(() -> {
                         this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
@@ -260,7 +259,7 @@ public class ProfileGui extends UnmodifiableGui {
         if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
             this.setItem(GuiItem.builder().slot(47).material(Material.MAP)
                     .customModelData(3004)
-                    .name(NameComponents.DYNMAP)
+                    .name(Messages.DYNMAP, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)
                     .onLeftClick(() -> {
                         this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
@@ -271,7 +270,7 @@ public class ProfileGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(NameComponents.EXIT)
+                .name(Messages.EXIT, 0xFF5555)
                 .onLeftClick(this.inv::close)
                 .build());
 
