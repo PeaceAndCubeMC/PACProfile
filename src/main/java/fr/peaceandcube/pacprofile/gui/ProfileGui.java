@@ -3,6 +3,7 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.statistic.Statistic;
 import fr.peaceandcube.pacprofile.statistic.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -45,6 +46,8 @@ public class ProfileGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         String rank = this.getRank();
         String rankExpiration = this.getRankExpiration();
         String nickname = this.user.getNickname();
@@ -195,14 +198,15 @@ public class ProfileGui extends UnmodifiableGui {
     }
 
     private void fillStainedGlassPanes() {
-        this.setItemWithoutTooltip(0, Material.RED_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(1, Material.RED_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(2, Material.RED_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(3, Material.ORANGE_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(5, Material.ORANGE_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(6, Material.LIME_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(7, Material.LIME_STAINED_GLASS_PANE, 3001);
-        this.setItemWithoutTooltip(8, Material.LIME_STAINED_GLASS_PANE, 3001);
+        GuiItem.Builder builder = GuiItem.builder().customModelData(3001).hideTooltip();
+        this.setItem(builder.slot(0).material(Material.RED_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(1).material(Material.RED_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(2).material(Material.RED_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(3).material(Material.ORANGE_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(5).material(Material.ORANGE_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(6).material(Material.LIME_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(7).material(Material.LIME_STAINED_GLASS_PANE).build());
+        this.setItem(builder.slot(8).material(Material.LIME_STAINED_GLASS_PANE).build());
     }
 
     private String getRank() {

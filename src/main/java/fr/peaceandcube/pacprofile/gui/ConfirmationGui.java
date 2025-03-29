@@ -22,6 +22,8 @@ public class ConfirmationGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         this.setItem(3, Material.GREEN_TERRACOTTA, 3006, NameComponents.CONFIRMATION_YES);
         this.setItem(5, Material.RED_TERRACOTTA, 3006, NameComponents.CONFIRMATION_NO);
     }

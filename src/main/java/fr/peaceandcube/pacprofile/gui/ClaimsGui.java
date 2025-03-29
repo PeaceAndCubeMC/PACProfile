@@ -46,6 +46,8 @@ public class ClaimsGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         switch (this.orderSet.currentOrder()) {
             case DEFAULT -> this.claims = this.playerData.getClaims();
             case NAME_AZ -> this.claims.sort((claim1, claim2) ->

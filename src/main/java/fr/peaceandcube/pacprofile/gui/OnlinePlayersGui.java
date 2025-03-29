@@ -48,6 +48,8 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         switch (this.orderSet.currentOrder()) {
             case DEFAULT ->
                     this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
