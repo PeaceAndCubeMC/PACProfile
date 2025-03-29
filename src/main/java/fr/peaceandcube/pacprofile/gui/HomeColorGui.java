@@ -25,6 +25,8 @@ public class HomeColorGui extends UnmodifiableGui {
 
     @Override
     protected void fillInventory() {
+        this.items.clear();
+
         for (int i = 0; i < Color.values().length; i++) {
             Component name = Component.text(Color.values()[i].translate(), TextColor.color(0xFF55FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
             this.setItem(i, Color.values()[i].getDye(), 3012, name);
