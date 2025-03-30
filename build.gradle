@@ -7,20 +7,19 @@ plugins {
 }
 
 group = project.pacprofile_group
-archivesBaseName = project.pacprofile_name
 version = project.pacprofile_version
 
 repositories {
     // LuckPerms
     mavenCentral()
     // Paper
-    maven { url "https://repo.papermc.io/repository/maven-public/" }
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
     // AnvilGUI
-    maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
+    maven { url = "https://repo.codemc.io/repository/maven-snapshots/" }
     // Essentials
-    maven { url "https://repo.essentialsx.net/releases/" }
+    maven { url = "https://repo.essentialsx.net/releases/" }
     // GriefPrevention
-    maven { url "https://jitpack.io" }
+    maven { url = "https://jitpack.io" }
 
     flatDir { dirs 'libs' }
 }
@@ -36,8 +35,10 @@ dependencies {
     include "net.wesjd:anvilgui:${anvilgui_version}"
 
     compileOnly "net.luckperms:api:${luckperms_version}"
-    compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
     compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
+    compileOnly("net.essentialsx:EssentialsX:${essentials_version}") {
+        exclude group: "org.spigotmc"
+    }
 
     compileOnly name: "pacutilities-${pacutilities_version}"
     compileOnly name: "pacbirthday-${pacbirthday_version}"
@@ -54,7 +55,7 @@ build {
 shadowJar {
     configurations = [project.configurations.include]
 
-    archiveFileName = "${archivesBaseName}-${version}.jar"
+    archiveFileName = "${pacprofile_name}-${version}.jar"
 }
 
 java {

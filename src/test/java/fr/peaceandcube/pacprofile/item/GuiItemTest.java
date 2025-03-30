@@ -69,7 +69,7 @@ public class GuiItemTest {
         Assertions.assertEquals(123, item.getStack().getItemMeta().getCustomModelData());
         Assertions.assertFalse(item.getStack().getItemMeta().getEnchantmentGlintOverride());
         Assertions.assertFalse(item.getStack().getItemMeta().isHideTooltip());
-        Assertions.assertTrue(item.getStack().getItemMeta().customName() instanceof TextComponent);
+        Assertions.assertInstanceOf(TextComponent.class, item.getStack().getItemMeta().customName());
 
         TextComponent customName = (TextComponent) item.getStack().getItemMeta().customName();
         Assertions.assertNotNull(customName);
@@ -95,7 +95,7 @@ public class GuiItemTest {
         Assertions.assertNotNull(item);
         Assertions.assertEquals(Material.PLAYER_HEAD, item.getStack().getType());
         Assertions.assertNull(item.getStack().getItemMeta().customName());
-        Assertions.assertTrue(item.getStack().getItemMeta() instanceof SkullMeta);
+        Assertions.assertInstanceOf(SkullMeta.class, item.getStack().getItemMeta());
 
         SkullMeta skullMeta = (SkullMeta) item.getStack().getItemMeta();
         Assertions.assertNotNull(skullMeta.getOwningPlayer());

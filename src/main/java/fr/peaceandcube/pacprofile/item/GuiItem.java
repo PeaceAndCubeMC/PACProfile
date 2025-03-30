@@ -125,7 +125,7 @@ public class GuiItem {
             ItemStack stack = new ItemStack(material);
             ItemMeta meta = stack.getItemMeta();
             if (name != null) {
-                meta.displayName(Component
+                meta.customName(Component
                         .text(name.text(), TextColor.color(name.color()), TextDecoration.BOLD)
                         .decoration(TextDecoration.ITALIC, false));
             }
