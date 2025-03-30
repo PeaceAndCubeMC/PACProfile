@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!-- See https://github.com/FabricMC/fabric/blob/1.21.5/checkstyle.xml -->
+
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="fileExtensions" value="java"/>
+    <property name="localeLanguage" value="en"/>
+    <property name="localeCountry" value="US"/>
+    <property name="tabWidth" value="4"/>
+
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- disallow trailing whitespace -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="message" value="trailing whitespace"/>
+    </module>
+
+    <!-- disallow multiple consecutive blank lines -->
+    <module name="RegexpMultiline">
+        <property name="format" value="\n[\t ]*\r?\n[\t ]*\r?\n"/>
+        <property name="message" value="adjacent blank lines"/>
+    </module>
+
+    <!-- disallow blank after { -->
+    <module name="RegexpMultiline">
+        <property name="format" value="\{[\t ]*\r[\t ]*\r"/>
+        <property name="message" value="blank line after '{'"/>
+    </module>
+
+    <!-- disallow blank before } -->
+    <module name="RegexpMultiline">
+        <property name="format" value="\n[\t ]*\r?\n[\t ]*\}"/>
+        <property name="message" value="blank line before '}'"/>
+    </module>
+
+    <!-- require blank before { in the same indentation level -->
+    <module name="RegexpMultiline">
+        <property name="format" value="(?&lt;=\n)([\t]+)(?:[^/\r\n \t][^\r\n]*|/[^/\r\n][^\r\n]*|[^/\r\n][^\r\n]*(\r?\n\1//[^\r\n]*)+)\r?\n\1(|(if|do|while|for|try)[^\r\n]+)\{[\t ]*\r?\n"/>
+        <property name="message" value="missing blank line before block at same indentation level"/>
+    </module>
+
+    <!-- require blank after } in the same indentation level -->
+    <module name="RegexpMultiline">
+        <property name="format" value="(?&lt;=\n)([\t]+)\}\r?\n\1(?:[^\r\n\}cd]|c[^\r\na]|ca[^\r\ns]|d[^\r\ne]|de[^\r\nf])"/>
+        <property name="message" value="missing blank line after block at same indentation level"/>
+    </module>
+
+    <module name="TreeWalker">
+        <!-- Ensure all imports are ship shape -->
+        <module name="IllegalImport"/>
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+
+        <!-- Ensures braces are at the end of a line -->
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+
+        <!-- single line statements on one line, -->
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_IF,LITERAL_FOR,LITERAL_WHILE"/>
+            <property name="allowSingleLineStatement" value="true"/>
+        </module>
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_ELSE,LITERAL_DO"/>
+            <property name="allowSingleLineStatement" value="false"/>
+        </module>
+
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+            <property name="allowMultipleEmptyLines" value="false"/>
+        </module>
+
+        <module name="OperatorWrap"/>
+        <module name="SeparatorWrap">
+            <property name="tokens" value="DOT,ELLIPSIS,AT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="tokens" value="COMMA,SEMI"/>
+            <property name="option" value="eol"/>
+        </module>
+
+        <module name="Indentation"/>
+        <module name="CommentsIndentation"/>
+
+        <module name="AnnotationLocation"/>
+        <module name="MissingOverride"/>
+
+        <!-- By default, this allows catch blocks with only comments -->
+        <module name="EmptyCatchBlock"/>
+
+        <module name="JavadocParagraph"/>
+        <module name="JavadocStyle"/>
+        <module name="AtclauseOrder">
+            <property name="tagOrder" value="@param,@return,@throws,@deprecated"/>
+        </module>
+    </module>
+</module>
