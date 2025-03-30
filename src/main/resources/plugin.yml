@@ -1,9 +1,11 @@
 name: PACProfile
 main: fr.peaceandcube.pacprofile.PACProfile
 version: ${version}
-author: YanisBft
+description: A plugin providing an interface to see and use many PeaceAndCube features
+authors:
+  - YanisBft
 website: https://github.com/PeaceAndCubeMC/PACProfile
-api-version: 1.21
+api-version: 1.21.4
 
 depend:
   - LuckPerms
