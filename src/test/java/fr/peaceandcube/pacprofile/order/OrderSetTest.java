@@ -9,14 +9,14 @@ public class OrderSetTest {
 
     @ParameterizedTest
     @CsvSource({
-            "DEFAULT,NAME_AZ",
-            "NAME_AZ,NAME_ZA",
-            "NAME_ZA,AREA_ASC",
-            "AREA_ASC,AREA_DESC",
-            "AREA_DESC,CATEGORY_AZ",
-            "CATEGORY_AZ,CATEGORY_ZA",
-            "CATEGORY_ZA,COLOR",
-            "COLOR,DEFAULT"
+        "DEFAULT,NAME_AZ",
+        "NAME_AZ,NAME_ZA",
+        "NAME_ZA,AREA_ASC",
+        "AREA_ASC,AREA_DESC",
+        "AREA_DESC,CATEGORY_AZ",
+        "CATEGORY_AZ,CATEGORY_ZA",
+        "CATEGORY_ZA,COLOR",
+        "COLOR,DEFAULT"
     })
     void testOrderSetNextWithAll(String currentOrder, String nextOrder) {
         OrderSet orderSet = new OrderSet(Order.valueOf(currentOrder), Order.DEFAULT,
@@ -33,10 +33,10 @@ public class OrderSetTest {
 
     @ParameterizedTest
     @CsvSource({
-            "DEFAULT,NAME_AZ",
-            "NAME_AZ,NAME_ZA",
-            "NAME_ZA,COLOR",
-            "COLOR,DEFAULT"
+        "DEFAULT,NAME_AZ",
+        "NAME_AZ,NAME_ZA",
+        "NAME_ZA,COLOR",
+        "COLOR,DEFAULT"
     })
     void testOrderSetNextWithNotAll(String currentOrder, String nextOrder) {
         OrderSet orderSet = new OrderSet(Order.valueOf(currentOrder), Order.DEFAULT,
@@ -51,8 +51,8 @@ public class OrderSetTest {
 
     @ParameterizedTest
     @CsvSource({
-            "DEFAULT,DEFAULT",
-            "AREA_DESC,AREA_DESC"
+        "DEFAULT,DEFAULT",
+        "AREA_DESC,AREA_DESC"
     })
     void testOrderSetNextWithOne(String currentOrder, String nextOrder) {
         OrderSet orderSet = new OrderSet(Order.valueOf(currentOrder), Order.valueOf(currentOrder));
