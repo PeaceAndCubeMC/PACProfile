@@ -25,6 +25,8 @@ jobs:
         run: chmod +x ./gradlew
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Checkstyle
+        run: ./gradlew checkstyleMain checkstyleTest
       - name: Build
         run: ./gradlew build
       - name: Run tests
