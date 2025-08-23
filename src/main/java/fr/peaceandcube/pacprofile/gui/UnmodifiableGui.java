@@ -89,7 +89,8 @@ public abstract class UnmodifiableGui implements Listener {
 
     protected void dispatchCommand(String command) {
         if (command != null && !command.isEmpty()) {
-            Bukkit.dispatchCommand(this.viewer, command);
+            // Get as close as possible to player-run commands, in order to respect permissions
+            this.viewer.chat("/" + command);
         }
     }
 

@@ -23,8 +23,7 @@ public class Statistics {
         register(new Statistic("luck", Attribute.LUCK));
     }
 
-    private static Statistic register(Statistic statistic) {
+    private static void register(Statistic statistic) {
         ALL.add(statistic);
-        return statistic;
     }
 }
