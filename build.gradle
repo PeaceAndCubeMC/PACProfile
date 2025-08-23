@@ -42,7 +42,8 @@ dependencies {
     compileOnly name: "pacutilities-${pacutilities_version}"
     compileOnly name: "pacbirthday-${pacbirthday_version}"
 
-    testImplementation "org.junit.jupiter:junit-jupiter:5.7.1"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.13.4"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.13.4"
 }
 
 build {
