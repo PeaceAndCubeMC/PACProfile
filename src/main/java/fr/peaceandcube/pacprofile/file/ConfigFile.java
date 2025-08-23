@@ -66,6 +66,16 @@ public class ConfigFile extends YamlFile {
             homesSection.set("enable_deletion", true);
         }
 
+        // config for online players
+        ConfigurationSection onlinePlayersSection = this.config.getConfigurationSection("online_players");
+        if (onlinePlayersSection == null) {
+            onlinePlayersSection = this.config.createSection("online_players");
+        }
+
+        if (!onlinePlayersSection.isBoolean("enable_teleportation")) {
+            onlinePlayersSection.set("enable_teleportation", true);
+        }
+
         // config for statistics
         ConfigurationSection statsSection = this.config.getConfigurationSection("statistics");
         if (statsSection == null) {
@@ -148,6 +158,10 @@ public class ConfigFile extends YamlFile {
 
     public boolean isHomeDeletionEnabled() {
         return this.config.getConfigurationSection("homes").getBoolean("enable_deletion", true);
+    }
+
+    public boolean isOnlinePlayerTeleportationEnabled() {
+        return this.config.getConfigurationSection("online_players").getBoolean("enable_teleportation", true);
     }
 
     public boolean isStatisticEnabled(String name) {

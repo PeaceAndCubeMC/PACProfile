@@ -27,6 +27,9 @@ A plugin providing an interface to see many PeaceAndCube features.
 - **enable_teleportation**: Toggles teleport action when left-clicking a home. Defaults to `true`.
 - **enable_deletion**: Toggles delete action when right-clicking a home. Defaults to `true`.
 
+### `online_players`
+- **enable_teleportation**: Toggles teleport request when left-clicking a player. Defaults to `true`.
+
 ### `statistics`
 - _stat name_
   - **enabled**: Toggles whether this stat is displayed. Defaults to `true`.

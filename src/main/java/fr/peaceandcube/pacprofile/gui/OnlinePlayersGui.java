@@ -91,7 +91,9 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                         .append(LoreComponents.ONLINE_PLAYER_MAIL_SENT_2)
                 );
                 lore.add(Component.empty());
-                lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
+                if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
+                    lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
+                }
             }
             this.setPlayerHead(slot, player, 3030, Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), lore);
 
@@ -189,9 +191,11 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
         // players
         else if (PLAYERS_SLOTS.containsKey(slot)) {
-            if (!PLAYERS_SLOTS.get(slot).getUniqueId().equals(this.player.getUniqueId())) {
-                this.dispatchCommand("tpa " + PLAYERS_SLOTS.get(slot).getName());
-                this.inv.close();
+            if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
+                if (!PLAYERS_SLOTS.get(slot).getUniqueId().equals(this.player.getUniqueId())) {
+                    this.dispatchCommand("tpa " + PLAYERS_SLOTS.get(slot).getName());
+                    this.inv.close();
+                }
             }
         }
 
