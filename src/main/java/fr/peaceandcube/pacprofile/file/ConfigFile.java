@@ -15,7 +15,6 @@ public class ConfigFile extends YamlFile {
     static {
         DEFAULT_CONFIGS.add(new ConfigEntry("date_format", "yyyy-MM-dd HH:mm:ss", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("first_time_advancement_name", "", null));
-        DEFAULT_CONFIGS.add(new ConfigEntry("default_home_color", "red", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets_scoreboard", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("coins", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets", "", "commands_on_click"));
@@ -59,6 +58,9 @@ public class ConfigFile extends YamlFile {
             homesSection = this.config.createSection("homes");
         }
 
+        if (!homesSection.isString("default_color")) {
+            homesSection.set("default_color", "red");
+        }
         if (!homesSection.isBoolean("enable_teleportation")) {
             homesSection.set("enable_teleportation", true);
         }
@@ -106,7 +108,7 @@ public class ConfigFile extends YamlFile {
     }
 
     public String getDefaultHomeColor() {
-        return this.config.getString("default_home_color");
+        return this.config.getConfigurationSection("homes").getString("default_color", "red");
     }
 
     public String getHeadTicketsScoreboard() {

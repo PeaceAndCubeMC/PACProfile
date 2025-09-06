@@ -181,7 +181,7 @@ public class HomesGui extends UnmodifiableGui {
             TextInputDialog.of(
                     this.viewer,
                     NameComponents.HOMES,
-                    homeColor != null ? homeColor.getBed() : Material.RED_BED,
+                    homeColor.getBed(),
                     HOME_SLOTS.get(slot - 1),
                     Messages.HOME_NOTES_TITLE,
                     PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)),
