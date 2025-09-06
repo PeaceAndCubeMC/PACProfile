@@ -8,16 +8,16 @@ import fr.peaceandcube.pacprofile.text.NameComponents;
 import fr.peaceandcube.pacprofile.util.Color;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class HomesGui extends UnmodifiableGui {
     private final Map<Integer, String> HOME_SLOTS = new LinkedHashMap<>();
@@ -94,13 +94,13 @@ public class HomesGui extends UnmodifiableGui {
                     bedLore
             );
 
-            this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, List.of(
-                    Component.empty(),
-                    this.getNotesLore(name),
-                    Component.empty(),
-                    LoreComponents.HOME_NOTES_CLICK_LEFT,
-                    LoreComponents.HOME_NOTES_CLICK_RIGHT
-            ));
+            List<Component> notesLore = new ArrayList<>();
+            notesLore.add(Component.empty());
+            notesLore.addAll(getNotesLore(name));
+            notesLore.add(Component.empty());
+            notesLore.add(LoreComponents.HOME_NOTES_CLICK_LEFT);
+            notesLore.add(LoreComponents.HOME_NOTES_CLICK_RIGHT);
+            this.setItem(slot + 1, Material.PAPER, 3011, NameComponents.HOME_NOTES, notesLore);
 
             this.setItem(slot + 2, color.getDye(), 3012, NameComponents.HOME_COLOR, List.of(
                     Component.empty(),
@@ -123,12 +123,14 @@ public class HomesGui extends UnmodifiableGui {
         }
     }
 
-    private Component getNotesLore(String name) {
+    private List<TextComponent> getNotesLore(String name) {
         String notes = PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name);
         if (!notes.isEmpty()) {
-            return Component.text(notes, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false);
+            return Stream.of(notes.split("\\R"))
+                    .map(note -> Component.text(note, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false))
+                    .toList();
         }
-        return Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        return List.of(Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 
     @Override
@@ -175,19 +177,21 @@ public class HomesGui extends UnmodifiableGui {
 
         // home notes
         else if (HOME_SLOTS.containsKey(slot - 1)) {
-            new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.HOME_NOTES_TITLE)
-                    .text(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
-                    .itemLeft(new ItemStack(Material.PAPER))
-                    .onClick((anvilSlot, stateSnapshot) -> {
-                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
-                            return List.of();
-                        }
-                        PACProfile.getInstance().playerData.setHomeNotes(stateSnapshot.getPlayer().getUniqueId(), HOME_SLOTS.get(slot - 1), stateSnapshot.getText());
+            Color homeColor = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)));
+            TextInputDialog.of(
+                    this.viewer,
+                    NameComponents.HOMES,
+                    homeColor != null ? homeColor.getBed() : Material.RED_BED,
+                    HOME_SLOTS.get(slot - 1),
+                    Messages.HOME_NOTES_TITLE,
+                    PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)),
+                    8,
+                    80,
+                    (newValue) -> {
+                        PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1), newValue);
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                        return List.of(AnvilGUI.ResponseAction.close());
-                    })
-                    .open(this.viewer);
+                    }
+            ).show();
         }
 
         // home colors

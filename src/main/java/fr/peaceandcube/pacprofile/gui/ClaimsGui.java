@@ -11,12 +11,10 @@ import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -195,19 +193,20 @@ public class ClaimsGui extends UnmodifiableGui {
 
         // claim names
         else if (CLAIM_SLOTS.containsKey(slot - 2)) {
-            new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.CLAIM_NAME_TITLE)
-                    .text(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)))
-                    .itemLeft(new ItemStack(Material.PAPER))
-                    .onClick((anvilSlot, stateSnapshot) -> {
-                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
-                            return List.of();
-                        }
-                        PACProfile.getInstance().playerData.setClaimName(stateSnapshot.getPlayer().getUniqueId(), CLAIM_SLOTS.get(slot - 2), stateSnapshot.getText());
+            TextInputDialog.of(
+                    this.viewer,
+                    NameComponents.CLAIMS,
+                    Material.GOLDEN_SHOVEL,
+                    Messages.CLAIMS_DEFAULT_NAME.formatted(CLAIM_SLOTS.get(slot - 2)),
+                    Messages.CLAIM_NAME_TITLE,
+                    PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)),
+                    1,
+                    18,
+                    (newValue) -> {
+                        PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2), newValue);
                         new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                        return List.of(AnvilGUI.ResponseAction.close());
-                    })
-                    .open(this.viewer);
+                    }
+            ).show();
         }
     }
 }

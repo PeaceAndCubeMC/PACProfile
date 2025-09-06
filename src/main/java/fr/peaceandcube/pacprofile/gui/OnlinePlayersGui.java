@@ -12,16 +12,18 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OnlinePlayersGui extends UnmodifiableGui {
     private final Map<Integer, Player> PLAYERS_SLOTS = new LinkedHashMap<>();
@@ -97,13 +99,13 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             }
             this.setPlayerHead(slot, player, 3030, Component.text(player.getName(), TextColor.color(0x5555FF), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false), lore);
 
-            this.setItem(slot + 1, Material.PAPER, 3031, NameComponents.HOME_NOTES, List.of(
-                    Component.empty(),
-                    this.getNotesLore(playerUuid),
-                    Component.empty(),
-                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT,
-                    LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT
-            ));
+            List<Component> notesLore = new ArrayList<>();
+            notesLore.add(Component.empty());
+            notesLore.addAll(getNotesLore(playerUuid));
+            notesLore.add(Component.empty());
+            notesLore.add(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT);
+            notesLore.add(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT);
+            this.setItem(slot + 1, Material.PAPER, 3031, NameComponents.HOME_NOTES, notesLore);
         }
 
         this.setItem(51, Material.HOPPER, 3013, NameComponents.ONLINE_PLAYERS_ORDER, List.of(
@@ -150,12 +152,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                 .count();
     }
 
-    private Component getNotesLore(String playerUuid) {
+    private List<TextComponent> getNotesLore(String playerUuid) {
         String notes = PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid);
         if (!notes.isEmpty()) {
-            return Component.text(notes, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false);
+            return Stream.of(notes.split("\\R"))
+                    .map(note -> Component.text(note, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false))
+                    .toList();
         }
-        return Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false);
+        return List.of(Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 
     @Override
@@ -201,19 +205,28 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
         // player notes
         else if (PLAYERS_SLOTS.containsKey(slot - 1)) {
-            new AnvilGUI.Builder().plugin(PACProfile.getInstance())
-                    .title(Messages.ONLINE_PLAYER_NOTES_TITLE)
-                    .text(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
-                    .itemLeft(new ItemStack(Material.PAPER))
-                    .onClick((anvilSlot, stateSnapshot) -> {
-                        if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
-                            return List.of();
-                        }
-                        PACProfile.getInstance().playerData.setPlayerNotes(stateSnapshot.getPlayer().getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), stateSnapshot.getText());
+            ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
+            if (itemStack.getItemMeta() instanceof SkullMeta meta) {
+                meta.setOwningPlayer(PLAYERS_SLOTS.get(slot - 1));
+                meta.setCustomModelData(3030);
+                meta.setHideTooltip(true);
+                itemStack.setItemMeta(meta);
+            }
+
+            TextInputDialog.of(
+                    this.viewer,
+                    NameComponents.ONLINE_PLAYERS,
+                    itemStack,
+                    PLAYERS_SLOTS.get(slot - 1).getName(),
+                    Messages.ONLINE_PLAYER_NOTES_TITLE,
+                    PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()),
+                    8,
+                    80,
+                    (newValue) -> {
+                        PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), newValue);
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                        return List.of(AnvilGUI.ResponseAction.close());
-                    })
-                    .open(this.viewer);
+                    }
+            ).show();
         }
     }
 
