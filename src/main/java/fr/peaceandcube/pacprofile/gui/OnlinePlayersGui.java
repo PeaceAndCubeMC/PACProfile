@@ -213,20 +213,20 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                 itemStack.setItemMeta(meta);
             }
 
-            TextInputDialog.of(
-                    this.viewer,
-                    NameComponents.ONLINE_PLAYERS,
-                    itemStack,
-                    PLAYERS_SLOTS.get(slot - 1).getName(),
-                    Messages.ONLINE_PLAYER_NOTES_TITLE,
-                    PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()),
-                    8,
-                    80,
-                    (newValue) -> {
+            TextInputDialog.builder()
+                    .player(this.viewer)
+                    .title(NameComponents.ONLINE_PLAYERS)
+                    .bodyItem(itemStack)
+                    .bodyText(PLAYERS_SLOTS.get(slot - 1).getName())
+                    .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
+                    .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
+                    .inputSize(8, 80)
+                    .onConfirm(newValue -> {
                         PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), newValue);
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                    }
-            ).show();
+                    })
+                    .build()
+                    .show();
         }
     }
 

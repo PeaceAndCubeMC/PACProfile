@@ -193,20 +193,20 @@ public class ClaimsGui extends UnmodifiableGui {
 
         // claim names
         else if (CLAIM_SLOTS.containsKey(slot - 2)) {
-            TextInputDialog.of(
-                    this.viewer,
-                    NameComponents.CLAIMS,
-                    Material.GOLDEN_SHOVEL,
-                    Messages.CLAIMS_DEFAULT_NAME.formatted(CLAIM_SLOTS.get(slot - 2)),
-                    Messages.CLAIM_NAME_TITLE,
-                    PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)),
-                    1,
-                    18,
-                    (newValue) -> {
+            TextInputDialog.builder()
+                    .player(this.viewer)
+                    .title(NameComponents.CLAIMS)
+                    .bodyItem(Material.GOLDEN_SHOVEL)
+                    .bodyText(Messages.CLAIMS_DEFAULT_NAME.formatted(CLAIM_SLOTS.get(slot - 2)))
+                    .inputLabel(Messages.CLAIM_NAME_TITLE)
+                    .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)))
+                    .inputSize(1, 18)
+                    .onConfirm(newValue -> {
                         PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2), newValue);
                         new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                    }
-            ).show();
+                    })
+                    .build()
+                    .show();
         }
     }
 }

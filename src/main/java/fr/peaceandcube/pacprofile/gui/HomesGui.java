@@ -178,20 +178,20 @@ public class HomesGui extends UnmodifiableGui {
         // home notes
         else if (HOME_SLOTS.containsKey(slot - 1)) {
             Color homeColor = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)));
-            TextInputDialog.of(
-                    this.viewer,
-                    NameComponents.HOMES,
-                    homeColor.getBed(),
-                    HOME_SLOTS.get(slot - 1),
-                    Messages.HOME_NOTES_TITLE,
-                    PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)),
-                    8,
-                    80,
-                    (newValue) -> {
+            TextInputDialog.builder()
+                    .player(this.viewer)
+                    .title(NameComponents.HOMES)
+                    .bodyItem(homeColor.getBed())
+                    .bodyText(HOME_SLOTS.get(slot - 1))
+                    .inputLabel(Messages.HOME_NOTES_TITLE)
+                    .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
+                    .inputSize(8, 80)
+                    .onConfirm(newValue -> {
                         PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1), newValue);
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                    }
-            ).show();
+                    })
+                    .build()
+                    .show();
         }
 
         // home colors

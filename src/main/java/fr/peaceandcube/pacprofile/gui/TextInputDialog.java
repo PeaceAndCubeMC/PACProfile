@@ -32,42 +32,102 @@ public class TextInputDialog {
         this.player.showDialog(dialog);
     }
 
-    public static TextInputDialog of(Player player, Component title, Material material, String bodyText, String inputLabel, String inputValue, int inputLines, int inputHeight, Consumer<String> callback) {
-        ItemStack itemStack = ItemStack.of(material);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setHideTooltip(true);
-        itemStack.setItemMeta(itemMeta);
-        return TextInputDialog.of(player, title, itemStack, bodyText, inputLabel, inputValue, inputLines, inputHeight, callback);
+    public static Builder builder() {
+        return new Builder();
     }
 
-    @SuppressWarnings("UnstableApiUsage")
-    public static TextInputDialog of(Player player, Component title, ItemStack itemStack, String bodyText, String inputLabel, String inputValue, int inputLines, int inputHeight, Consumer<String> callback) {
-        Dialog dialog = Dialog.create(builder -> builder.empty()
-                .base(DialogBase.builder(title)
-                        .body(List.of(
-                                DialogBody.item(itemStack).description(DialogBody.plainMessage(Component.text(bodyText))).build()
-                        ))
-                        .inputs(List.of(
-                                DialogInput.text("value", Component.text(inputLabel))
-                                        .initial(inputValue)
-                                        .maxLength(1024)
-                                        .multiline(TextDialogInput.MultilineOptions.create(inputLines, inputHeight)).build()
-                        ))
-                        .build()
-                ).type(DialogType.confirmation(
-                        ActionButton.builder(Component.text(Messages.CONFIRMATION_YES))
-                                .action(DialogAction.customClick((response, audience) -> {
-                                    String value = response.getText("value");
-                                    if (audience == player) {
-                                        callback.accept(value);
-                                    }
-                                }, ClickCallback.Options.builder().build()))
-                                .build(),
-                        ActionButton.builder(Component.text(Messages.CONFIRMATION_NO))
-                                .build()
-                ))
-        );
+    public static class Builder {
+        private Player player;
+        private Component title;
+        private ItemStack bodyItem;
+        private String bodyText;
+        private String inputLabel;
+        private String inputValue;
+        private int inputMaxLines;
+        private int inputHeight;
+        private Consumer<String> onConfirm;
 
-        return new TextInputDialog(dialog, player);
+        private Builder() {
+        }
+
+        public Builder player(Player player) {
+            this.player = player;
+            return this;
+        }
+
+        public Builder title(Component title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder bodyItem(Material material) {
+            ItemStack bodyItem = ItemStack.of(material);
+            ItemMeta itemMeta = bodyItem.getItemMeta();
+            itemMeta.setHideTooltip(true);
+            bodyItem.setItemMeta(itemMeta);
+            return bodyItem(bodyItem);
+        }
+
+        public Builder bodyItem(ItemStack bodyItem) {
+            this.bodyItem = bodyItem;
+            return this;
+        }
+
+        public Builder bodyText(String bodyText) {
+            this.bodyText = bodyText;
+            return this;
+        }
+
+        public Builder inputLabel(String inputLabel) {
+            this.inputLabel = inputLabel;
+            return this;
+        }
+
+        public Builder inputValue(String inputValue) {
+            this.inputValue = inputValue;
+            return this;
+        }
+
+        public Builder inputSize(int maxLines, int height) {
+            this.inputMaxLines = maxLines;
+            this.inputHeight = height;
+            return this;
+        }
+
+        public Builder onConfirm(Consumer<String> onConfirm) {
+            this.onConfirm = onConfirm;
+            return this;
+        }
+
+        @SuppressWarnings("UnstableApiUsage")
+        public TextInputDialog build() {
+            Dialog dialog = Dialog.create(builder -> builder.empty()
+                    .base(DialogBase.builder(title)
+                            .body(List.of(
+                                    DialogBody.item(bodyItem).description(DialogBody.plainMessage(Component.text(bodyText))).build()
+                            ))
+                            .inputs(List.of(
+                                    DialogInput.text("value", Component.text(inputLabel))
+                                            .initial(inputValue)
+                                            .maxLength(1024)
+                                            .multiline(TextDialogInput.MultilineOptions.create(inputMaxLines, inputHeight)).build()
+                            ))
+                            .build()
+                    ).type(DialogType.confirmation(
+                            ActionButton.builder(Component.text(Messages.CONFIRMATION_YES))
+                                    .action(DialogAction.customClick((response, audience) -> {
+                                        String value = response.getText("value");
+                                        if (audience == player) {
+                                            onConfirm.accept(value);
+                                        }
+                                    }, ClickCallback.Options.builder().build()))
+                                    .build(),
+                            ActionButton.builder(Component.text(Messages.CONFIRMATION_NO))
+                                    .build()
+                    ))
+            );
+
+            return new TextInputDialog(dialog, player);
+        }
     }
 }
