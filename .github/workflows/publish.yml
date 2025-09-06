@@ -9,19 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'adopt'
       - name: Make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Publish package
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publish
+        run: ./gradlew publish
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
