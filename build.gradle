@@ -15,8 +15,6 @@ repositories {
     mavenCentral()
     // Paper
     maven { url "https://repo.papermc.io/repository/maven-public/" }
-    // AnvilGUI
-    maven { url "https://repo.codemc.io/repository/maven-snapshots/" }
     // Essentials
     maven { url "https://repo.essentialsx.net/releases/" }
     // GriefPrevention
@@ -32,8 +30,6 @@ configurations {
 
 dependencies {
     implementation "io.papermc.paper:paper-api:${paper_version}"
-
-    include "net.wesjd:anvilgui:${anvilgui_version}"
 
     compileOnly "net.luckperms:api:${luckperms_version}"
     compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
