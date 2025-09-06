@@ -52,7 +52,7 @@ public abstract class UnmodifiableGui implements Listener {
     protected void setItem(int slot, Material material, int customModelData, boolean glint, boolean hideTooltip, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
-        meta.displayName(name);
+        meta.customName(name);
         meta.lore(lore);
         meta.setCustomModelData(customModelData);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
@@ -74,7 +74,7 @@ public abstract class UnmodifiableGui implements Listener {
     protected void setPlayerHead(int slot, Player player, int customModelData, Component name, List<Component> lore) {
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
         if (stack.getItemMeta() instanceof SkullMeta meta) {
-            meta.displayName(name);
+            meta.customName(name);
             meta.lore(lore);
             meta.setOwningPlayer(player);
             meta.setCustomModelData(customModelData);

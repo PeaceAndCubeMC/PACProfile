@@ -7,18 +7,17 @@ plugins {
 }
 
 group = project.pacprofile_group
-archivesBaseName = project.pacprofile_name
 version = project.pacprofile_version
 
 repositories {
     // LuckPerms
     mavenCentral()
     // Paper
-    maven { url "https://repo.papermc.io/repository/maven-public/" }
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
     // Essentials
-    maven { url "https://repo.essentialsx.net/releases/" }
+    maven { url = "https://repo.essentialsx.net/releases/" }
     // GriefPrevention
-    maven { url "https://jitpack.io" }
+    maven { url = "https://jitpack.io" }
 
     flatDir { dirs 'libs' }
 }
@@ -49,7 +48,7 @@ build {
 shadowJar {
     configurations = [project.configurations.include]
 
-    archiveFileName = "${archivesBaseName}-${version}.jar"
+    archiveFileName = "${pacprofile_name}-${version}.jar"
 }
 
 java {
