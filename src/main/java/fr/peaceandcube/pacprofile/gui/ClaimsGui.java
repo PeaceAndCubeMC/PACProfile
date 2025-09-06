@@ -134,7 +134,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
     private String getName(String claimId) {
         String name = PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId);
-        return name.isEmpty() ? Messages.NOT_DEFINED : name;
+        return name.isEmpty() ? Messages.CLAIMS_DEFAULT_NAME.formatted(claimId) : name;
     }
 
     private Component getNameLore(String claimId) {

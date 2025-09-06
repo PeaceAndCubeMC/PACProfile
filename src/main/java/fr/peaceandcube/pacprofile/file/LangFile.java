@@ -97,6 +97,7 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("home_color_title", "Choose a color");
         DEFAULT_TRANSLATIONS.put("claims", "Claims");
         DEFAULT_TRANSLATIONS.put("claims_total", "Total: ");
+        DEFAULT_TRANSLATIONS.put("claims_default_name", "Claim n°%s");
         DEFAULT_TRANSLATIONS.put("claims_cb_used", "Used claim blocks: ");
         DEFAULT_TRANSLATIONS.put("claims_cb_remaining", "Remaining claim blocks: ");
         DEFAULT_TRANSLATIONS.put("claims_cb_accrued", "Accrued claim blocks: ");

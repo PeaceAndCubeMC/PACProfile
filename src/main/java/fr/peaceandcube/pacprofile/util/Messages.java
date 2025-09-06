@@ -75,6 +75,7 @@ public class Messages {
     public static String HOME_COLOR_TITLE;
     public static String CLAIMS;
     public static String CLAIMS_TOTAL;
+    public static String CLAIMS_DEFAULT_NAME;
     public static String CLAIMS_CB_USED;
     public static String CLAIMS_CB_REMAINING;
     public static String CLAIMS_CB_ACCRUED;
@@ -204,6 +205,7 @@ public class Messages {
         HOME_COLOR_TITLE = PACProfile.getInstance().lang.translate("home_color_title");
         CLAIMS = PACProfile.getInstance().lang.translate("claims");
         CLAIMS_TOTAL = PACProfile.getInstance().lang.translate("claims_total");
+        CLAIMS_DEFAULT_NAME = PACProfile.getInstance().lang.translate("claims_default_name");
         CLAIMS_CB_USED = PACProfile.getInstance().lang.translate("claims_cb_used");
         CLAIMS_CB_REMAINING = PACProfile.getInstance().lang.translate("claims_cb_remaining");
         CLAIMS_CB_ACCRUED = PACProfile.getInstance().lang.translate("claims_cb_accrued");
