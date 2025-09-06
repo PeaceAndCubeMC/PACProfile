@@ -107,10 +107,6 @@ public class ConfigFile extends YamlFile {
         return this.config.getString("first_time_advancement_name");
     }
 
-    public String getDefaultHomeColor() {
-        return this.config.getConfigurationSection("homes").getString("default_color", "red");
-    }
-
     public String getHeadTicketsScoreboard() {
         return this.config.getString("head_tickets_scoreboard");
     }
@@ -152,6 +148,10 @@ public class ConfigFile extends YamlFile {
             }
         }
         return warps;
+    }
+
+    public String getDefaultHomeColor() {
+        return this.config.getConfigurationSection("homes").getString("default_color", "red");
     }
 
     public boolean isHomeTeleportationEnabled() {
