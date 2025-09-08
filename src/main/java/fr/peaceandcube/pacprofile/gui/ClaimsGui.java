@@ -122,18 +122,19 @@ public class ClaimsGui extends UnmodifiableGui {
                     .lore(Component.empty(), LoreComponents.CLAIM_NAME_CLICK)
                     .onLeftClick(() -> TextInputDialog.builder()
                             .player(this.viewer)
-                            .title(NameComponents.CLAIMS)
+                            .title(Messages.CLAIMS, 0x00AA00)
                             .bodyItem(Material.GOLDEN_SHOVEL)
-                            .bodyText(Messages.CLAIMS_DEFAULT_NAME.formatted(CLAIM_SLOTS.get(slot - 2)))
+                            .bodyText(Messages.CLAIMS_DEFAULT_NAME.formatted(claimId))
                             .inputLabel(Messages.CLAIM_NAME_TITLE)
-                            .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2)))
+                            .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId))
                             .inputSize(1, 18)
                             .onConfirm(newValue -> {
-                                PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), CLAIM_SLOTS.get(slot - 2), newValue);
+                                PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), claimId, newValue);
                                 new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
-                            .show());
+                            .show())
+                    .build());
         }
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)

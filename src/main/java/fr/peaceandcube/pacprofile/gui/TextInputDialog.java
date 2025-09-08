@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.gui;
 
+import fr.peaceandcube.pacprofile.item.GuiItemName;
 import fr.peaceandcube.pacprofile.util.Messages;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
@@ -11,6 +12,8 @@ import io.papermc.paper.registry.data.dialog.input.TextDialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickCallback;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +41,7 @@ public class TextInputDialog {
 
     public static class Builder {
         private Player player;
-        private Component title;
+        private GuiItemName title;
         private ItemStack bodyItem;
         private String bodyText;
         private String inputLabel;
@@ -55,8 +58,8 @@ public class TextInputDialog {
             return this;
         }
 
-        public Builder title(Component title) {
-            this.title = title;
+        public Builder title(String text, int color) {
+            this.title = new GuiItemName(text, color);
             return this;
         }
 
@@ -101,8 +104,10 @@ public class TextInputDialog {
 
         @SuppressWarnings("UnstableApiUsage")
         public TextInputDialog build() {
+            Component titleComponent = Component.text(title.text(), TextColor.color(title.color()), TextDecoration.BOLD)
+                    .decoration(TextDecoration.ITALIC, false);
             Dialog dialog = Dialog.create(builder -> builder.empty()
-                    .base(DialogBase.builder(title)
+                    .base(DialogBase.builder(titleComponent)
                             .body(List.of(
                                     DialogBody.item(bodyItem).description(DialogBody.plainMessage(Component.text(bodyText))).build()
                             ))
