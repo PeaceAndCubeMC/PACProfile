@@ -126,22 +126,21 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .onLeftClick(() -> {
                         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
                         if (itemStack.getItemMeta() instanceof SkullMeta meta) {
-                            meta.setOwningPlayer(PLAYERS_SLOTS.get(slot - 1));
+                            meta.setOwningPlayer(player);
                             meta.setCustomModelData(3030);
                             meta.setHideTooltip(true);
                             itemStack.setItemMeta(meta);
                         }
-
                         TextInputDialog.builder()
                                 .player(this.viewer)
-                                .title(NameComponents.ONLINE_PLAYERS)
+                                .title(Messages.ONLINE_PLAYERS, 0x55FF55)
                                 .bodyItem(itemStack)
-                                .bodyText(PLAYERS_SLOTS.get(slot - 1).getName())
+                                .bodyText(player.getName())
                                 .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
-                                .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString()))
+                                .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid))
                                 .inputSize(8, 80)
                                 .onConfirm(newValue -> {
-                                    PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), PLAYERS_SLOTS.get(slot - 1).getUniqueId().toString(), newValue);
+                                    PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), playerUuid, newValue);
                                     new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                                 })
                                 .build()

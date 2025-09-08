@@ -16,7 +16,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class HomesGui extends UnmodifiableGui {
@@ -127,23 +129,20 @@ public class HomesGui extends UnmodifiableGui {
                     .customModelData(3011)
                     .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(notesLore)
-                    .onLeftClick(() -> {
-                        Color homeColor = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)));
-                        TextInputDialog.builder()
-                                .player(this.viewer)
-                                .title(NameComponents.HOMES)
-                                .bodyItem(homeColor.getBed())
-                                .bodyText(HOME_SLOTS.get(slot - 1))
-                                .inputLabel(Messages.HOME_NOTES_TITLE)
-                                .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1)))
-                                .inputSize(8, 80)
-                                .onConfirm(newValue -> {
-                                    PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), HOME_SLOTS.get(slot - 1), newValue);
-                                    new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                                })
-                                .build()
-                                .show()
-                    })
+                    .onLeftClick(() -> TextInputDialog.builder()
+                            .player(this.viewer)
+                            .title(Messages.HOMES, 0x5555FF)
+                            .bodyItem(color.getBed())
+                            .bodyText(name)
+                            .inputLabel(Messages.HOME_NOTES_TITLE)
+                            .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name))
+                            .inputSize(8, 80)
+                            .onConfirm(newValue -> {
+                                PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), name, newValue);
+                                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                            })
+                            .build()
+                            .show())
                     .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
                         PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), name);
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
