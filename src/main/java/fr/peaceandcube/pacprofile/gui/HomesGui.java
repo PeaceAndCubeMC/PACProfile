@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
+import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
@@ -132,7 +134,7 @@ public class HomesGui extends UnmodifiableGui {
                     .onLeftClick(() -> TextInputDialog.builder()
                             .player(this.viewer)
                             .title(Messages.HOMES, 0x5555FF)
-                            .bodyItem(color.getBed())
+                            .bodyItem(new DialogItem(color.getBed(), 3010))
                             .bodyText(name)
                             .inputLabel(Messages.HOME_NOTES_TITLE)
                             .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name))

@@ -1,6 +1,8 @@
 package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
+import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
@@ -81,6 +83,7 @@ public class ClaimsGui extends UnmodifiableGui {
             int length = claim.getHeight();
             int area = claim.getArea();
 
+            int customModelData = world.equals("world_nether") ? 3021 : 3020;
             List<Component> claimLore = List.of(
                     Component.empty(),
                     LoreComponents.CLAIM_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
@@ -93,7 +96,7 @@ public class ClaimsGui extends UnmodifiableGui {
                     Component.empty()
             );
             this.setItem(GuiItem.builder().slot(slot).material(Material.GOLDEN_SHOVEL)
-                    .customModelData(world.equals("world_nether") ? 3021 : 3020)
+                    .customModelData(customModelData)
                     .name(getName(claimId), 0xFFFF55)
                     .lore(claimLore)
                     .build());
@@ -123,7 +126,7 @@ public class ClaimsGui extends UnmodifiableGui {
                     .onLeftClick(() -> TextInputDialog.builder()
                             .player(this.viewer)
                             .title(Messages.CLAIMS, 0x00AA00)
-                            .bodyItem(Material.GOLDEN_SHOVEL)
+                            .bodyItem(new DialogItem(Material.GOLDEN_SHOVEL, customModelData))
                             .bodyText(Messages.CLAIMS_DEFAULT_NAME.formatted(claimId))
                             .inputLabel(Messages.CLAIM_NAME_TITLE)
                             .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId))

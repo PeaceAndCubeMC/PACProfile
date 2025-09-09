@@ -3,6 +3,8 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
+import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
@@ -18,8 +20,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -123,29 +123,20 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .customModelData(3031)
                     .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(notesLore)
-                    .onLeftClick(() -> {
-                        ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
-                        if (itemStack.getItemMeta() instanceof SkullMeta meta) {
-                            meta.setOwningPlayer(player);
-                            meta.setCustomModelData(3030);
-                            meta.setHideTooltip(true);
-                            itemStack.setItemMeta(meta);
-                        }
-                        TextInputDialog.builder()
-                                .player(this.viewer)
-                                .title(Messages.ONLINE_PLAYERS, 0x55FF55)
-                                .bodyItem(itemStack)
-                                .bodyText(player.getName())
-                                .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
-                                .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid))
-                                .inputSize(8, 80)
-                                .onConfirm(newValue -> {
-                                    PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), playerUuid, newValue);
-                                    new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
-                                })
-                                .build()
-                                .show();
-                    })
+                    .onLeftClick(() -> TextInputDialog.builder()
+                            .player(this.viewer)
+                            .title(Messages.ONLINE_PLAYERS, 0x55FF55)
+                            .bodyItem(new DialogItem(Material.PLAYER_HEAD, 3030, player))
+                            .bodyText(player.getName())
+                            .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
+                            .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid))
+                            .inputSize(8, 80)
+                            .onConfirm(newValue -> {
+                                PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), playerUuid, newValue);
+                                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                            })
+                            .build()
+                            .show())
                     .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
                         PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), player.getUniqueId().toString());
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();

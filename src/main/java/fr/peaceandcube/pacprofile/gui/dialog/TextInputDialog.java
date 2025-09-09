@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.gui;
+package fr.peaceandcube.pacprofile.gui.dialog;
 
 import fr.peaceandcube.pacprofile.item.GuiItemName;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -14,10 +14,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -42,7 +39,7 @@ public class TextInputDialog {
     public static class Builder {
         private Player player;
         private GuiItemName title;
-        private ItemStack bodyItem;
+        private DialogItem bodyItem;
         private String bodyText;
         private String inputLabel;
         private String inputValue;
@@ -63,15 +60,7 @@ public class TextInputDialog {
             return this;
         }
 
-        public Builder bodyItem(Material material) {
-            ItemStack bodyItem = ItemStack.of(material);
-            ItemMeta itemMeta = bodyItem.getItemMeta();
-            itemMeta.setHideTooltip(true);
-            bodyItem.setItemMeta(itemMeta);
-            return bodyItem(bodyItem);
-        }
-
-        public Builder bodyItem(ItemStack bodyItem) {
+        public Builder bodyItem(DialogItem bodyItem) {
             this.bodyItem = bodyItem;
             return this;
         }
@@ -109,7 +98,7 @@ public class TextInputDialog {
             Dialog dialog = Dialog.create(builder -> builder.empty()
                     .base(DialogBase.builder(titleComponent)
                             .body(List.of(
-                                    DialogBody.item(bodyItem).description(DialogBody.plainMessage(Component.text(bodyText))).build()
+                                    DialogBody.item(bodyItem.toItemStack()).description(DialogBody.plainMessage(Component.text(bodyText))).build()
                             ))
                             .inputs(List.of(
                                     DialogInput.text("value", Component.text(inputLabel))
