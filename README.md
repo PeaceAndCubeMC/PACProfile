@@ -6,7 +6,6 @@ A plugin providing an interface to see many PeaceAndCube features.
 ### General
 - **date_format**: The date format displayed in various places.
 - **first_time_advancement_name**: The name of the advancement granted when opening the profile for the first time.
-- **default_home_color**: The default color of home items. One of the 16 vanilla values.
 - **head_tickets_scoreboard**: The name of the score displayed in head tickets item.
 
 ### `commands_on_click`
@@ -24,6 +23,7 @@ A plugin providing an interface to see many PeaceAndCube features.
   - **category**: The displayed category of the warp.
 
 ### `homes`
+- **default_color**: The default color of home items. One of the 16 vanilla values.
 - **enable_teleportation**: Toggles teleport action when left-clicking a home. Defaults to `true`.
 - **enable_deletion**: Toggles delete action when right-clicking a home. Defaults to `true`.
 
