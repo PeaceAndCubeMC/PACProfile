@@ -245,7 +245,7 @@ public class ProfileGui extends UnmodifiableGui {
         }
 
         if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
-            this.setItem(GuiItem.builder().slot(46).material(Material.CHAIN)
+            this.setItem(GuiItem.builder().slot(46).material(Material.IRON_CHAIN)
                     .customModelData(3004)
                     .name(Messages.LINKS, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.LINKS_CLICK)

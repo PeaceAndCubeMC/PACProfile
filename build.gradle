@@ -7,8 +7,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = project.pacprofile_group
-version = project.pacprofile_version
+group = "fr.peaceandcube"
+version = "1.7.0"
 
 repositories {
     // LuckPerms
@@ -29,16 +29,16 @@ configurations {
 }
 
 dependencies {
-    implementation "io.papermc.paper:paper-api:${paper_version}"
+    implementation "io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT"
 
-    compileOnly "net.luckperms:api:${luckperms_version}"
-    compileOnly "net.essentialsx:EssentialsX:${essentials_version}"
-    compileOnly "com.github.TechFortress:GriefPrevention:${griefprevention_version}"
+    compileOnly "net.luckperms:api:5.4"
+    compileOnly "net.essentialsx:EssentialsX:2.21.2"
+    compileOnly "com.github.TechFortress:GriefPrevention:16.18.4"
 
-    compileOnly name: "pacutilities-${pacutilities_version}"
-    compileOnly name: "pacbirthday-${pacbirthday_version}"
+    compileOnly name: "pacutilities-1.3.2"
+    compileOnly name: "pacbirthday-1.5.0"
 
-    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.91.0"
+    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.101.0"
     testImplementation "org.junit.jupiter:junit-jupiter:6.0.3"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher:6.0.3"
 }
@@ -50,7 +50,7 @@ build {
 shadowJar {
     configurations = [project.configurations.include]
 
-    archiveFileName = "${pacprofile_name}-${version}.jar"
+    archiveFileName = "${rootProject.name}-${version}.jar"
 }
 
 java {
