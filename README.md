@@ -16,6 +16,9 @@ A plugin providing an interface to see many PeaceAndCube features.
 - **links**: The command executed when left-clicking the links item.
 - **dynmap**: The command executed when left-clicking the dynmap item.
 
+### `head_tickets`
+- **quests_scoreboard**: The name of the scoreboard counting quests done.
+
 ### `warps`
 - _warp name_
   - **name**: The displayed name of the warp.

@@ -31,6 +31,7 @@ public class LoreComponents {
     public static Component COINS_CLICK;
 
     public static Component HEAD_TICKETS_NUMBER;
+    public static Component HEAD_TICKETS_QUEST_NUMBER;
     public static Component HEAD_TICKETS_CLICK;
 
     public static Component MAILS_TOTAL;
@@ -125,6 +126,7 @@ public class LoreComponents {
         COINS_CLICK = Component.text(Messages.COINS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         HEAD_TICKETS_NUMBER = Component.text(Messages.HEAD_TICKETS_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+        HEAD_TICKETS_QUEST_NUMBER = Component.text(Messages.HEAD_TICKETS_QUEST_NUMBER, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
         HEAD_TICKETS_CLICK = Component.text(Messages.HEAD_TICKETS_CLICK, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
 
         MAILS_TOTAL = Component.text(Messages.MAILS_TOTAL, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);

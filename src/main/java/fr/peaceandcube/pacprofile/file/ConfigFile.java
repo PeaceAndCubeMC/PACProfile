@@ -22,6 +22,7 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("dynmap", "", "commands_on_click"));
+        DEFAULT_CONFIGS.add(new ConfigEntry("quests_scoreboard", "", "head_tickets"));
         DEFAULT_CONFIGS.add(new ConfigEntry("name", "Spawn", "warps.spawn"));
         DEFAULT_CONFIGS.add(new ConfigEntry("icon", "grass_block", "warps.spawn"));
         DEFAULT_CONFIGS.add(new ConfigEntry("category", "Spawn", "warps.spawn"));
@@ -109,6 +110,10 @@ public class ConfigFile extends YamlFile {
 
     public String getHeadTicketsScoreboard() {
         return this.config.getString("head_tickets_scoreboard");
+    }
+
+    public String getQuestsScoreboard() {
+        return this.config.getConfigurationSection("head_tickets").getString("quests_scoreboard");
     }
 
     public String getCommandOnClickCoins() {

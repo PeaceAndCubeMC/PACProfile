@@ -48,6 +48,7 @@ public class Messages {
     public static String COINS_CLICK;
     public static String HEAD_TICKETS;
     public static String HEAD_TICKETS_NUMBER;
+    public static String HEAD_TICKETS_QUEST_NUMBER;
     public static String HEAD_TICKETS_CLICK;
     public static String MAILS;
     public static String MAILS_TOTAL;
@@ -178,6 +179,7 @@ public class Messages {
         COINS_CLICK = PACProfile.getInstance().lang.translate("coins_click");
         HEAD_TICKETS = PACProfile.getInstance().lang.translate("head_tickets");
         HEAD_TICKETS_NUMBER = PACProfile.getInstance().lang.translate("head_tickets_total");
+        HEAD_TICKETS_QUEST_NUMBER = PACProfile.getInstance().lang.translate("head_tickets_quest_number");
         HEAD_TICKETS_CLICK = PACProfile.getInstance().lang.translate("head_tickets_click");
         MAILS = PACProfile.getInstance().lang.translate("mails");
         MAILS_TOTAL = PACProfile.getInstance().lang.translate("mails_total");

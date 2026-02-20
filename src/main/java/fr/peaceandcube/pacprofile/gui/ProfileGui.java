@@ -118,11 +118,15 @@ public class ProfileGui extends UnmodifiableGui {
                 })
                 .build());
 
-        Objective objective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
-        int headTicketCount = objective != null ? objective.getScore(this.player.getName()).getScore() : 0;
+        Objective headTicketObjective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
+        int headTicketCount = headTicketObjective != null ? headTicketObjective.getScore(this.player.getName()).getScore() : 0;
+        Objective questObjective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getQuestsScoreboard());
+        int questCount = questObjective != null ? questObjective.getScore(this.player.getName()).getScore() : 0;
         List<Component> headTicketLore = new ArrayList<>();
         headTicketLore.add(Component.empty());
         headTicketLore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        headTicketLore.add(Component.empty());
+        headTicketLore.add(LoreComponents.HEAD_TICKETS_QUEST_NUMBER.append(Component.text(questCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
         if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
             headTicketLore.add(Component.empty());
             headTicketLore.add(LoreComponents.HEAD_TICKETS_CLICK);

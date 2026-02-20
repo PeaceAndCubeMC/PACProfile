@@ -24,6 +24,8 @@ public class ConfigFileTest {
               rules: ''
               links: ''
               dynmap: ''
+            head_tickets:
+              quests_scoreboard: ''
             warps:
               spawn:
                 name: Spawn
