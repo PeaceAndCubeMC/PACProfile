@@ -3,6 +3,7 @@ package fr.peaceandcube.pacprofile.gui;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.file.WarpEntry;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -71,6 +72,7 @@ public class WarpsGui extends UnmodifiableGui {
                     .name(warp.title(), 0x5555FF)
                     .lore(warpLore)
                     .onLeftClick(() -> {
+                        Logger.debug("%s teleported to warp %s".formatted(this.viewer.getName(), warp.name()));
                         this.dispatchCommand("warp " + warp.name());
                         this.inv.close();
                     })

@@ -99,6 +99,7 @@ public class HomesGui extends UnmodifiableGui {
                     .lore(bedLore)
                     .onLeftClick(() -> {
                         if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
+                            Logger.debug("%s teleported to home %s:%s".formatted(this.viewer.getName(), this.player.getName(), name));
                             if (this.player.equals(this.viewer)) {
                                 this.dispatchCommand("home " + name);
                             } else {
@@ -115,6 +116,7 @@ public class HomesGui extends UnmodifiableGui {
                                 command = "delhome " + this.player.getName() + ":" + name;
                             }
                             new ConfirmationGui(this.viewer, this.player, this, () -> {
+                                Logger.debug("%s deleted home %s:%s".formatted(this.viewer.getName(), this.player.getName(), name));
                                 dispatchCommand(command);
                                 new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             }).open();

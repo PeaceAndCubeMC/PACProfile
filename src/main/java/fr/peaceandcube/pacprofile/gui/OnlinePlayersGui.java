@@ -107,6 +107,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .onLeftClick(() -> {
                         if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
                             if (!player.getUniqueId().equals(this.player.getUniqueId())) {
+                                Logger.debug("%s asked for teleportation to player %s".formatted(this.viewer.getName(), player.getName()));
                                 this.dispatchCommand("tpa " + player.getName());
                                 this.inv.close();
                             }
