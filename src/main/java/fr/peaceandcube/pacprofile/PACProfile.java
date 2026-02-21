@@ -6,6 +6,7 @@ import fr.peaceandcube.pacprofile.command.ReloadCommand;
 import fr.peaceandcube.pacprofile.file.ConfigFile;
 import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -44,6 +45,7 @@ public class PACProfile extends JavaPlugin {
         PACProfile.getInstance().playerData.reload();
         Messages.init();
         LoreComponents.init();
+        Logger.info("All data has been reloaded");
     }
 
     public static PACProfile getInstance() {

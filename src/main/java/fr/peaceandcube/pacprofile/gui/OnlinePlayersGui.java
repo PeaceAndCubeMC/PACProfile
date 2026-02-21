@@ -6,6 +6,7 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -132,12 +133,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                             .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
+                                Logger.debug("%s edited notes for player %s".formatted(this.player.getName(), player.getName()));
                                 PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), playerUuid, newValue);
                                 new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
                             .show())
                     .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
+                        Logger.debug("%s removed notes for player %s".formatted(this.player.getName(), player.getName()));
                         PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), player.getUniqueId().toString());
                         new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                     }).open())

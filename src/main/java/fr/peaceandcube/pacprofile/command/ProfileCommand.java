@@ -2,6 +2,7 @@ package fr.peaceandcube.pacprofile.command;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacprofile.util.SuggestionProviders;
 import org.bukkit.Bukkit;
@@ -28,6 +29,7 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
                 if (sender.hasPermission(PERM_PROFILE)) {
                     ProfileGui gui = new ProfileGui(viewer, viewer);
                     gui.open();
+                    Logger.debug("%s opened its profile".formatted(viewer.getName()));
 
                     // Give first time advancement
                     if (!PACProfile.getInstance().config.getFirstTimeAdvancementName().equals("")) {
@@ -46,6 +48,7 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
                     if (player != null) {
                         ProfileGui gui = new ProfileGui(viewer, player);
                         gui.open();
+                        Logger.debug("%s opened %s's profile".formatted(viewer.getName(), player.getName()));
                     } else {
                         sender.sendMessage(Messages.PLAYER_NOT_FOUND);
                     }

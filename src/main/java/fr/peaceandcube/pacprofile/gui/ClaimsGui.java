@@ -4,6 +4,7 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -132,6 +133,7 @@ public class ClaimsGui extends UnmodifiableGui {
                             .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId))
                             .inputSize(1, 18)
                             .onConfirm(newValue -> {
+                                Logger.debug("%s edited name for claim %s".formatted(this.player.getName(), getName(claimId)));
                                 PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), claimId, newValue);
                                 new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })

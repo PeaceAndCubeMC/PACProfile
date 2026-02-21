@@ -14,6 +14,7 @@ import java.util.List;
 public class ConfigFileTest {
 
     private static final String CONFIG_CONTENT = """
+            debug_logging: false
             date_format: yyyy-MM-dd HH:mm:ss
             first_time_advancement_name: ''
             head_tickets_scoreboard: ''

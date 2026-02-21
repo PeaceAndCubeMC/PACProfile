@@ -4,6 +4,7 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -140,12 +141,14 @@ public class HomesGui extends UnmodifiableGui {
                             .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
+                                Logger.debug("%s edited notes for home %s".formatted(this.player.getName(), name));
                                 PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), name, newValue);
                                 new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
                             .show())
                     .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
+                        Logger.debug("%s removed notes for home %s".formatted(this.player.getName(), name));
                         PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), name);
                         new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
                     }).open())

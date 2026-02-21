@@ -34,6 +34,11 @@ public class ConfigFile extends YamlFile {
     }
 
     private void initConfig() {
+        // global config
+        if (!this.config.isBoolean("debug_logging")) {
+            this.config.set("debug_logging", false);
+        }
+
         DEFAULT_CONFIGS.forEach(entry -> {
             if (entry.section() != null) {
                 ConfigurationSection section;
@@ -98,6 +103,10 @@ public class ConfigFile extends YamlFile {
         }
 
         this.save();
+    }
+
+    public boolean hasDebugLogging() {
+        return this.config.getBoolean("debug_logging", false);
     }
 
     public String getDateFormat() {

@@ -4,6 +4,7 @@ A plugin providing an interface to see many PeaceAndCube features.
 ## Configuration
 
 ### General
+- **debug_logging**: Toggles debug messages in console.
 - **date_format**: The date format displayed in various places.
 - **first_time_advancement_name**: The name of the advancement granted when opening the profile for the first time.
 - **head_tickets_scoreboard**: The name of the score displayed in head tickets item.
