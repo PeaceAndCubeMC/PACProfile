@@ -11,7 +11,7 @@ import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -86,13 +86,13 @@ public class ClaimsGui extends UnmodifiableGui {
             int customModelData = world.equals("world_nether") ? 3021 : 3020;
             List<Component> claimLore = List.of(
                     Component.empty(),
-                    LoreComponents.CLAIM_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_GREATER_CORNER.append(Component.text(greaterCorner.getBlockX() + " " + greaterCorner.getBlockY() + " " + greaterCorner.getBlockZ(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_LESSER_CORNER.append(Component.text(lesserCorner.getBlockX() + " " + lesserCorner.getBlockY() + " " + lesserCorner.getBlockZ(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_WORLD.append(Component.text(world, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_GREATER_CORNER.append(Component.text(greaterCorner.getBlockX() + " " + greaterCorner.getBlockY() + " " + greaterCorner.getBlockZ(), NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_LESSER_CORNER.append(Component.text(lesserCorner.getBlockX() + " " + lesserCorner.getBlockY() + " " + lesserCorner.getBlockZ(), NamedTextColor.YELLOW, TextDecoration.BOLD)),
                     Component.empty(),
-                    LoreComponents.CLAIM_WIDTH.append(Component.text(width, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_LENGTH.append(Component.text(length, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.CLAIM_AREA.append(Component.text(area, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_WIDTH.append(Component.text(width, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_LENGTH.append(Component.text(length, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreComponents.CLAIM_AREA.append(Component.text(area, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                     Component.empty()
             );
             this.setItem(GuiItem.builder().slot(slot).material(Material.GOLDEN_SHOVEL)
@@ -203,7 +203,7 @@ public class ClaimsGui extends UnmodifiableGui {
 
         for (var subList : subLists) {
             String subListStr = String.join(" ", subList);
-            components.add(Component.text(subListStr, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+            components.add(Component.text(subListStr, NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
         }
     }
 }

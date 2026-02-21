@@ -2,7 +2,7 @@ package fr.peaceandcube.pacprofile.statistic;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -38,7 +38,7 @@ public class Statistic {
 
     public Component getTextComponent() {
         String text = PACProfile.getInstance().lang.translate("statistics_" + name);
-        return Component.text(text, TextColor.color(0xAAAAAA))
+        return Component.text(text, NamedTextColor.GRAY)
                 .decoration(TextDecoration.ITALIC, false);
     }
 }

@@ -8,7 +8,7 @@ import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -61,8 +61,8 @@ public class WarpsGui extends UnmodifiableGui {
             String command = String.format("/warp %s", warp.name());
             List<Component> warpLore = List.of(
                     Component.empty(),
-                    LoreComponents.WARP_COMMAND.append(Component.text(command, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                    LoreComponents.WARP_CATEGORY.append(Component.text(warp.category(), TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                    LoreComponents.WARP_COMMAND.append(Component.text(command, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreComponents.WARP_CATEGORY.append(Component.text(warp.category(), NamedTextColor.YELLOW, TextDecoration.BOLD)),
                     Component.empty(),
                     LoreComponents.WARP_CLICK
             );

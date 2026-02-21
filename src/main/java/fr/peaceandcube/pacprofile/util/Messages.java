@@ -3,7 +3,7 @@ package fr.peaceandcube.pacprofile.util;
 import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class Messages {
     public static TextComponent SENDER_NOT_PLAYER;
@@ -265,10 +265,10 @@ public class Messages {
     }
 
     public static TextComponent error(String msg) {
-        return Component.text(msg, TextColor.color(0xFF5555));
+        return Component.text(msg, NamedTextColor.RED);
     }
 
     public static TextComponent success(String msg) {
-        return Component.text(msg, TextColor.color(0x55FF55));
+        return Component.text(msg, NamedTextColor.GREEN);
     }
 }

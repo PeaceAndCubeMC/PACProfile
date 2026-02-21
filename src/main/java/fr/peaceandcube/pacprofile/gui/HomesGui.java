@@ -11,7 +11,7 @@ import fr.peaceandcube.pacprofile.util.Color;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -81,10 +81,10 @@ public class HomesGui extends UnmodifiableGui {
 
             List<Component> bedLore = new ArrayList<>();
             bedLore.add(Component.empty());
-            bedLore.add(LoreComponents.HOME_WORLD.append(Component.text(world, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_X.append(Component.text(x, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_Y.append(Component.text(y, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_Z.append(Component.text(z, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_WORLD.append(Component.text(world, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_X.append(Component.text(x, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_Y.append(Component.text(y, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            bedLore.add(LoreComponents.HOME_Z.append(Component.text(z, NamedTextColor.YELLOW, TextDecoration.BOLD)));
             bedLore.add(Component.empty());
             if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
                 bedLore.add(LoreComponents.HOME_CLICK_LEFT);
@@ -204,9 +204,9 @@ public class HomesGui extends UnmodifiableGui {
         String notes = PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name);
         if (!notes.isEmpty()) {
             return Stream.of(notes.split("\\R"))
-                    .map(note -> Component.text(note, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false))
+                    .map(note -> Component.text(note, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
                     .toList();
         }
-        return List.of(Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        return List.of(Component.text(Messages.NOT_DEFINED, NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 }

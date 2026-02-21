@@ -2,7 +2,7 @@ package fr.peaceandcube.pacprofile.order;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
 public enum Order {
@@ -23,7 +23,7 @@ public enum Order {
 
     public Component getText() {
         String text = PACProfile.getInstance().lang.translate("order_" + name);
-        return Component.text(text, TextColor.color(0xFFFF55), TextDecoration.BOLD)
+        return Component.text(text, NamedTextColor.YELLOW, TextDecoration.BOLD)
                 .decoration(TextDecoration.ITALIC, false);
     }
 }

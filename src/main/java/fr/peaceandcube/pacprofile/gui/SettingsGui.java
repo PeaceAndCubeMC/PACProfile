@@ -8,7 +8,7 @@ import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacutilities.PACUtilities;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -70,9 +70,9 @@ public class SettingsGui extends UnmodifiableGui {
             ptimeLore.add(Component.empty());
             Arrays.stream(PTimeType.values()).forEach(time -> {
                 String text = PACProfile.getInstance().lang.translate("settings_ptime_" + time.name().toLowerCase());
-                Component component = Component.text(text, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+                Component component = Component.text(text, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
                 if (time == currentTime && this.player.getPlayerTimeOffset() != 0) {
-                    component = component.color(TextColor.color(0xFFFF55)).decoration(TextDecoration.BOLD, true);
+                    component = component.color(NamedTextColor.YELLOW).decoration(TextDecoration.BOLD, true);
                 }
                 ptimeLore.add(component);
             });
@@ -110,9 +110,9 @@ public class SettingsGui extends UnmodifiableGui {
             pweatherLore.add(Component.empty());
             Arrays.stream(PWeatherType.values()).forEach(weather -> {
                 String text = PACProfile.getInstance().lang.translate("settings_pweather_" + weather.name().toLowerCase());
-                Component component = Component.text(text, TextColor.color(0xAAAAAA)).decoration(TextDecoration.ITALIC, false);
+                Component component = Component.text(text, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
                 if (weather == currentWeather && this.player.getPlayerWeather() != null) {
-                    component = component.color(TextColor.color(0xFFFF55)).decoration(TextDecoration.BOLD, true);
+                    component = component.color(NamedTextColor.YELLOW).decoration(TextDecoration.BOLD, true);
                 }
                 pweatherLore.add(component);
             });

@@ -15,7 +15,7 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -84,14 +84,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, NamedTextColor.YELLOW, TextDecoration.BOLD)));
             if (!player.getUniqueId().equals(this.player.getUniqueId())) {
                 lore.add(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_1
-                        .append(Component.text(trustCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
+                        .append(Component.text(trustCount, NamedTextColor.YELLOW, TextDecoration.BOLD))
                         .append(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_2)
                 );
                 lore.add(LoreComponents.ONLINE_PLAYER_MAIL_SENT_1
-                        .append(Component.text(mailSentCount, TextColor.color(0xFFFF55), TextDecoration.BOLD))
+                        .append(Component.text(mailSentCount, NamedTextColor.YELLOW, TextDecoration.BOLD))
                         .append(LoreComponents.ONLINE_PLAYER_MAIL_SENT_2)
                 );
                 lore.add(Component.empty());
@@ -218,9 +218,9 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         String notes = PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid);
         if (!notes.isEmpty()) {
             return Stream.of(notes.split("\\R"))
-                    .map(note -> Component.text(note, TextColor.color(0xFFFF55)).decoration(TextDecoration.ITALIC, false))
+                    .map(note -> Component.text(note, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
                     .toList();
         }
-        return List.of(Component.text(Messages.NOT_DEFINED, TextColor.color(0xFFFF55), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        return List.of(Component.text(Messages.NOT_DEFINED, NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 }

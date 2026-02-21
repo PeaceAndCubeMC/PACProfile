@@ -10,6 +10,7 @@ import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.model.group.Group;
@@ -54,17 +55,17 @@ public class ProfileGui extends UnmodifiableGui {
         String joinDate = this.getFirstPlayed();
         List<Component> playerLore = new ArrayList<>();
         playerLore.add(Component.empty());
-        playerLore.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        playerLore.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         if (rankExpiration != null) {
-            playerLore.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            playerLore.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         }
         playerLore.add(Component.empty());
         if (nickname != null) {
-            playerLore.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+            playerLore.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         }
-        playerLore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        playerLore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         playerLore.add(Component.empty());
-        playerLore.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        playerLore.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         this.setItem(GuiItem.builder().slot(4).material(Material.PLAYER_HEAD).player(this.player)
                 .customModelData(3004)
                 .name(this.player.getName(), 0x55FFFF)
@@ -101,7 +102,7 @@ public class ProfileGui extends UnmodifiableGui {
         double coinCount = this.user.getMoney().doubleValue();
         List<Component> coinLore = new ArrayList<>();
         coinLore.add(Component.empty());
-        coinLore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        coinLore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
             coinLore.add(Component.empty());
             coinLore.add(LoreComponents.COINS_CLICK);
@@ -124,9 +125,9 @@ public class ProfileGui extends UnmodifiableGui {
         int questCount = questObjective != null ? questObjective.getScore(this.player.getName()).getScore() : 0;
         List<Component> headTicketLore = new ArrayList<>();
         headTicketLore.add(Component.empty());
-        headTicketLore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        headTicketLore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         headTicketLore.add(Component.empty());
-        headTicketLore.add(LoreComponents.HEAD_TICKETS_QUEST_NUMBER.append(Component.text(questCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        headTicketLore.add(LoreComponents.HEAD_TICKETS_QUEST_NUMBER.append(Component.text(questCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
             headTicketLore.add(Component.empty());
             headTicketLore.add(LoreComponents.HEAD_TICKETS_CLICK);
@@ -147,8 +148,8 @@ public class ProfileGui extends UnmodifiableGui {
         int unreadMailCount = this.user.getUnreadMailAmount();
         List<Component> mailLore = new ArrayList<>();
         mailLore.add(Component.empty());
-        mailLore.add(LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
-        mailLore.add(LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)));
+        mailLore.add(LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+        mailLore.add(LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
         if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
             mailLore.add(Component.empty());
             mailLore.add(LoreComponents.MAILS_CLICK);
@@ -171,9 +172,9 @@ public class ProfileGui extends UnmodifiableGui {
         this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
         List<Component> homesLore = List.of(
                 Component.empty(),
-                LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.HOMES_MAX_AVAILABLE.append(Component.text(totalHomeCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.HOMES_MAX_AVAILABLE.append(Component.text(totalHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.HOMES_CLICK
         );
@@ -194,15 +195,15 @@ public class ProfileGui extends UnmodifiableGui {
         this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
         List<Component> claimsLore = List.of(
                 Component.empty(),
-                LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_REMAINING.append(Component.text(remainingClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_REMAINING.append(Component.text(remainingClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                 Component.empty(),
-                LoreComponents.CLAIMS_CB_ACCRUED.append(Component.text(accruedClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_BONUS.append(Component.text(bonusClaimBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_TOTAL.append(Component.text(totalClaimsBlocks, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_ACCRUED.append(Component.text(accruedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_BONUS.append(Component.text(bonusClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_TOTAL.append(Component.text(totalClaimsBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                 Component.empty(),
-                LoreComponents.CLAIMS_CB_PER_HOUR.append(Component.text(blocksAccruedPerHour, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.CLAIMS_CB_PER_HOUR.append(Component.text(blocksAccruedPerHour, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.CLAIMS_CLICK
         );
@@ -217,7 +218,7 @@ public class ProfileGui extends UnmodifiableGui {
         this.maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
         List<Component> onlinePlayersLore = List.of(
                 Component.empty(),
-                LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, TextColor.color(0xFFFF55), TextDecoration.BOLD)),
+                LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_CLICK
         );
@@ -338,9 +339,9 @@ public class ProfileGui extends UnmodifiableGui {
     private Component getStatisticComponent(Statistic statistic) {
         double value = this.baseStatistics ? statistic.getBaseValue(player) : statistic.getCurrentValue(player);
         double diff = Math.round((statistic.getCurrentValue(player) - statistic.getBaseValue(player)) * 100.0) / 100.0;
-        Component component = statistic.getTextComponent().append(Component.text(value, TextColor.color(0xFFFF55), TextDecoration.BOLD));
+        Component component = statistic.getTextComponent().append(Component.text(value, NamedTextColor.YELLOW, TextDecoration.BOLD));
         if (!this.baseStatistics && diff != 0) {
-            TextColor diffColor = diff > 0 ? TextColor.color(0x55FF55) : TextColor.color(0xFF5555);
+            TextColor diffColor = diff > 0 ? NamedTextColor.GREEN : NamedTextColor.RED;
             // if the difference is positive, add a plus sign
             component = component.append(Component.text(" (" + (diff > 0 ? "+" : "") + diff + ")", diffColor));
         }
