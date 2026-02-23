@@ -31,7 +31,7 @@ configurations {
 dependencies {
     implementation "io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT"
 
-    compileOnly "net.luckperms:api:5.4"
+    compileOnly "net.luckperms:api:5.5"
     compileOnly "net.essentialsx:EssentialsX:2.21.2"
     compileOnly "com.github.TechFortress:GriefPrevention:16.18.4"
 
