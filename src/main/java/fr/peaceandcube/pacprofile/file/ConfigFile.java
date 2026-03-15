@@ -41,13 +41,7 @@ public class ConfigFile extends YamlFile {
 
         DEFAULT_CONFIGS.forEach(entry -> {
             if (entry.section() != null) {
-                ConfigurationSection section;
-                if (this.config.getConfigurationSection(entry.section()) != null) {
-                    section = this.config.getConfigurationSection(entry.section());
-                } else {
-                    section = this.config.createSection(entry.section());
-                }
-
+                ConfigurationSection section = getOrCreateSection(config, entry.section());
                 if (!section.isSet(entry.key())) {
                     section.set(entry.key(), entry.defaultValue());
                 }
@@ -59,11 +53,7 @@ public class ConfigFile extends YamlFile {
         });
 
         // config for homes
-        ConfigurationSection homesSection = this.config.getConfigurationSection("homes");
-        if (homesSection == null) {
-            homesSection = this.config.createSection("homes");
-        }
-
+        ConfigurationSection homesSection = getOrCreateSection(config, "homes");
         if (!homesSection.isString("default_color")) {
             homesSection.set("default_color", "red");
         }
@@ -75,34 +65,31 @@ public class ConfigFile extends YamlFile {
         }
 
         // config for online players
-        ConfigurationSection onlinePlayersSection = this.config.getConfigurationSection("online_players");
-        if (onlinePlayersSection == null) {
-            onlinePlayersSection = this.config.createSection("online_players");
-        }
-
+        ConfigurationSection onlinePlayersSection = getOrCreateSection(config, "online_players");
         if (!onlinePlayersSection.isBoolean("enable_teleportation")) {
             onlinePlayersSection.set("enable_teleportation", true);
         }
 
         // config for statistics
-        ConfigurationSection statsSection = this.config.getConfigurationSection("statistics");
-        if (statsSection == null) {
-            statsSection = this.config.createSection("statistics");
-        }
+        ConfigurationSection statsSection = getOrCreateSection(config, "statistics");
         this.config.setComments("statistics", List.of("Toggles specific statistics"));
 
         for (Statistic statistic : Statistics.ALL) {
-            ConfigurationSection statSection = statsSection.getConfigurationSection(statistic.getName());
-            if (statSection == null) {
-                statSection = statsSection.createSection(statistic.getName());
-            }
-
+            ConfigurationSection statSection = getOrCreateSection(statsSection, statistic.getName());
             if (!statSection.isSet("enabled")) {
                 statSection.set("enabled", true);
             }
         }
 
         this.save();
+    }
+
+    private ConfigurationSection getOrCreateSection(ConfigurationSection parent, String name) {
+        ConfigurationSection section = parent.getConfigurationSection(name);
+        if (section == null) {
+            section = parent.createSection(name);
+        }
+        return section;
     }
 
     public boolean hasDebugLogging() {

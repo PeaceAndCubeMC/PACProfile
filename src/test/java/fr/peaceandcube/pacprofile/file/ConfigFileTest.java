@@ -79,11 +79,11 @@ public class ConfigFileTest {
     @Test
     void testCreateConfigFile() {
         PluginMock mockPlugin = MockBukkit.createMockPlugin();
+
         ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
 
         Assertions.assertTrue(configFile.file.exists());
         Assertions.assertEquals(CONFIG_CONTENT, configFile.config.saveToString());
-
         Assertions.assertEquals("yyyy-MM-dd HH:mm:ss", configFile.getDateFormat());
         Assertions.assertEquals("", configFile.getFirstTimeAdvancementName());
         Assertions.assertEquals("", configFile.getHeadTicketsScoreboard());
@@ -99,5 +99,35 @@ public class ConfigFileTest {
         Assertions.assertTrue(configFile.isHomeDeletionEnabled());
         Assertions.assertTrue(configFile.isOnlinePlayerTeleportationEnabled());
         Statistics.ALL.forEach(statistic -> Assertions.assertTrue(configFile.isStatisticEnabled(statistic.getName())));
+    }
+
+    @Test
+    void testUpdateConfigFileWithInvalidValues() {
+        PluginMock mockPlugin = MockBukkit.createMockPlugin();
+        mockPlugin.getConfig().set("debug_logging", "not a boolean");
+        mockPlugin.getConfig().createSection("homes").set("default_color", false);
+        mockPlugin.saveConfig();
+
+        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
+
+        Assertions.assertTrue(configFile.file.exists());
+        Assertions.assertFalse(configFile.hasDebugLogging());
+        Assertions.assertEquals("red", configFile.getDefaultHomeColor());
+    }
+
+    @Test
+    void testUpdateConfigFileWithValidValues() {
+        PluginMock mockPlugin = MockBukkit.createMockPlugin();
+        mockPlugin.getConfig().createSection("homes").set("default_color", "yellow");
+        mockPlugin.getConfig().createSection("commands_on_click").set("rules", "rules");
+        mockPlugin.saveConfig();
+
+        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
+
+        Assertions.assertTrue(configFile.file.exists());
+        Assertions.assertEquals("yellow", configFile.getDefaultHomeColor());
+        Assertions.assertTrue(configFile.isHomeTeleportationEnabled());
+        Assertions.assertEquals("rules", configFile.getCommandOnClickRules());
+        Assertions.assertEquals("", configFile.getCommandOnClickLinks());
     }
 }
