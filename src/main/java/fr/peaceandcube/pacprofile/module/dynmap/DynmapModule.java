@@ -6,6 +6,9 @@ import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+
+import java.util.function.Function;
 
 public class DynmapModule extends Module {
 
@@ -19,8 +22,8 @@ public class DynmapModule extends Module {
     }
 
     @Override
-    protected GuiItem createGuiItem() {
-        return GuiItem.builder().slot(47).material(Material.MAP)
+    protected Function<Player, GuiItem> createGuiItem() {
+        return player -> GuiItem.builder().slot(47).material(Material.MAP)
                 .customModelData(3004)
                 .name(Messages.DYNMAP, 0xFF55FF)
                 .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)

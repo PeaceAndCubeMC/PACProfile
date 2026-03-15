@@ -7,6 +7,9 @@ import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+
+import java.util.function.Function;
 
 public class SettingsModule extends Module {
 
@@ -15,8 +18,8 @@ public class SettingsModule extends Module {
     }
 
     @Override
-    protected GuiItem createGuiItem() {
-        return GuiItem.builder().slot(17).material(Material.COMPARATOR)
+    protected Function<Player, GuiItem> createGuiItem() {
+        return player -> GuiItem.builder().slot(17).material(Material.COMPARATOR)
                 .customModelData(3004)
                 .name(Messages.SETTINGS, 0x555555)
                 .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)

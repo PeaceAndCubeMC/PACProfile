@@ -8,7 +8,9 @@ import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.module.Module;
+import fr.peaceandcube.pacprofile.module.coins.CoinsModule;
 import fr.peaceandcube.pacprofile.module.dynmap.DynmapModule;
+import fr.peaceandcube.pacprofile.module.headtickets.HeadTicketsModule;
 import fr.peaceandcube.pacprofile.module.links.LinksModule;
 import fr.peaceandcube.pacprofile.module.rules.RulesModule;
 import fr.peaceandcube.pacprofile.module.settings.SettingsModule;
@@ -53,9 +55,12 @@ public class PACProfile extends JavaPlugin {
 
     private void registerModules() {
         modules.add(new SettingsModule());
+        modules.add(new CoinsModule());
+        modules.add(new HeadTicketsModule());
         modules.add(new RulesModule());
         modules.add(new LinksModule());
         modules.add(new DynmapModule());
+        Logger.info("Registered modules: %s".formatted(modules.stream().map(Module::name).toList()));
     }
 
     public static void reload() {

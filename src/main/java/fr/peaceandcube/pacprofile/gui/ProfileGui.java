@@ -22,7 +22,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.scoreboard.Objective;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class ProfileGui extends UnmodifiableGui {
 
         for (Module module : PACProfile.getInstance().getModules()) {
             if (module.isEnabled()) {
-                this.setItem(module.guiItem());
+                this.setItem(module.guiItem(player));
             }
         }
 
@@ -92,51 +91,6 @@ public class ProfileGui extends UnmodifiableGui {
                 .onLeftClick(context -> {
                     this.baseStatistics = !this.baseStatistics;
                     context.fillInventory();
-                })
-                .build());
-
-        double coinCount = this.user.getMoney().doubleValue();
-        List<Component> coinLore = new ArrayList<>();
-        coinLore.add(Component.empty());
-        coinLore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-        if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
-            coinLore.add(Component.empty());
-            coinLore.add(LoreComponents.COINS_CLICK);
-        }
-        this.setItem(GuiItem.builder().slot(20).material(Material.SUNFLOWER)
-                .customModelData(3004)
-                .name(Messages.COINS, 0xFFAA00)
-                .lore(coinLore)
-                .onLeftClick(context -> {
-                    if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
-                        context.close();
-                    }
-                })
-                .build());
-
-        Objective headTicketObjective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getHeadTicketsScoreboard());
-        int headTicketCount = headTicketObjective != null ? headTicketObjective.getScore(this.player.getName()).getScore() : 0;
-        Objective questObjective = this.player.getScoreboard().getObjective(PACProfile.getInstance().config.getQuestsScoreboard());
-        int questCount = questObjective != null ? questObjective.getScore(this.player.getName()).getScore() : 0;
-        List<Component> headTicketLore = new ArrayList<>();
-        headTicketLore.add(Component.empty());
-        headTicketLore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-        headTicketLore.add(Component.empty());
-        headTicketLore.add(LoreComponents.HEAD_TICKETS_QUEST_NUMBER.append(Component.text(questCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-        if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
-            headTicketLore.add(Component.empty());
-            headTicketLore.add(LoreComponents.HEAD_TICKETS_CLICK);
-        }
-        this.setItem(GuiItem.builder().slot(22).material(Material.NAME_TAG)
-                .customModelData(3004)
-                .name(Messages.HEAD_TICKETS, 0x00AAAA)
-                .lore(headTicketLore)
-                .onLeftClick(context -> {
-                    if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
-                        context.close();
-                    }
                 })
                 .build());
 
