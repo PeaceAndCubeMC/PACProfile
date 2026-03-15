@@ -33,7 +33,7 @@ public class ProfileGui extends UnmodifiableGui {
     private boolean baseStatistics;
 
     public ProfileGui(Player viewer, Player player) {
-        super(6, Component.text(String.format(Messages.PROFILE, player.getName())), viewer, player);
+        super(6, Component.text(Messages.PROFILE.formatted(player.getName())), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.baseStatistics = false;
         this.fillInventory();

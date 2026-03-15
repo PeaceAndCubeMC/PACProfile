@@ -2,7 +2,9 @@ package fr.peaceandcube.pacprofile.gui;
 
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.exception.NotPaginatedGuiException;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.order.OrderSet;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,6 +40,21 @@ public abstract class UnmodifiableGui implements Listener, GuiContext {
     @Override
     public Player player() {
         return player;
+    }
+
+    @Override
+    public int page() {
+        throw new NotPaginatedGuiException();
+    }
+
+    @Override
+    public int maxPages() {
+        throw new NotPaginatedGuiException();
+    }
+
+    @Override
+    public OrderSet orderSet() {
+        throw new NotPaginatedGuiException();
     }
 
     public void open() {

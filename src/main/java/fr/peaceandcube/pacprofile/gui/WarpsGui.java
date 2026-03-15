@@ -17,22 +17,22 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class WarpsGui extends UnmodifiableGui {
-    private final int page;
-    private final int maxPages;
+public class WarpsGui extends PaginatedGui {
     private List<WarpEntry> warps;
-    private final OrderSet orderSet;
 
     public WarpsGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
     }
 
     public WarpsGui(Player viewer, Player player, int page, int maxPages, Order order) {
-        super(6, Component.text(String.format(Messages.WARPS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
-        this.page = Math.max(1, page);
-        this.maxPages = maxPages;
+        super(Component.text(Messages.WARPS_TITLE.formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
+                viewer,
+                player,
+                page,
+                maxPages,
+                new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.CATEGORY_AZ, Order.CATEGORY_ZA)
+        );
         this.warps = PACProfile.getInstance().config.getWarps();
-        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.CATEGORY_AZ, Order.CATEGORY_ZA);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -41,7 +41,7 @@ public class WarpsGui extends UnmodifiableGui {
     public void fillInventory() {
         this.items.clear();
 
-        switch (this.orderSet.currentOrder()) {
+        switch (this.orderSet().currentOrder()) {
             case DEFAULT -> this.warps = PACProfile.getInstance().config.getWarps();
             case NAME_AZ -> this.warps.sort((warp1, warp2) -> warp1.name().compareToIgnoreCase(warp2.name()));
             case NAME_ZA -> this.warps.sort((warp1, warp2) -> warp2.name().compareToIgnoreCase(warp1.name()));
@@ -50,8 +50,8 @@ public class WarpsGui extends UnmodifiableGui {
         }
 
         int warpCount = this.warps.size();
-        int maxWarpsOnPage = this.page * 35;
-        int warpsOnPage = warpCount >= maxWarpsOnPage ? maxWarpsOnPage : (warpCount - (this.page - 1) * 35);
+        int maxWarpsOnPage = this.page() * 35;
+        int warpsOnPage = warpCount >= maxWarpsOnPage ? maxWarpsOnPage : (warpCount - (this.page() - 1) * 35);
 
         for (int i = 0; i < Math.min(warpsOnPage, 35); i++) {
             int index = maxWarpsOnPage - 35 + i;
@@ -82,10 +82,10 @@ public class WarpsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3041)
                 .name(Messages.WARPS_ORDER, 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
-                    this.orderSet.next();
+                    context.orderSet().next();
                     context.fillInventory();
                 })
                 .build());
@@ -94,11 +94,16 @@ public class WarpsGui extends UnmodifiableGui {
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(context -> {
-                    if (this.page == 1) {
+                    if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new WarpsGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
-                                this.orderSet.currentOrder()).open();
+                        new WarpsGui(
+                                context.viewer(),
+                                context.player(),
+                                context.page() - 1,
+                                context.maxPages(),
+                                context.orderSet().currentOrder()
+                        ).open();
                     }
                 })
                 .build());
@@ -114,8 +119,13 @@ public class WarpsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
-                            this.orderSet.currentOrder()).open())
+                    .onLeftClick(context -> new WarpsGui(
+                            context.viewer(),
+                            context.player(),
+                            context.page() + 1,
+                            context.maxPages(),
+                            context.orderSet().currentOrder()
+                    ).open())
                     .build());
         }
     }

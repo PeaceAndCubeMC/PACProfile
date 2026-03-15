@@ -22,24 +22,24 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class ClaimsGui extends UnmodifiableGui {
+public class ClaimsGui extends PaginatedGui {
     private final PlayerData playerData;
-    private final int page;
-    private final int maxPages;
     private Vector<Claim> claims;
-    private final OrderSet orderSet;
 
     public ClaimsGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
     }
 
     public ClaimsGui(Player viewer, Player player, int page, int maxPages, Order order) {
-        super(6, Component.text(String.format(Messages.CLAIMS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
+        super(Component.text(Messages.CLAIMS_TITLE.formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
+                viewer,
+                player,
+                page,
+                maxPages,
+                new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.AREA_ASC, Order.AREA_DESC)
+        );
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
-        this.page = Math.max(1, page);
-        this.maxPages = maxPages;
         this.claims = this.playerData.getClaims();
-        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.AREA_ASC, Order.AREA_DESC);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -48,7 +48,7 @@ public class ClaimsGui extends UnmodifiableGui {
     public void fillInventory() {
         this.items.clear();
 
-        switch (this.orderSet.currentOrder()) {
+        switch (this.orderSet().currentOrder()) {
             case DEFAULT -> this.claims = this.playerData.getClaims();
             case NAME_AZ -> this.claims.sort((claim1, claim2) ->
                     this.getName(claim1.getID().toString()).compareToIgnoreCase(this.getName(claim2.getID().toString()))
@@ -61,8 +61,8 @@ public class ClaimsGui extends UnmodifiableGui {
         }
 
         int claimCount = this.claims.size();
-        int maxClaimOnPage = this.page * 10;
-        int claimsOnPage = claimCount >= maxClaimOnPage ? maxClaimOnPage : (claimCount - (this.page - 1) * 10);
+        int maxClaimOnPage = this.page() * 10;
+        int claimsOnPage = claimCount >= maxClaimOnPage ? maxClaimOnPage : (claimCount - (this.page() - 1) * 10);
 
         for (int i = 0; i < Math.min(claimsOnPage, 10); i++) {
             int index = maxClaimOnPage - 10 + i;
@@ -135,7 +135,7 @@ public class ClaimsGui extends UnmodifiableGui {
                             .onConfirm(newValue -> {
                                 Logger.debug("%s edited name for claim %s".formatted(context.player().getName(), getName(claimId)));
                                 PACProfile.getInstance().playerData.setClaimName(context.player().getUniqueId(), claimId, newValue);
-                                new ClaimsGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                new ClaimsGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                             })
                             .build()
                             .show())
@@ -145,10 +145,10 @@ public class ClaimsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3024)
                 .name(Messages.CLAIMS_ORDER, 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
-                    this.orderSet.next();
+                    context.orderSet().next();
                     context.fillInventory();
                 })
                 .build());
@@ -157,11 +157,16 @@ public class ClaimsGui extends UnmodifiableGui {
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(context -> {
-                    if (this.page == 1) {
+                    if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new ClaimsGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
-                                this.orderSet.currentOrder()).open();
+                        new ClaimsGui(
+                                context.viewer(),
+                                context.player(),
+                                context.page() - 1,
+                                context.maxPages(),
+                                context.orderSet().currentOrder()
+                        ).open();
                     }
                 })
                 .build());
@@ -177,8 +182,13 @@ public class ClaimsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
-                            this.orderSet.currentOrder()).open())
+                    .onLeftClick(context -> new ClaimsGui(
+                            context.viewer(),
+                            context.player(),
+                            context.page() + 1,
+                            context.maxPages(),
+                            context.orderSet().currentOrder()
+                    ).open())
                     .build());
         }
     }

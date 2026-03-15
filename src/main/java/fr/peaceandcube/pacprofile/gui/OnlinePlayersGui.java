@@ -29,24 +29,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class OnlinePlayersGui extends UnmodifiableGui {
+public class OnlinePlayersGui extends PaginatedGui {
     private final PlayerData playerData;
-    private final int page;
-    private final int maxPages;
     private List<Player> playerList;
-    private final OrderSet orderSet;
 
     public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages) {
         this(viewer, player, page, maxPages, Order.DEFAULT);
     }
 
     public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages, Order order) {
-        super(6, Component.text(String.format(Messages.ONLINE_PLAYERS_TITLE, player.getName(), Math.max(1, page), Math.max(1, maxPages))), viewer, player);
+        super(Component.text(Messages.ONLINE_PLAYERS_TITLE.formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
+                viewer,
+                player,
+                page,
+                maxPages,
+                new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA)
+        );
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
-        this.page = Math.max(1, page);
-        this.maxPages = maxPages;
         this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
-        this.orderSet = new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA);
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -55,7 +55,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
     public void fillInventory() {
         this.items.clear();
 
-        switch (this.orderSet.currentOrder()) {
+        switch (this.orderSet().currentOrder()) {
             case DEFAULT ->
                     this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
             case NAME_AZ -> this.playerList.sort(Comparator.comparing(Player::getName));
@@ -63,8 +63,8 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         }
 
         int playerCount = this.playerList.size();
-        int maxPlayersOnPage = this.page * 10;
-        int playersOnPage = playerCount >= maxPlayersOnPage ? maxPlayersOnPage : (playerCount - (this.page - 1) * 10);
+        int maxPlayersOnPage = this.page() * 10;
+        int playersOnPage = playerCount >= maxPlayersOnPage ? maxPlayersOnPage : (playerCount - (this.page() - 1) * 10);
 
         for (int i = 0; i < Math.min(playersOnPage, 10); i++) {
             int index = maxPlayersOnPage - 10 + i;
@@ -136,14 +136,14 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                             .onConfirm(newValue -> {
                                 Logger.debug("%s edited notes for player %s".formatted(context.player().getName(), player.getName()));
                                 PACProfile.getInstance().playerData.setPlayerNotes(context.player().getUniqueId(), playerUuid, newValue);
-                                new OnlinePlayersGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                new OnlinePlayersGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                             })
                             .build()
                             .show())
                     .onRightClick(context -> new ConfirmationGui(context.viewer(), context.player(), this, () -> {
                         Logger.debug("%s removed notes for player %s".formatted(context.player().getName(), player.getName()));
                         PACProfile.getInstance().playerData.removePlayerNotes(context.player().getUniqueId(), player.getUniqueId().toString());
-                        new OnlinePlayersGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                        new OnlinePlayersGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                     }).open())
                     .build());
         }
@@ -151,10 +151,10 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
                 .name(Messages.ONLINE_PLAYERS_ORDER, 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
+                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
-                    this.orderSet.next();
+                    context.orderSet().next();
                     context.fillInventory();
                 })
                 .build());
@@ -163,11 +163,16 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
                 .onLeftClick(context -> {
-                    if (this.page == 1) {
+                    if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new OnlinePlayersGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
-                                this.orderSet.currentOrder()).open();
+                        new OnlinePlayersGui(
+                                context.viewer(),
+                                context.player(),
+                                context.page() - 1,
+                                context.maxPages(),
+                                context.orderSet().currentOrder()
+                        ).open();
                     }
                 })
                 .build());
@@ -183,8 +188,13 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
-                            this.orderSet.currentOrder()).open())
+                    .onLeftClick(context -> new OnlinePlayersGui(
+                            context.viewer(),
+                            context.player(),
+                            context.page() + 1,
+                            context.maxPages(),
+                            context.orderSet().currentOrder()
+                    ).open())
                     .build());
         }
     }
