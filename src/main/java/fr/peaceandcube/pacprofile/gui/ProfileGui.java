@@ -94,54 +94,6 @@ public class ProfileGui extends UnmodifiableGui {
                 })
                 .build());
 
-        int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
-        int usedHomeCount = this.user.getHomes().size();
-        int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
-        int maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
-        List<Component> homesLore = List.of(
-                Component.empty(),
-                LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.HOMES_MAX_AVAILABLE.append(Component.text(totalHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.HOMES_CLICK
-        );
-        this.setItem(GuiItem.builder().slot(28).material(Material.RED_BED)
-                .customModelData(3004)
-                .name(Messages.HOMES, 0x5555FF)
-                .lore(homesLore)
-                .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), 1, maxHomePages).open())
-                .build());
-
-        int totalClaimCount = this.playerData.getClaims().size();
-        int remainingClaimBlocks = this.playerData.getRemainingClaimBlocks();
-        int accruedClaimBlocks = this.playerData.getAccruedClaimBlocks();
-        int bonusClaimBlocks = this.playerData.getBonusClaimBlocks();
-        int totalClaimsBlocks = accruedClaimBlocks + bonusClaimBlocks;
-        int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
-        int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
-        int maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
-        List<Component> claimsLore = List.of(
-                Component.empty(),
-                LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_REMAINING.append(Component.text(remainingClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.CLAIMS_CB_ACCRUED.append(Component.text(accruedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_BONUS.append(Component.text(bonusClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                LoreComponents.CLAIMS_CB_TOTAL.append(Component.text(totalClaimsBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.CLAIMS_CB_PER_HOUR.append(Component.text(blocksAccruedPerHour, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.CLAIMS_CLICK
-        );
-        this.setItem(GuiItem.builder().slot(30).material(Material.GOLDEN_SHOVEL)
-                .customModelData(3004)
-                .name(Messages.CLAIMS, 0x00AA00)
-                .lore(claimsLore)
-                .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), 1, maxClaimPages).open())
-                .build());
-
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)

@@ -1,6 +1,7 @@
-package fr.peaceandcube.pacprofile.gui;
+package fr.peaceandcube.pacprofile.module.homes;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.util.Color;
 import fr.peaceandcube.pacprofile.util.Messages;
