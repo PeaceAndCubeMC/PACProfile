@@ -21,7 +21,7 @@ public class ConfirmationGui extends UnmodifiableGui {
     }
 
     @Override
-    protected void fillInventory() {
+    public void fillInventory() {
         this.items.clear();
 
         this.setItem(GuiItem.builder().slot(3).material(Material.GREEN_TERRACOTTA)

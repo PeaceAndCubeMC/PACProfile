@@ -8,6 +8,8 @@ public interface GuiContext {
 
     Player player();
 
+    void fillInventory();
+
     void close();
 
     void dispatchCommand(String command);

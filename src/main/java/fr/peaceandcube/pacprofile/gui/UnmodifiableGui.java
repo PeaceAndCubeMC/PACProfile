@@ -40,8 +40,6 @@ public abstract class UnmodifiableGui implements Listener, GuiContext {
         return player;
     }
 
-    protected abstract void fillInventory();
-
     public void open() {
         this.viewer.openInventory(this.inv);
     }

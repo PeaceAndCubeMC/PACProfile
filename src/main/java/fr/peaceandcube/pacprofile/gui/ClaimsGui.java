@@ -45,7 +45,7 @@ public class ClaimsGui extends UnmodifiableGui {
     }
 
     @Override
-    protected void fillInventory() {
+    public void fillInventory() {
         this.items.clear();
 
         switch (this.orderSet.currentOrder()) {
@@ -149,7 +149,7 @@ public class ClaimsGui extends UnmodifiableGui {
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
                     this.orderSet.next();
-                    this.fillInventory();
+                    context.fillInventory();
                 })
                 .build());
 

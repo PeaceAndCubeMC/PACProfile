@@ -28,7 +28,7 @@ public class SettingsGui extends UnmodifiableGui {
     }
 
     @Override
-    protected void fillInventory() {
+    public void fillInventory() {
         this.items.clear();
 
         if (hasPermission("essentials.msgtoggle")) {
@@ -42,7 +42,7 @@ public class SettingsGui extends UnmodifiableGui {
                     .lore(Component.empty(), LoreComponents.SETTINGS_MSGTOGGLE_CLICK)
                     .onLeftClick(context -> {
                         PACProfile.getEssentials().getUser(context.player()).setIgnoreMsg(msgtoggleEnabled);
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .build());
         }
@@ -58,7 +58,7 @@ public class SettingsGui extends UnmodifiableGui {
                     .lore(Component.empty(), LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK)
                     .onLeftClick(context -> {
                         PACUtilities.playersFile.setMsgSound(context.player().getUniqueId().toString(), !togglemsgsoundEnabled);
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .build());
         }
@@ -90,7 +90,7 @@ public class SettingsGui extends UnmodifiableGui {
                         } else {
                             context.dispatchCommand("ptime " + newTime.name().toLowerCase() + " " + context.player().getName());
                         }
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .onRightClick(context -> {
                         if (context.player().equals(context.viewer())) {
@@ -98,7 +98,7 @@ public class SettingsGui extends UnmodifiableGui {
                         } else {
                             context.dispatchCommand("ptime reset " + context.player().getName());
                         }
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .build());
         }
@@ -130,7 +130,7 @@ public class SettingsGui extends UnmodifiableGui {
                         } else {
                             context.dispatchCommand("pweather " + newWeather.name().toLowerCase() + " " + context.player().getName());
                         }
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .onRightClick(context -> {
                         if (context.player().equals(context.viewer())) {
@@ -138,7 +138,7 @@ public class SettingsGui extends UnmodifiableGui {
                         } else {
                             context.dispatchCommand("pweather reset " + context.player().getName());
                         }
-                        this.fillInventory();
+                        context.fillInventory();
                     })
                     .build());
         }

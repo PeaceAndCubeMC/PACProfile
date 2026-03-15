@@ -23,7 +23,7 @@ public class HomeColorGui extends UnmodifiableGui {
     }
 
     @Override
-    protected void fillInventory() {
+    public void fillInventory() {
         this.items.clear();
 
         for (int i = 0; i < Color.values().length; i++) {

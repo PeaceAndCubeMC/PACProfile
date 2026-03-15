@@ -41,7 +41,7 @@ public class ProfileGui extends UnmodifiableGui {
     }
 
     @Override
-    protected void fillInventory() {
+    public void fillInventory() {
         this.items.clear();
 
         String rank = this.getRank();
@@ -84,7 +84,7 @@ public class ProfileGui extends UnmodifiableGui {
                 .lore(statsLore)
                 .onLeftClick(context -> {
                     this.baseStatistics = !this.baseStatistics;
-                    this.fillInventory();
+                    context.fillInventory();
                 })
                 .build());
 
