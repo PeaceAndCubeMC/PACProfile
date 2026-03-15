@@ -1,0 +1,2 @@
+- Refactored click actions of items to use a gui context
+- Added release CI workflow
