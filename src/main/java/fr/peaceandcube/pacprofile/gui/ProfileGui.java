@@ -94,28 +94,6 @@ public class ProfileGui extends UnmodifiableGui {
                 })
                 .build());
 
-        int mailCount = this.user.getMailAmount();
-        int unreadMailCount = this.user.getUnreadMailAmount();
-        List<Component> mailLore = new ArrayList<>();
-        mailLore.add(Component.empty());
-        mailLore.add(LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-        mailLore.add(LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-        if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
-            mailLore.add(Component.empty());
-            mailLore.add(LoreComponents.MAILS_CLICK);
-        }
-        this.setItem(GuiItem.builder().slot(24).material(Material.WRITABLE_BOOK)
-                .customModelData(3004)
-                .name(Messages.MAILS, 0xAA00AA)
-                .lore(mailLore)
-                .onLeftClick(context -> {
-                    if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
-                        context.close();
-                    }
-                })
-                .build());
-
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
@@ -162,29 +140,6 @@ public class ProfileGui extends UnmodifiableGui {
                 .name(Messages.CLAIMS, 0x00AA00)
                 .lore(claimsLore)
                 .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), 1, maxClaimPages).open())
-                .build());
-
-        int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).toList().size();
-        int maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
-        List<Component> onlinePlayersLore = List.of(
-                Component.empty(),
-                LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                Component.empty(),
-                LoreComponents.ONLINE_PLAYERS_CLICK
-        );
-        this.setItem(GuiItem.builder().slot(32).material(Material.PLAYER_HEAD)
-                .customModelData(3005)
-                .name(Messages.ONLINE_PLAYERS, 0x55FF55)
-                .lore(onlinePlayersLore)
-                .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
-                .build());
-
-        int maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
-        this.setItem(GuiItem.builder().slot(34).material(Material.ENDER_PEARL)
-                .customModelData(3004)
-                .name(Messages.WARPS, 0xFFFF55)
-                .lore(Component.empty(), LoreComponents.WARPS_CLICK)
-                .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), 1, maxWarpsPages).open())
                 .build());
 
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)

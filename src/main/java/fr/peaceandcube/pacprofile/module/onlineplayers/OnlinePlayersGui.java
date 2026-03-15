@@ -1,8 +1,12 @@
-package fr.peaceandcube.pacprofile.gui;
+package fr.peaceandcube.pacprofile.module.onlineplayers;
 
 import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.gui.ConfirmationGui;
+import fr.peaceandcube.pacprofile.gui.GuiContext;
+import fr.peaceandcube.pacprofile.gui.PaginatedGui;
+import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.item.GuiItem;

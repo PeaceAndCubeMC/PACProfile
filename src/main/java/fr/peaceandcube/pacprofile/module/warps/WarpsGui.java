@@ -1,7 +1,10 @@
-package fr.peaceandcube.pacprofile.gui;
+package fr.peaceandcube.pacprofile.module.warps;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.file.WarpEntry;
+import fr.peaceandcube.pacprofile.gui.GuiContext;
+import fr.peaceandcube.pacprofile.gui.PaginatedGui;
+import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;

@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class HeadTicketsModule extends Module {
 
     public HeadTicketsModule() {
-        super("headtickets");
+        super("head_tickets");
     }
 
     @Override
