@@ -7,12 +7,20 @@ import fr.peaceandcube.pacprofile.file.ConfigFile;
 import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
 import fr.peaceandcube.pacprofile.logging.Logger;
+import fr.peaceandcube.pacprofile.module.Module;
+import fr.peaceandcube.pacprofile.module.dynmap.DynmapModule;
+import fr.peaceandcube.pacprofile.module.links.LinksModule;
+import fr.peaceandcube.pacprofile.module.rules.RulesModule;
+import fr.peaceandcube.pacprofile.module.settings.SettingsModule;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PACProfile extends JavaPlugin {
     private static PACProfile instance;
@@ -23,6 +31,8 @@ public class PACProfile extends JavaPlugin {
     public ConfigFile config;
     public LangFile lang;
     public PlayerDataFile playerData;
+
+    private final List<Module> modules = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -37,6 +47,15 @@ public class PACProfile extends JavaPlugin {
         config = new ConfigFile("config.yml", this);
         lang = new LangFile("lang.yml", this);
         playerData = new PlayerDataFile("playerdata.yml", this);
+
+        registerModules();
+    }
+
+    private void registerModules() {
+        modules.add(new SettingsModule());
+        modules.add(new RulesModule());
+        modules.add(new LinksModule());
+        modules.add(new DynmapModule());
     }
 
     public static void reload() {
@@ -62,5 +81,9 @@ public class PACProfile extends JavaPlugin {
 
     public static GriefPrevention getGriefPrevention() {
         return griefPrevention;
+    }
+
+    public List<Module> getModules() {
+        return modules;
     }
 }

@@ -1,0 +1,26 @@
+package fr.peaceandcube.pacprofile.module.settings;
+
+import fr.peaceandcube.pacprofile.gui.SettingsGui;
+import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.module.Module;
+import fr.peaceandcube.pacprofile.text.LoreComponents;
+import fr.peaceandcube.pacprofile.util.Messages;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+
+public class SettingsModule extends Module {
+
+    public SettingsModule() {
+        super("settings");
+    }
+
+    @Override
+    protected GuiItem createGuiItem() {
+        return GuiItem.builder().slot(17).material(Material.COMPARATOR)
+                .customModelData(3004)
+                .name(Messages.SETTINGS, 0x555555)
+                .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
+                .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
+                .build();
+    }
+}

@@ -4,6 +4,7 @@ import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.statistic.Statistic;
 import fr.peaceandcube.pacprofile.statistic.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -43,6 +44,12 @@ public class ProfileGui extends UnmodifiableGui {
     @Override
     public void fillInventory() {
         this.items.clear();
+
+        for (Module module : PACProfile.getInstance().getModules()) {
+            if (module.isEnabled()) {
+                this.setItem(module.guiItem());
+            }
+        }
 
         String rank = this.getRank();
         String rankExpiration = this.getRankExpiration();
@@ -86,13 +93,6 @@ public class ProfileGui extends UnmodifiableGui {
                     this.baseStatistics = !this.baseStatistics;
                     context.fillInventory();
                 })
-                .build());
-
-        this.setItem(GuiItem.builder().slot(17).material(Material.COMPARATOR)
-                .customModelData(3004)
-                .name(Messages.SETTINGS, 0x555555)
-                .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
-                .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
                 .build());
 
         double coinCount = this.user.getMoney().doubleValue();
@@ -232,42 +232,6 @@ public class ProfileGui extends UnmodifiableGui {
                 .lore(Component.empty(), LoreComponents.WARPS_CLICK)
                 .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), 1, maxWarpsPages).open())
                 .build());
-
-        if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
-            this.setItem(GuiItem.builder().slot(45).material(Material.KNOWLEDGE_BOOK)
-                    .customModelData(3004)
-                    .name(Messages.RULES, 0xFF55FF)
-                    .lore(Component.empty(), LoreComponents.RULES_CLICK)
-                    .onLeftClick(context -> {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
-                        context.close();
-                    })
-                    .build());
-        }
-
-        if (!PACProfile.getInstance().config.getCommandOnClickLinks().isBlank()) {
-            this.setItem(GuiItem.builder().slot(46).material(Material.IRON_CHAIN)
-                    .customModelData(3004)
-                    .name(Messages.LINKS, 0xFF55FF)
-                    .lore(Component.empty(), LoreComponents.LINKS_CLICK)
-                    .onLeftClick(context -> {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
-                        context.close();
-                    })
-                    .build());
-        }
-
-        if (!PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank()) {
-            this.setItem(GuiItem.builder().slot(47).material(Material.MAP)
-                    .customModelData(3004)
-                    .name(Messages.DYNMAP, 0xFF55FF)
-                    .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)
-                    .onLeftClick(context -> {
-                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
-                        context.close();
-                    })
-                    .build());
-        }
 
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
                 .customModelData(3002)
