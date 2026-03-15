@@ -40,8 +40,8 @@ public class SettingsGui extends UnmodifiableGui {
                     .name(Messages.SETTINGS_MSGTOGGLE, 0x5555FF)
                     .lore(Component.empty(), msgtoggle)
                     .lore(Component.empty(), LoreComponents.SETTINGS_MSGTOGGLE_CLICK)
-                    .onLeftClick(() -> {
-                        PACProfile.getEssentials().getUser(this.player).setIgnoreMsg(msgtoggleEnabled);
+                    .onLeftClick(context -> {
+                        PACProfile.getEssentials().getUser(context.player()).setIgnoreMsg(msgtoggleEnabled);
                         this.fillInventory();
                     })
                     .build());
@@ -56,8 +56,8 @@ public class SettingsGui extends UnmodifiableGui {
                     .name(Messages.SETTINGS_TOGGLEMSGSOUND, 0x5555FF)
                     .lore(Component.empty(), togglemsgsound)
                     .lore(Component.empty(), LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK)
-                    .onLeftClick(() -> {
-                        PACUtilities.playersFile.setMsgSound(this.player.getUniqueId().toString(), !togglemsgsoundEnabled);
+                    .onLeftClick(context -> {
+                        PACUtilities.playersFile.setMsgSound(context.player().getUniqueId().toString(), !togglemsgsoundEnabled);
                         this.fillInventory();
                     })
                     .build());
@@ -83,20 +83,20 @@ public class SettingsGui extends UnmodifiableGui {
                     .customModelData(3050)
                     .name(Messages.SETTINGS_PTIME, 0x5555FF)
                     .lore(ptimeLore)
-                    .onLeftClick(() -> {
+                    .onLeftClick(context -> {
                         PTimeType newTime = currentTime.next();
-                        if (this.player.equals(this.viewer)) {
-                            this.dispatchCommand("ptime " + newTime.name().toLowerCase());
+                        if (context.player().equals(context.viewer())) {
+                            context.dispatchCommand("ptime " + newTime.name().toLowerCase());
                         } else {
-                            this.dispatchCommand("ptime " + newTime.name().toLowerCase() + " " + this.player.getName());
+                            context.dispatchCommand("ptime " + newTime.name().toLowerCase() + " " + context.player().getName());
                         }
                         this.fillInventory();
                     })
-                    .onRightClick(() -> {
-                        if (this.player.equals(this.viewer)) {
-                            this.dispatchCommand("ptime reset");
+                    .onRightClick(context -> {
+                        if (context.player().equals(context.viewer())) {
+                            context.dispatchCommand("ptime reset");
                         } else {
-                            this.dispatchCommand("ptime reset " + this.player.getName());
+                            context.dispatchCommand("ptime reset " + context.player().getName());
                         }
                         this.fillInventory();
                     })
@@ -123,20 +123,20 @@ public class SettingsGui extends UnmodifiableGui {
                     .customModelData(3050)
                     .name(Messages.SETTINGS_PWEATHER, 0x5555FF)
                     .lore(pweatherLore)
-                    .onLeftClick(() -> {
+                    .onLeftClick(context -> {
                         PWeatherType newWeather = currentWeather.next();
-                        if (this.player.equals(this.viewer)) {
-                            this.dispatchCommand("pweather " + newWeather.name().toLowerCase());
+                        if (context.player().equals(context.viewer())) {
+                            context.dispatchCommand("pweather " + newWeather.name().toLowerCase());
                         } else {
-                            this.dispatchCommand("pweather " + newWeather.name().toLowerCase() + " " + this.player.getName());
+                            context.dispatchCommand("pweather " + newWeather.name().toLowerCase() + " " + context.player().getName());
                         }
                         this.fillInventory();
                     })
-                    .onRightClick(() -> {
-                        if (this.player.equals(this.viewer)) {
-                            this.dispatchCommand("pweather reset");
+                    .onRightClick(context -> {
+                        if (context.player().equals(context.viewer())) {
+                            context.dispatchCommand("pweather reset");
                         } else {
-                            this.dispatchCommand("pweather reset " + this.player.getName());
+                            context.dispatchCommand("pweather reset " + context.player().getName());
                         }
                         this.fillInventory();
                     })
@@ -146,13 +146,13 @@ public class SettingsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(0).material(Material.ARROW)
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
-                .onLeftClick(() -> new ProfileGui(this.viewer, this.player).open())
+                .onLeftClick(context -> new ProfileGui(context.viewer(), context.player()).open())
                 .build());
 
         this.setItem(GuiItem.builder().slot(8).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
     }
 

@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.item;
 
+import fr.peaceandcube.pacprofile.gui.GuiContext;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -12,14 +13,15 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class GuiItem {
     private final int slot;
     private final ItemStack stack;
-    private final Runnable leftClickAction;
-    private final Runnable rightClickAction;
+    private final Consumer<GuiContext> leftClickAction;
+    private final Consumer<GuiContext> rightClickAction;
 
-    private GuiItem(int slot, ItemStack stack, Runnable leftClickAction, Runnable rightClickAction) {
+    private GuiItem(int slot, ItemStack stack, Consumer<GuiContext> leftClickAction, Consumer<GuiContext> rightClickAction) {
         this.slot = slot;
         this.stack = stack;
         this.leftClickAction = leftClickAction;
@@ -34,11 +36,11 @@ public class GuiItem {
         return stack;
     }
 
-    public Runnable getLeftClickAction() {
+    public Consumer<GuiContext> getLeftClickAction() {
         return leftClickAction;
     }
 
-    public Runnable getRightClickAction() {
+    public Consumer<GuiContext> getRightClickAction() {
         return rightClickAction;
     }
 
@@ -55,8 +57,8 @@ public class GuiItem {
         private boolean hideTooltip;
         private GuiItemName name;
         private final List<Component> lore;
-        private Runnable leftClickAction;
-        private Runnable rightClickAction;
+        private Consumer<GuiContext> leftClickAction;
+        private Consumer<GuiContext> rightClickAction;
 
         private Builder() {
             this.lore = new ArrayList<>();
@@ -107,12 +109,12 @@ public class GuiItem {
             return this;
         }
 
-        public Builder onLeftClick(Runnable action) {
+        public Builder onLeftClick(Consumer<GuiContext> action) {
             this.leftClickAction = action;
             return this;
         }
 
-        public Builder onRightClick(Runnable action) {
+        public Builder onRightClick(Consumer<GuiContext> action) {
             this.rightClickAction = action;
             return this;
         }

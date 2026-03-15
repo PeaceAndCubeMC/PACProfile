@@ -97,28 +97,28 @@ public class HomesGui extends UnmodifiableGui {
                     .customModelData(3010)
                     .name(name, 0x5555FF)
                     .lore(bedLore)
-                    .onLeftClick(() -> {
+                    .onLeftClick(context -> {
                         if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
-                            Logger.debug("%s teleported to home %s:%s".formatted(this.viewer.getName(), this.player.getName(), name));
-                            if (this.player.equals(this.viewer)) {
-                                this.dispatchCommand("home " + name);
+                            Logger.debug("%s teleported to home %s:%s".formatted(context.viewer().getName(), context.player().getName(), name));
+                            if (context.player().equals(context.viewer())) {
+                                context.dispatchCommand("home " + name);
                             } else {
-                                this.dispatchCommand("home " + this.player.getName() + ":" + name);
+                                context.dispatchCommand("home " + context.player().getName() + ":" + name);
                             }
                         }
                     })
-                    .onRightClick(() -> {
+                    .onRightClick(context -> {
                         if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
                             String command;
-                            if (this.player.equals(this.viewer)) {
+                            if (context.player().equals(context.viewer())) {
                                 command = "delhome " + name;
                             } else {
-                                command = "delhome " + this.player.getName() + ":" + name;
+                                command = "delhome " + context.player().getName() + ":" + name;
                             }
-                            new ConfirmationGui(this.viewer, this.player, this, () -> {
-                                Logger.debug("%s deleted home %s:%s".formatted(this.viewer.getName(), this.player.getName(), name));
-                                dispatchCommand(command);
-                                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                            new ConfirmationGui(context.viewer(), context.player(), this, () -> {
+                                Logger.debug("%s deleted home %s:%s".formatted(context.viewer().getName(), context.player().getName(), name));
+                                context.dispatchCommand(command);
+                                new HomesGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             }).open();
                         }
                     })
@@ -134,25 +134,25 @@ public class HomesGui extends UnmodifiableGui {
                     .customModelData(3011)
                     .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(notesLore)
-                    .onLeftClick(() -> TextInputDialog.builder()
-                            .player(this.viewer)
+                    .onLeftClick(context -> TextInputDialog.builder()
+                            .player(context.viewer())
                             .title(Messages.HOMES, 0x5555FF)
                             .bodyItem(new DialogItem(color.getBed(), 3010))
                             .bodyText(name)
                             .inputLabel(Messages.HOME_NOTES_TITLE)
-                            .inputValue(PACProfile.getInstance().playerData.getHomeNotes(this.player.getUniqueId(), name))
+                            .inputValue(PACProfile.getInstance().playerData.getHomeNotes(context.player().getUniqueId(), name))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
-                                Logger.debug("%s edited notes for home %s".formatted(this.player.getName(), name));
-                                PACProfile.getInstance().playerData.setHomeNotes(this.player.getUniqueId(), name, newValue);
-                                new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                Logger.debug("%s edited notes for home %s".formatted(context.player().getName(), name));
+                                PACProfile.getInstance().playerData.setHomeNotes(context.player().getUniqueId(), name, newValue);
+                                new HomesGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
                             .show())
-                    .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
-                        Logger.debug("%s removed notes for home %s".formatted(this.player.getName(), name));
-                        PACProfile.getInstance().playerData.removeHomeNotes(this.player.getUniqueId(), name);
-                        new HomesGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                    .onRightClick(context -> new ConfirmationGui(context.viewer(), context.player(), this, () -> {
+                        Logger.debug("%s removed notes for home %s".formatted(context.player().getName(), name));
+                        PACProfile.getInstance().playerData.removeHomeNotes(context.player().getUniqueId(), name);
+                        new HomesGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                     }).open())
                     .build());
 
@@ -160,7 +160,7 @@ public class HomesGui extends UnmodifiableGui {
                     .customModelData(3012)
                     .name(Messages.HOME_COLOR, 0x00AAAA)
                     .lore(Component.empty(), LoreComponents.HOME_COLOR_CLICK)
-                    .onLeftClick(() -> new HomeColorGui(this.viewer, this.player, name, this.page, this.maxPages).open())
+                    .onLeftClick(context -> new HomeColorGui(context.viewer(), context.player(), name, this.page, this.maxPages).open())
                     .build());
         }
 
@@ -169,7 +169,7 @@ public class HomesGui extends UnmodifiableGui {
                 .name(Messages.HOMES_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     this.orderSet.next();
                     this.fillInventory();
                 })
@@ -178,11 +178,11 @@ public class HomesGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (this.page == 1) {
-                        new ProfileGui(this.viewer, this.player).open();
+                        new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new HomesGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                        new HomesGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
                                 this.orderSet.currentOrder()).open();
                     }
                 })
@@ -191,7 +191,7 @@ public class HomesGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
 
         // if it's not the last page
@@ -199,7 +199,7 @@ public class HomesGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(() -> new HomesGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                    .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
         }

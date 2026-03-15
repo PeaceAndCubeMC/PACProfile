@@ -31,9 +31,9 @@ public class HomeColorGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(i).material(color.getDye())
                     .customModelData(3012)
                     .name(color.translate(), 0xFF55FF)
-                    .onLeftClick(() -> {
-                        PACProfile.getInstance().playerData.setHomeColor(this.player.getUniqueId(), this.name, color.getName());
-                        new HomesGui(this.viewer, this.player, this.page, this.maxPages).open();
+                    .onLeftClick(context -> {
+                        PACProfile.getInstance().playerData.setHomeColor(context.player().getUniqueId(), this.name, color.getName());
+                        new HomesGui(context.viewer(), context.player(), this.page, this.maxPages).open();
                     })
                     .build());
         }

@@ -30,10 +30,6 @@ import java.util.List;
 
 public class ProfileGui extends UnmodifiableGui {
     private final PlayerData playerData;
-    private int maxHomePages;
-    private int maxClaimPages;
-    private int maxOnlinePlayersPages;
-    private int maxWarpsPages;
     private boolean baseStatistics;
 
     public ProfileGui(Player viewer, Player player) {
@@ -86,7 +82,7 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.STATISTICS, 0xFF55FF)
                 .lore(statsLore)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     this.baseStatistics = !this.baseStatistics;
                     this.fillInventory();
                 })
@@ -96,7 +92,7 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.SETTINGS, 0x555555)
                 .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
-                .onLeftClick(() -> new SettingsGui(this.viewer, this.player).open())
+                .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
                 .build());
 
         double coinCount = this.user.getMoney().doubleValue();
@@ -111,10 +107,10 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.COINS, 0xFFAA00)
                 .lore(coinLore)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
-                        this.inv.close();
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
+                        context.close();
                     }
                 })
                 .build());
@@ -136,10 +132,10 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.HEAD_TICKETS, 0x00AAAA)
                 .lore(headTicketLore)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
-                        this.inv.close();
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickHeadTickets());
+                        context.close();
                     }
                 })
                 .build());
@@ -158,10 +154,10 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.MAILS, 0xAA00AA)
                 .lore(mailLore)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
-                        this.inv.close();
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
+                        context.close();
                     }
                 })
                 .build());
@@ -169,7 +165,7 @@ public class ProfileGui extends UnmodifiableGui {
         int totalHomeCount = PACProfile.getEssentials().getSettings().getHomeLimit(this.user);
         int usedHomeCount = this.user.getHomes().size();
         int remainingHomeCount = Math.max(0, totalHomeCount - usedHomeCount);
-        this.maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
+        int maxHomePages = (int) Math.ceil(usedHomeCount / 10.0f);
         List<Component> homesLore = List.of(
                 Component.empty(),
                 LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
@@ -182,7 +178,7 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.HOMES, 0x5555FF)
                 .lore(homesLore)
-                .onLeftClick(() -> new HomesGui(this.viewer, this.player, 1, this.maxHomePages).open())
+                .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), 1, maxHomePages).open())
                 .build());
 
         int totalClaimCount = this.playerData.getClaims().size();
@@ -192,7 +188,7 @@ public class ProfileGui extends UnmodifiableGui {
         int totalClaimsBlocks = accruedClaimBlocks + bonusClaimBlocks;
         int usedClaimBlocks = totalClaimsBlocks - remainingClaimBlocks;
         int blocksAccruedPerHour = PACProfile.getGriefPrevention().config_claims_blocksAccruedPerHour_default;
-        this.maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
+        int maxClaimPages = (int) Math.ceil(totalClaimCount / 10.0f);
         List<Component> claimsLore = List.of(
                 Component.empty(),
                 LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
@@ -211,11 +207,11 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(Messages.CLAIMS, 0x00AA00)
                 .lore(claimsLore)
-                .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, 1, this.maxClaimPages).open())
+                .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), 1, maxClaimPages).open())
                 .build());
 
         int onlinePlayersCount = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).toList().size();
-        this.maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
+        int maxOnlinePlayersPages = (int) Math.ceil(onlinePlayersCount / 10.0f);
         List<Component> onlinePlayersLore = List.of(
                 Component.empty(),
                 LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
@@ -226,15 +222,15 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3005)
                 .name(Messages.ONLINE_PLAYERS, 0x55FF55)
                 .lore(onlinePlayersLore)
-                .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, 1, this.maxOnlinePlayersPages).open())
+                .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
                 .build());
 
-        this.maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
+        int maxWarpsPages = (int) Math.ceil(PACProfile.getInstance().config.getWarps().size() / 35.0f);
         this.setItem(GuiItem.builder().slot(34).material(Material.ENDER_PEARL)
                 .customModelData(3004)
                 .name(Messages.WARPS, 0xFFFF55)
                 .lore(Component.empty(), LoreComponents.WARPS_CLICK)
-                .onLeftClick(() -> new WarpsGui(this.viewer, this.player, 1, this.maxWarpsPages).open())
+                .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), 1, maxWarpsPages).open())
                 .build());
 
         if (!PACProfile.getInstance().config.getCommandOnClickRules().isBlank()) {
@@ -242,9 +238,9 @@ public class ProfileGui extends UnmodifiableGui {
                     .customModelData(3004)
                     .name(Messages.RULES, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.RULES_CLICK)
-                    .onLeftClick(() -> {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
-                        this.inv.close();
+                    .onLeftClick(context -> {
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
+                        context.close();
                     })
                     .build());
         }
@@ -254,9 +250,9 @@ public class ProfileGui extends UnmodifiableGui {
                     .customModelData(3004)
                     .name(Messages.LINKS, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.LINKS_CLICK)
-                    .onLeftClick(() -> {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
-                        this.inv.close();
+                    .onLeftClick(context -> {
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
+                        context.close();
                     })
                     .build());
         }
@@ -266,9 +262,9 @@ public class ProfileGui extends UnmodifiableGui {
                     .customModelData(3004)
                     .name(Messages.DYNMAP, 0xFF55FF)
                     .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)
-                    .onLeftClick(() -> {
-                        this.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
-                        this.inv.close();
+                    .onLeftClick(context -> {
+                        context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
+                        context.close();
                     })
                     .build());
         }
@@ -276,7 +272,7 @@ public class ProfileGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
 
         this.fillStainedGlassPanes();

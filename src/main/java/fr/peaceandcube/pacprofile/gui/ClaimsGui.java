@@ -124,18 +124,18 @@ public class ClaimsGui extends UnmodifiableGui {
                     .customModelData(3023)
                     .name(Messages.CLAIM_NAME, 0x00AAAA)
                     .lore(Component.empty(), LoreComponents.CLAIM_NAME_CLICK)
-                    .onLeftClick(() -> TextInputDialog.builder()
-                            .player(this.viewer)
+                    .onLeftClick(context -> TextInputDialog.builder()
+                            .player(context.viewer())
                             .title(Messages.CLAIMS, 0x00AA00)
                             .bodyItem(new DialogItem(Material.GOLDEN_SHOVEL, customModelData))
                             .bodyText(Messages.CLAIMS_DEFAULT_NAME.formatted(claimId))
                             .inputLabel(Messages.CLAIM_NAME_TITLE)
-                            .inputValue(PACProfile.getInstance().playerData.getClaimName(this.player.getUniqueId(), claimId))
+                            .inputValue(PACProfile.getInstance().playerData.getClaimName(context.player().getUniqueId(), claimId))
                             .inputSize(1, 18)
                             .onConfirm(newValue -> {
-                                Logger.debug("%s edited name for claim %s".formatted(this.player.getName(), getName(claimId)));
-                                PACProfile.getInstance().playerData.setClaimName(this.player.getUniqueId(), claimId, newValue);
-                                new ClaimsGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                Logger.debug("%s edited name for claim %s".formatted(context.player().getName(), getName(claimId)));
+                                PACProfile.getInstance().playerData.setClaimName(context.player().getUniqueId(), claimId, newValue);
+                                new ClaimsGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
                             .show())
@@ -147,7 +147,7 @@ public class ClaimsGui extends UnmodifiableGui {
                 .name(Messages.CLAIMS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     this.orderSet.next();
                     this.fillInventory();
                 })
@@ -156,11 +156,11 @@ public class ClaimsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (this.page == 1) {
-                        new ProfileGui(this.viewer, this.player).open();
+                        new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new ClaimsGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                        new ClaimsGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
                                 this.orderSet.currentOrder()).open();
                     }
                 })
@@ -169,7 +169,7 @@ public class ClaimsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
 
         // if it's not the last page
@@ -177,7 +177,7 @@ public class ClaimsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(() -> new ClaimsGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                    .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
         }

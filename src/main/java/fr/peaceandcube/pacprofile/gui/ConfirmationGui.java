@@ -27,13 +27,13 @@ public class ConfirmationGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(3).material(Material.GREEN_TERRACOTTA)
                 .customModelData(3006)
                 .name(Messages.CONFIRMATION_YES, 0x55FF55)
-                .onLeftClick(this.action::onConfirm)
+                .onLeftClick(context -> this.action.onConfirm())
                 .build());
 
         this.setItem(GuiItem.builder().slot(5).material(Material.RED_TERRACOTTA)
                 .customModelData(3006)
                 .name(Messages.CONFIRMATION_NO, 0xFF5555)
-                .onLeftClick(this.previousGui::open)
+                .onLeftClick(context -> this.previousGui.open())
                 .build());
     }
 

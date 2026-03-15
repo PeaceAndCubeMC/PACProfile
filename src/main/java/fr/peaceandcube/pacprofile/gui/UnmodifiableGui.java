@@ -15,7 +15,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class UnmodifiableGui implements Listener {
+public abstract class UnmodifiableGui implements Listener, GuiContext {
     protected final Inventory inv;
     protected final Player viewer;
     protected final Player player;
@@ -30,10 +30,25 @@ public abstract class UnmodifiableGui implements Listener {
         this.items = new ArrayList<>();
     }
 
+    @Override
+    public Player viewer() {
+        return viewer;
+    }
+
+    @Override
+    public Player player() {
+        return player;
+    }
+
     protected abstract void fillInventory();
 
     public void open() {
         this.viewer.openInventory(this.inv);
+    }
+
+    @Override
+    public void close() {
+        this.inv.close();
     }
 
     protected void setItem(GuiItem item) {
@@ -41,7 +56,8 @@ public abstract class UnmodifiableGui implements Listener {
         this.inv.setItem(item.getSlot(), item.getStack());
     }
 
-    protected void dispatchCommand(String command) {
+    @Override
+    public void dispatchCommand(String command) {
         if (command != null && !command.isEmpty()) {
             // Get as close as possible to player-run commands, in order to respect permissions
             this.viewer.chat("/" + command);
@@ -54,13 +70,13 @@ public abstract class UnmodifiableGui implements Listener {
             if (!e.isShiftClick() && e.isLeftClick()) {
                 for (GuiItem item : this.items) {
                     if (item.getLeftClickAction() != null && item.getSlot() == e.getSlot()) {
-                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), item.getLeftClickAction());
+                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), () -> item.getLeftClickAction().accept(this));
                     }
                 }
             } else if (!e.isShiftClick() && e.isRightClick()) {
                 for (GuiItem item : this.items) {
                     if (item.getRightClickAction() != null && item.getSlot() == e.getSlot()) {
-                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), item.getRightClickAction());
+                        Bukkit.getScheduler().runTask(PACProfile.getInstance(), () -> item.getRightClickAction().accept(this));
                     }
                 }
             }

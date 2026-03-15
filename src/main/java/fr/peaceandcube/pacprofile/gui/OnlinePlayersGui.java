@@ -104,12 +104,12 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .customModelData(3030)
                     .name(player.getName(), 0x5555FF)
                     .lore(lore)
-                    .onLeftClick(() -> {
+                    .onLeftClick(context -> {
                         if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
-                            if (!player.getUniqueId().equals(this.player.getUniqueId())) {
-                                Logger.debug("%s asked for teleportation to player %s".formatted(this.viewer.getName(), player.getName()));
-                                this.dispatchCommand("tpa " + player.getName());
-                                this.inv.close();
+                            if (!player.getUniqueId().equals(context.player().getUniqueId())) {
+                                Logger.debug("%s asked for teleportation to player %s".formatted(context.viewer().getName(), player.getName()));
+                                context.dispatchCommand("tpa " + player.getName());
+                                context.close();
                             }
                         }
                     })
@@ -125,25 +125,25 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                     .customModelData(3031)
                     .name(Messages.HOME_NOTES, 0x00AA00)
                     .lore(notesLore)
-                    .onLeftClick(() -> TextInputDialog.builder()
-                            .player(this.viewer)
+                    .onLeftClick(context -> TextInputDialog.builder()
+                            .player(context.viewer())
                             .title(Messages.ONLINE_PLAYERS, 0x55FF55)
                             .bodyItem(new DialogItem(Material.PLAYER_HEAD, 3030, player))
                             .bodyText(player.getName())
                             .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
-                            .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(this.player.getUniqueId(), playerUuid))
+                            .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(context.player().getUniqueId(), playerUuid))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
-                                Logger.debug("%s edited notes for player %s".formatted(this.player.getName(), player.getName()));
-                                PACProfile.getInstance().playerData.setPlayerNotes(this.player.getUniqueId(), playerUuid, newValue);
-                                new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                                Logger.debug("%s edited notes for player %s".formatted(context.player().getName(), player.getName()));
+                                PACProfile.getInstance().playerData.setPlayerNotes(context.player().getUniqueId(), playerUuid, newValue);
+                                new OnlinePlayersGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                             })
                             .build()
                             .show())
-                    .onRightClick(() -> new ConfirmationGui(this.viewer, this.player, this, () -> {
-                        Logger.debug("%s removed notes for player %s".formatted(this.player.getName(), player.getName()));
-                        PACProfile.getInstance().playerData.removePlayerNotes(this.player.getUniqueId(), player.getUniqueId().toString());
-                        new OnlinePlayersGui(this.viewer, this.player, this.page, this.maxPages, this.orderSet.currentOrder()).open();
+                    .onRightClick(context -> new ConfirmationGui(context.viewer(), context.player(), this, () -> {
+                        Logger.debug("%s removed notes for player %s".formatted(context.player().getName(), player.getName()));
+                        PACProfile.getInstance().playerData.removePlayerNotes(context.player().getUniqueId(), player.getUniqueId().toString());
+                        new OnlinePlayersGui(context.viewer(), context.player(), this.page, this.maxPages, this.orderSet.currentOrder()).open();
                     }).open())
                     .build());
         }
@@ -153,7 +153,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
                 .name(Messages.ONLINE_PLAYERS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     this.orderSet.next();
                     this.fillInventory();
                 })
@@ -162,11 +162,11 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (this.page == 1) {
-                        new ProfileGui(this.viewer, this.player).open();
+                        new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new OnlinePlayersGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                        new OnlinePlayersGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
                                 this.orderSet.currentOrder()).open();
                     }
                 })
@@ -175,7 +175,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
 
         // if it's not the last page
@@ -183,7 +183,7 @@ public class OnlinePlayersGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(() -> new OnlinePlayersGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                    .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
         }

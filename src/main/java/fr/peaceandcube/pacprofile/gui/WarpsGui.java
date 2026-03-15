@@ -71,10 +71,10 @@ public class WarpsGui extends UnmodifiableGui {
                     .customModelData(3040)
                     .name(warp.title(), 0x5555FF)
                     .lore(warpLore)
-                    .onLeftClick(() -> {
-                        Logger.debug("%s teleported to warp %s".formatted(this.viewer.getName(), warp.name()));
-                        this.dispatchCommand("warp " + warp.name());
-                        this.inv.close();
+                    .onLeftClick(context -> {
+                        Logger.debug("%s teleported to warp %s".formatted(context.viewer().getName(), warp.name()));
+                        context.dispatchCommand("warp " + warp.name());
+                        context.close();
                     })
                     .build());
         }
@@ -84,7 +84,7 @@ public class WarpsGui extends UnmodifiableGui {
                 .name(Messages.WARPS_ORDER, 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet.currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     this.orderSet.next();
                     this.fillInventory();
                 })
@@ -93,11 +93,11 @@ public class WarpsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
                 .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
-                .onLeftClick(() -> {
+                .onLeftClick(context -> {
                     if (this.page == 1) {
-                        new ProfileGui(this.viewer, this.player).open();
+                        new ProfileGui(context.viewer(), context.player()).open();
                     } else {
-                        new WarpsGui(this.viewer, this.player, this.page - 1, this.maxPages,
+                        new WarpsGui(context.viewer(), context.player(), this.page - 1, this.maxPages,
                                 this.orderSet.currentOrder()).open();
                     }
                 })
@@ -106,7 +106,7 @@ public class WarpsGui extends UnmodifiableGui {
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
                 .name(Messages.EXIT, 0xFF5555)
-                .onLeftClick(this.inv::close)
+                .onLeftClick(GuiContext::close)
                 .build());
 
         // if it's not the last page
@@ -114,7 +114,7 @@ public class WarpsGui extends UnmodifiableGui {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
-                    .onLeftClick(() -> new WarpsGui(this.viewer, this.player, this.page + 1, this.maxPages,
+                    .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), this.page + 1, this.maxPages,
                             this.orderSet.currentOrder()).open())
                     .build());
         }
