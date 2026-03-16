@@ -1,9 +1,9 @@
-package fr.peaceandcube.pacprofile.util;
+package fr.peaceandcube.pacprofile.module.homes.enums;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import org.bukkit.Material;
 
-public enum Color {
+public enum HomeColor {
     WHITE("white", Material.WHITE_DYE, Material.WHITE_BED),
     LIGHT_GRAY("light_gray", Material.LIGHT_GRAY_DYE, Material.LIGHT_GRAY_BED),
     GRAY("gray", Material.GRAY_DYE, Material.GRAY_BED),
@@ -25,7 +25,7 @@ public enum Color {
     private final Material dye;
     private final Material bed;
 
-    Color(String name, Material dye, Material bed) {
+    HomeColor(String name, Material dye, Material bed) {
         this.name = name;
         this.dye = dye;
         this.bed = bed;
@@ -47,8 +47,8 @@ public enum Color {
         return PACProfile.getInstance().lang.translate("color_" + this.name);
     }
 
-    public static Color byName(String name) {
-        for (Color color : Color.values()) {
+    public static HomeColor byName(String name) {
+        for (HomeColor color : HomeColor.values()) {
             if (color.getName().equals(name)) {
                 return color;
             }

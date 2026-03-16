@@ -1,6 +1,5 @@
 package fr.peaceandcube.pacprofile.module.settings;
 
-import fr.peaceandcube.pacprofile.gui.SettingsGui;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;

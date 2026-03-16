@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.settings;
+package fr.peaceandcube.pacprofile.module.settings.enums;
 
 /**
  * Represents the different time types that can be set through the /ptime command.

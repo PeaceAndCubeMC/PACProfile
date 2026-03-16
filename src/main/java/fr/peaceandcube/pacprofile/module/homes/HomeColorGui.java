@@ -3,7 +3,7 @@ package fr.peaceandcube.pacprofile.module.homes;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
 import fr.peaceandcube.pacprofile.item.GuiItem;
-import fr.peaceandcube.pacprofile.util.Color;
+import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -27,9 +27,8 @@ public class HomeColorGui extends UnmodifiableGui {
     public void fillInventory() {
         this.items.clear();
 
-        for (int i = 0; i < Color.values().length; i++) {
-            Color color = Color.values()[i];
-            this.setItem(GuiItem.builder().slot(i).material(color.getDye())
+        for (HomeColor color : HomeColor.values()) {
+            this.setItem(GuiItem.builder().slot(color.ordinal()).material(color.getDye())
                     .customModelData(3012)
                     .name(color.translate(), 0xFF55FF)
                     .onLeftClick(context -> {

@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.settings;
+package fr.peaceandcube.pacprofile.module.settings.enums;
 
 import org.bukkit.WeatherType;
 

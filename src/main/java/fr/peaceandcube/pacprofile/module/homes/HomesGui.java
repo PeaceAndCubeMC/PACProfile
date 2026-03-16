@@ -12,7 +12,7 @@ import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Color;
+import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -57,7 +57,7 @@ public class HomesGui extends PaginatedGui {
             case NAME_AZ -> this.homes.sort(String::compareToIgnoreCase);
             case NAME_ZA -> this.homes.sort((home1, home2) -> home2.compareToIgnoreCase(home1));
             case COLOR -> this.homes.sort(Comparator.comparingInt(home ->
-                    Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), home)).ordinal()
+                    HomeColor.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), home)).ordinal()
             ));
         }
 
@@ -82,7 +82,7 @@ public class HomesGui extends PaginatedGui {
             String x = location != null ? String.valueOf(location.getBlockX()) : Messages.INVALID;
             String y = location != null ? String.valueOf(location.getBlockY()) : Messages.INVALID;
             String z = location != null ? String.valueOf(location.getBlockZ()) : Messages.INVALID;
-            Color color = Color.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), name));
+            HomeColor color = HomeColor.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), name));
 
             List<Component> bedLore = new ArrayList<>();
             bedLore.add(Component.empty());
