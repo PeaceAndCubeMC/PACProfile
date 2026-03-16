@@ -20,11 +20,6 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("confirmation_yes", "Confirm");
         DEFAULT_TRANSLATIONS.put("confirmation_no", "Cancel");
         DEFAULT_TRANSLATIONS.put("profile", "Profile of %s");
-        DEFAULT_TRANSLATIONS.put("profile_rank", "Rank: ");
-        DEFAULT_TRANSLATIONS.put("profile_rank_expiration", "Expiration: ");
-        DEFAULT_TRANSLATIONS.put("profile_nickname", "Nickname: ");
-        DEFAULT_TRANSLATIONS.put("profile_birthday", "Birthday: ");
-        DEFAULT_TRANSLATIONS.put("profile_join_date", "Joined on: ");
         DEFAULT_TRANSLATIONS.put("exit", "Exit");
         DEFAULT_TRANSLATIONS.put("page_previous", "Previous Page");
         DEFAULT_TRANSLATIONS.put("page_next", "Next Page");
