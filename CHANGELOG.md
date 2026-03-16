@@ -1,2 +1,7 @@
-- Refactored click actions of items to use a gui context
+- Refactored the codebase to introduce modules
+  - Modules handle everything related to a profile feature, like user interfaces
+  - Default translations are now defined per module
+  - Gui items no longer need to be defined in a gui
+    - Their click actions now use a gui context to access data or perform actions
+- Fixed a crash when a translation key is absent in the lang file
 - Added release CI workflow

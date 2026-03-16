@@ -63,7 +63,7 @@ public class LangFile extends YamlFile {
             }
         });
         for (Module module : PACProfile.getInstance().getModules()) {
-            module.getDefaultTranslations().forEach((k, v) -> {
+            module.defaultTranslations().forEach((k, v) -> {
                 if (!this.config.isSet(k) || this.config.getString(k).isBlank()) {
                     this.config.set(k, v);
                 }
@@ -73,6 +73,6 @@ public class LangFile extends YamlFile {
     }
 
     public String translate(String key) {
-        return this.config.getString(key);
+        return this.config.getString(key, key);
     }
 }

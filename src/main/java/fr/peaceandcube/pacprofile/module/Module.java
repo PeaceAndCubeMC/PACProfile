@@ -29,7 +29,7 @@ public abstract class Module {
         return guiItem.apply(player);
     }
 
-    public Map<String, String> getDefaultTranslations() {
+    public Map<String, String> defaultTranslations() {
         return defaultTranslations;
     }
 
