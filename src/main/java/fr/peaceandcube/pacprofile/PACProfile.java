@@ -52,11 +52,11 @@ public class PACProfile extends JavaPlugin {
         this.getCommand("reload").setExecutor(new ReloadCommand());
         this.getCommand("profile").setExecutor(new ProfileCommand());
 
+        registerModules();
+
         config = new ConfigFile("config.yml", this);
         lang = new LangFile("lang.yml", this);
         playerData = new PlayerDataFile("playerdata.yml", this);
-
-        registerModules();
     }
 
     private void registerModules() {

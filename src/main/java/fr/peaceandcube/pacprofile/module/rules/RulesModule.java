@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.module.rules;
 
+import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -18,7 +19,7 @@ public class RulesModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        return !config.getCommandOnClickRules().isBlank();
+        return !PACProfile.getInstance().config.getCommandOnClickRules().isBlank();
     }
 
     @Override
@@ -28,9 +29,15 @@ public class RulesModule extends Module {
                 .name(Messages.RULES, 0xFF55FF)
                 .lore(Component.empty(), LoreComponents.RULES_CLICK)
                 .onLeftClick(context -> {
-                    context.dispatchCommand(config.getCommandOnClickRules());
+                    context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
                     context.close();
                 })
                 .build();
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("rules", "Rules");
+        defaultTranslations.put("rules_click", "⇒ Click to see the rules");
     }
 }

@@ -30,4 +30,15 @@ public class WarpsModule extends Module {
                     .build();
         };
     }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("warps", "Warps");
+        defaultTranslations.put("warps_click", "⇒ Click to see warps");
+        defaultTranslations.put("warps_title", "Warps (%2$d/%3$d)");
+        defaultTranslations.put("warps_order", "Order warps");
+        defaultTranslations.put("warp_command", "Command: ");
+        defaultTranslations.put("warp_category", "Category: ");
+        defaultTranslations.put("warp_click", "⇒ Click to go to this warp");
+    }
 }

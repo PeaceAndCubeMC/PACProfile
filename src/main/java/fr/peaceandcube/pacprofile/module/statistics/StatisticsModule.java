@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.module.statistics;
 
+import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class StatisticsModule extends Module {
+
     private boolean baseStatistics;
 
     public StatisticsModule() {
@@ -32,7 +34,7 @@ public class StatisticsModule extends Module {
             lore.add(this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT);
             lore.add(Component.empty());
             for (Statistic statistic : Statistics.ALL) {
-                if (config.isStatisticEnabled(statistic.getName())) {
+                if (PACProfile.getInstance().config.isStatisticEnabled(statistic.getName())) {
                     lore.add(getStatisticComponent(statistic, player));
                 }
             }
@@ -49,6 +51,27 @@ public class StatisticsModule extends Module {
                     })
                     .build();
         };
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("statistics", "Statistics");
+        defaultTranslations.put("statistics_base", "Base statistics");
+        defaultTranslations.put("statistics_current", "Current statistics");
+        defaultTranslations.put("statistics_health", "❤ Health: ");
+        defaultTranslations.put("statistics_max_health", "❤ Max health: ");
+        defaultTranslations.put("statistics_oxygen_bonus", "🫧 Oxygen bonus: ");
+        defaultTranslations.put("statistics_armor", "\uD83D\uDEE1 Armor: ");
+        defaultTranslations.put("statistics_armor_toughness", "\uD83D\uDEE1 Armor toughness: ");
+        defaultTranslations.put("statistics_knockback_resistance", "❄ Knockback resistance: ");
+        defaultTranslations.put("statistics_speed", "👟 Speed: ");
+        defaultTranslations.put("statistics_sneaking_speed", "👟 Sneaking speed: ");
+        defaultTranslations.put("statistics_attack_damage", "\uD83D\uDDE1 Attack damage: ");
+        defaultTranslations.put("statistics_attack_speed", "\uD83D\uDDE1 Attack speed: ");
+        defaultTranslations.put("statistics_mining_efficiency", "⛏ Mining efficiency: ");
+        defaultTranslations.put("statistics_luck", "☘ Luck: ");
+        defaultTranslations.put("statistics_click_base", "⇒ Click to show base statistics");
+        defaultTranslations.put("statistics_click_current", "⇒ Click to show current statistics");
     }
 
     private Component getStatisticComponent(Statistic statistic, Player player) {

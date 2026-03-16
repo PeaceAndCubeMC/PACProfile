@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.module.links;
 
+import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -18,7 +19,7 @@ public class LinksModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        return !config.getCommandOnClickLinks().isBlank();
+        return !PACProfile.getInstance().config.getCommandOnClickLinks().isBlank();
     }
 
     @Override
@@ -28,9 +29,15 @@ public class LinksModule extends Module {
                 .name(Messages.LINKS, 0xFF55FF)
                 .lore(Component.empty(), LoreComponents.LINKS_CLICK)
                 .onLeftClick(context -> {
-                    context.dispatchCommand(config.getCommandOnClickLinks());
+                    context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
                     context.close();
                 })
                 .build();
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("links", "Server Links");
+        defaultTranslations.put("links_click", "⇒ Click to see the links");
     }
 }

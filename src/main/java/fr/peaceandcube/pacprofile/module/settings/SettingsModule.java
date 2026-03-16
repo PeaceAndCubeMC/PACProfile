@@ -25,4 +25,33 @@ public class SettingsModule extends Module {
                 .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
                 .build();
     }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("settings", "Settings");
+        defaultTranslations.put("settings_click", "⇒ Click to edit settings");
+        defaultTranslations.put("settings_title", "Settings");
+        defaultTranslations.put("settings_enabled", "Enabled");
+        defaultTranslations.put("settings_disabled", "Disabled");
+        defaultTranslations.put("settings_msgtoggle", "Private messages");
+        defaultTranslations.put("settings_msgtoggle_click", "⇒ Click to toggle private messages");
+        defaultTranslations.put("settings_togglemsgsound", "Private messages sound");
+        defaultTranslations.put("settings_togglemsgsound_click", "⇒ Click to toggle private messages sound");
+        defaultTranslations.put("settings_ptime", "Player time");
+        defaultTranslations.put("settings_ptime_sunrise", "Sunrise (5 AM)");
+        defaultTranslations.put("settings_ptime_day", "Day (6 AM)");
+        defaultTranslations.put("settings_ptime_morning", "Morning (7 AM)");
+        defaultTranslations.put("settings_ptime_noon", "Noon (12 PM)");
+        defaultTranslations.put("settings_ptime_afternoon", "Afternoon (3 PM)");
+        defaultTranslations.put("settings_ptime_sunset", "Sunset (6 PM)");
+        defaultTranslations.put("settings_ptime_night", "Night (8 PM)");
+        defaultTranslations.put("settings_ptime_midnight", "Midnight (12 AM)");
+        defaultTranslations.put("settings_ptime_click_left", "⇒ Left click to change player time");
+        defaultTranslations.put("settings_ptime_click_right", "⇒ Right click to reset player time");
+        defaultTranslations.put("settings_pweather", "Player weather");
+        defaultTranslations.put("settings_pweather_sun", "Sun");
+        defaultTranslations.put("settings_pweather_storm", "Storm");
+        defaultTranslations.put("settings_pweather_click_left", "⇒ Left click to change player weather");
+        defaultTranslations.put("settings_pweather_click_right", "⇒ Right click to reset player weather");
+    }
 }

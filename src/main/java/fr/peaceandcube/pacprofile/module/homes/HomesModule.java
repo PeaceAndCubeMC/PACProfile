@@ -47,4 +47,28 @@ public class HomesModule extends Module {
                     .build();
         };
     }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("homes", "Homes");
+        defaultTranslations.put("homes_total", "Total: ");
+        defaultTranslations.put("homes_remaining", "Remaining: ");
+        defaultTranslations.put("homes_max_available", "Maximum available: ");
+        defaultTranslations.put("homes_click", "⇒ Click to see homes");
+        defaultTranslations.put("homes_title", "Homes of %s (%2$d/%3$d)");
+        defaultTranslations.put("homes_order", "Order homes");
+        defaultTranslations.put("home_world", "World: ");
+        defaultTranslations.put("home_x", "X: ");
+        defaultTranslations.put("home_y", "Y: ");
+        defaultTranslations.put("home_z", "Z: ");
+        defaultTranslations.put("home_click_left", "⇒ Left click to go to this home");
+        defaultTranslations.put("home_click_right", "⇒ Right click to delete this home");
+        defaultTranslations.put("home_notes", "Notes");
+        defaultTranslations.put("home_notes_click_left", "⇒ Left click to edit notes");
+        defaultTranslations.put("home_notes_click_right", "⇒ Right click to clear notes");
+        defaultTranslations.put("home_notes_title", "Edit notes");
+        defaultTranslations.put("home_color", "Color");
+        defaultTranslations.put("home_color_click", "⇒ Click to change color");
+        defaultTranslations.put("home_color_title", "Choose a color");
+    }
 }

@@ -57,4 +57,34 @@ public class ClaimsModule extends Module {
                     .build();
         };
     }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("claims", "Claims");
+        defaultTranslations.put("claims_total", "Total: ");
+        defaultTranslations.put("claims_default_name", "Claim n°%s");
+        defaultTranslations.put("claims_cb_used", "Used claim blocks: ");
+        defaultTranslations.put("claims_cb_remaining", "Remaining claim blocks: ");
+        defaultTranslations.put("claims_cb_accrued", "Accrued claim blocks: ");
+        defaultTranslations.put("claims_cb_bonus", "Bonus claim blocks: ");
+        defaultTranslations.put("claims_cb_total", "Total claim blocks: ");
+        defaultTranslations.put("claims_cb_per_hour", "Accrued per hour: ");
+        defaultTranslations.put("claims_click", "⇒ Click to see claims");
+        defaultTranslations.put("claims_title", "Claims of %s (%2$d/%3$d)");
+        defaultTranslations.put("claims_order", "Order claims");
+        defaultTranslations.put("claim_world", "World: ");
+        defaultTranslations.put("claim_greater_corner", "Greater corner: ");
+        defaultTranslations.put("claim_lesser_corner", "Lesser corner: ");
+        defaultTranslations.put("claim_width", "Width: ");
+        defaultTranslations.put("claim_length", "Length: ");
+        defaultTranslations.put("claim_area", "Area: ");
+        defaultTranslations.put("claim_permissions", "Permissions");
+        defaultTranslations.put("claim_permissions_builders", "Builders: ");
+        defaultTranslations.put("claim_permissions_containers", "Containers: ");
+        defaultTranslations.put("claim_permissions_accessors", "Accessors: ");
+        defaultTranslations.put("claim_permissions_managers", "Managers: ");
+        defaultTranslations.put("claim_name", "Name");
+        defaultTranslations.put("claim_name_click", "⇒ Click to edit name");
+        defaultTranslations.put("claim_name_title", "Edit name");
+    }
 }

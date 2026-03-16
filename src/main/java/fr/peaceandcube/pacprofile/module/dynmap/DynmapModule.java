@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.module.dynmap;
 
+import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -18,7 +19,7 @@ public class DynmapModule extends Module {
 
     @Override
     public boolean isEnabled() {
-        return !config.getCommandOnClickDynmap().isBlank();
+        return !PACProfile.getInstance().config.getCommandOnClickDynmap().isBlank();
     }
 
     @Override
@@ -28,9 +29,15 @@ public class DynmapModule extends Module {
                 .name(Messages.DYNMAP, 0xFF55FF)
                 .lore(Component.empty(), LoreComponents.DYNMAP_CLICK)
                 .onLeftClick(context -> {
-                    context.dispatchCommand(config.getCommandOnClickDynmap());
+                    context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
                     context.close();
                 })
                 .build();
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("dynmap", "Dynmap");
+        defaultTranslations.put("dynmap_click", "⇒ Click to open the dynmap");
     }
 }

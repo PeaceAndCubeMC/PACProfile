@@ -31,7 +31,7 @@ public class CoinsModule extends Module {
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
             lore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-            if (!config.getCommandOnClickCoins().isBlank()) {
+            if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
                 lore.add(Component.empty());
                 lore.add(LoreComponents.COINS_CLICK);
             }
@@ -41,12 +41,19 @@ public class CoinsModule extends Module {
                     .name(Messages.COINS, 0xFFAA00)
                     .lore(lore)
                     .onLeftClick(context -> {
-                        if (!config.getCommandOnClickCoins().isBlank()) {
-                            context.dispatchCommand(config.getCommandOnClickCoins());
+                        if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
+                            context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickCoins());
                             context.close();
                         }
                     })
                     .build();
         };
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("coins", "Coins");
+        defaultTranslations.put("coins_total", "Total: ");
+        defaultTranslations.put("coins_click", "⇒ Click to see more about coins");
     }
 }

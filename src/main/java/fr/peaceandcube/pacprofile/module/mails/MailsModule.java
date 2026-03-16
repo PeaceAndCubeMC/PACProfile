@@ -33,7 +33,7 @@ public class MailsModule extends Module {
             lore.add(Component.empty());
             lore.add(LoreComponents.MAILS_TOTAL.append(Component.text(mailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
             lore.add(LoreComponents.MAILS_UNREAD.append(Component.text(unreadMailCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-            if (!config.getCommandOnClickMails().isBlank()) {
+            if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
                 lore.add(Component.empty());
                 lore.add(LoreComponents.MAILS_CLICK);
             }
@@ -43,12 +43,20 @@ public class MailsModule extends Module {
                     .name(Messages.MAILS, 0xAA00AA)
                     .lore(lore)
                     .onLeftClick(context -> {
-                        if (!config.getCommandOnClickMails().isBlank()) {
-                            context.dispatchCommand(config.getCommandOnClickMails());
+                        if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
+                            context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickMails());
                             context.close();
                         }
                     })
                     .build();
         };
+    }
+
+    @Override
+    protected void registerDefaultTranslations() {
+        defaultTranslations.put("mails", "Mails");
+        defaultTranslations.put("mails_total", "Total: ");
+        defaultTranslations.put("mails_unread", "Unread: ");
+        defaultTranslations.put("mails_click", "⇒ Click to see mails");
     }
 }
