@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.statistic;
+package fr.peaceandcube.pacprofile.module.statistics.data;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import net.kyori.adventure.text.Component;

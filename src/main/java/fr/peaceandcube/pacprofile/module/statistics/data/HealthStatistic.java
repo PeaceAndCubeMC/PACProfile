@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.statistic;
+package fr.peaceandcube.pacprofile.module.statistics.data;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;

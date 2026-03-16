@@ -5,14 +5,11 @@ import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.statistic.Statistic;
-import fr.peaceandcube.pacprofile.statistic.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
@@ -30,12 +27,10 @@ import java.util.List;
 
 public class ProfileGui extends UnmodifiableGui {
     private final PlayerData playerData;
-    private boolean baseStatistics;
 
     public ProfileGui(Player viewer, Player player) {
         super(6, Component.text(Messages.PROFILE.formatted(player.getName())), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
-        this.baseStatistics = false;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -72,26 +67,6 @@ public class ProfileGui extends UnmodifiableGui {
                 .customModelData(3004)
                 .name(this.player.getName(), 0x55FFFF)
                 .lore(playerLore)
-                .build());
-
-        List<Component> statsLore = new ArrayList<>();
-        statsLore.add(this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT);
-        statsLore.add(Component.empty());
-        for (Statistic statistic : Statistics.ALL) {
-            if (PACProfile.getInstance().config.isStatisticEnabled(statistic.getName())) {
-                statsLore.add(getStatisticComponent(statistic));
-            }
-        }
-        statsLore.add(Component.empty());
-        statsLore.add(this.baseStatistics ? LoreComponents.STATISTICS_CLICK_CURRENT : LoreComponents.STATISTICS_CLICK_BASE);
-        this.setItem(GuiItem.builder().slot(9).material(Material.ENCHANTED_BOOK)
-                .customModelData(3004)
-                .name(Messages.STATISTICS, 0xFF55FF)
-                .lore(statsLore)
-                .onLeftClick(context -> {
-                    this.baseStatistics = !this.baseStatistics;
-                    context.fillInventory();
-                })
                 .build());
 
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
@@ -155,18 +130,6 @@ public class ProfileGui extends UnmodifiableGui {
     private String getFirstPlayed() {
         long timestamp = this.player.getFirstPlayed();
         return new SimpleDateFormat(PACProfile.getInstance().config.getDateFormat()).format(new Date(timestamp));
-    }
-
-    private Component getStatisticComponent(Statistic statistic) {
-        double value = this.baseStatistics ? statistic.getBaseValue(player) : statistic.getCurrentValue(player);
-        double diff = Math.round((statistic.getCurrentValue(player) - statistic.getBaseValue(player)) * 100.0) / 100.0;
-        Component component = statistic.getTextComponent().append(Component.text(value, NamedTextColor.YELLOW, TextDecoration.BOLD));
-        if (!this.baseStatistics && diff != 0) {
-            TextColor diffColor = diff > 0 ? NamedTextColor.GREEN : NamedTextColor.RED;
-            // if the difference is positive, add a plus sign
-            component = component.append(Component.text(" (" + (diff > 0 ? "+" : "") + diff + ")", diffColor));
-        }
-        return component;
     }
 
     @EventHandler

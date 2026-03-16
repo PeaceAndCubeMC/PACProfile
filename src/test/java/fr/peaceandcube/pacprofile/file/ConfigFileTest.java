@@ -1,6 +1,6 @@
 package fr.peaceandcube.pacprofile.file;
 
-import fr.peaceandcube.pacprofile.statistic.Statistics;
+import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
 import org.bukkit.Material;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

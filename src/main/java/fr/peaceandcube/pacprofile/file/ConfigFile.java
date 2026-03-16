@@ -1,7 +1,7 @@
 package fr.peaceandcube.pacprofile.file;
 
-import fr.peaceandcube.pacprofile.statistic.Statistic;
-import fr.peaceandcube.pacprofile.statistic.Statistics;
+import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
+import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;

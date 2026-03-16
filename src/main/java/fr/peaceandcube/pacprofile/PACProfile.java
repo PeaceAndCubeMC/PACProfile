@@ -18,6 +18,7 @@ import fr.peaceandcube.pacprofile.module.mails.MailsModule;
 import fr.peaceandcube.pacprofile.module.onlineplayers.OnlinePlayersModule;
 import fr.peaceandcube.pacprofile.module.rules.RulesModule;
 import fr.peaceandcube.pacprofile.module.settings.SettingsModule;
+import fr.peaceandcube.pacprofile.module.statistics.StatisticsModule;
 import fr.peaceandcube.pacprofile.module.warps.WarpsModule;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
@@ -59,6 +60,7 @@ public class PACProfile extends JavaPlugin {
     }
 
     private void registerModules() {
+        modules.add(new StatisticsModule());
         modules.add(new SettingsModule());
         modules.add(new CoinsModule());
         modules.add(new HeadTicketsModule());
