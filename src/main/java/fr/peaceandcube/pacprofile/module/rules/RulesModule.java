@@ -36,6 +36,10 @@ public class RulesModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("rules", "Rules");
         defaultTranslations.put("rules_click", "⇒ Click to see the rules");

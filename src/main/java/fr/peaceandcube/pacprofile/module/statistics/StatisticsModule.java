@@ -54,6 +54,10 @@ public class StatisticsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("statistics", "Statistics");
         defaultTranslations.put("statistics_base", "Base statistics");

@@ -32,6 +32,10 @@ public class WarpsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("warps", "Warps");
         defaultTranslations.put("warps_click", "⇒ Click to see warps");

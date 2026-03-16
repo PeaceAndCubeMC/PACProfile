@@ -61,6 +61,10 @@ public class IdentityModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("profile_rank", "Rank: ");
         defaultTranslations.put("profile_rank_expiration", "Expiration: ");

@@ -36,6 +36,10 @@ public class LinksModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("links", "Server Links");
         defaultTranslations.put("links_click", "⇒ Click to see the links");

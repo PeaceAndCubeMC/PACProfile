@@ -53,6 +53,10 @@ public class MailsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("mails", "Mails");
         defaultTranslations.put("mails_total", "Total: ");

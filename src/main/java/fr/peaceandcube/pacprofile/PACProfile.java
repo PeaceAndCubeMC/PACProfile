@@ -55,7 +55,7 @@ public class PACProfile extends JavaPlugin {
 
         registerModules();
 
-        config = new ConfigFile("config.yml", this);
+        config = new ConfigFile("config.yml", this, modules);
         lang = new LangFile("lang.yml", this);
         playerData = new PlayerDataFile("playerdata.yml", this);
     }

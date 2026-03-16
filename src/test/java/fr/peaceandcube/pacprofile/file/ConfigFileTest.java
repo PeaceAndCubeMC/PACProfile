@@ -1,6 +1,20 @@
 package fr.peaceandcube.pacprofile.file;
 
+import fr.peaceandcube.pacprofile.module.Module;
+import fr.peaceandcube.pacprofile.module.claims.ClaimsModule;
+import fr.peaceandcube.pacprofile.module.coins.CoinsModule;
+import fr.peaceandcube.pacprofile.module.dynmap.DynmapModule;
+import fr.peaceandcube.pacprofile.module.headtickets.HeadTicketsModule;
+import fr.peaceandcube.pacprofile.module.homes.HomesModule;
+import fr.peaceandcube.pacprofile.module.identity.IdentityModule;
+import fr.peaceandcube.pacprofile.module.links.LinksModule;
+import fr.peaceandcube.pacprofile.module.mails.MailsModule;
+import fr.peaceandcube.pacprofile.module.onlineplayers.OnlinePlayersModule;
+import fr.peaceandcube.pacprofile.module.rules.RulesModule;
+import fr.peaceandcube.pacprofile.module.settings.SettingsModule;
+import fr.peaceandcube.pacprofile.module.statistics.StatisticsModule;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
+import fr.peaceandcube.pacprofile.module.warps.WarpsModule;
 import org.bukkit.Material;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -25,13 +39,13 @@ public class ConfigFileTest {
               rules: ''
               links: ''
               dynmap: ''
-            head_tickets:
-              quests_scoreboard: ''
             warps:
               spawn:
                 name: Spawn
                 icon: grass_block
                 category: Spawn
+            head_tickets:
+              quests_scoreboard: ''
             homes:
               default_color: red
               enable_teleportation: true
@@ -66,9 +80,17 @@ public class ConfigFileTest {
                 enabled: true
             """;
 
+    private List<Module> modules;
+
     @BeforeEach
     void runBefore() {
         MockBukkit.mock();
+        modules = List.of(
+                new IdentityModule(), new StatisticsModule(), new SettingsModule(), new CoinsModule(),
+                new HeadTicketsModule(), new MailsModule(), new HomesModule(), new ClaimsModule(),
+                new OnlinePlayersModule(), new WarpsModule(), new RulesModule(), new LinksModule(),
+                new DynmapModule()
+        );
     }
 
     @AfterEach
@@ -80,7 +102,7 @@ public class ConfigFileTest {
     void testCreateConfigFile() {
         PluginMock mockPlugin = MockBukkit.createMockPlugin();
 
-        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
+        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin, modules);
 
         Assertions.assertTrue(configFile.file.exists());
         Assertions.assertEquals(CONFIG_CONTENT, configFile.config.saveToString());
@@ -108,7 +130,7 @@ public class ConfigFileTest {
         mockPlugin.getConfig().createSection("homes").set("default_color", false);
         mockPlugin.saveConfig();
 
-        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
+        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin, modules);
 
         Assertions.assertTrue(configFile.file.exists());
         Assertions.assertFalse(configFile.hasDebugLogging());
@@ -122,7 +144,7 @@ public class ConfigFileTest {
         mockPlugin.getConfig().createSection("commands_on_click").set("rules", "rules");
         mockPlugin.saveConfig();
 
-        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin);
+        ConfigFile configFile = new ConfigFile("config.yml", mockPlugin, modules);
 
         Assertions.assertTrue(configFile.file.exists());
         Assertions.assertEquals("yellow", configFile.getDefaultHomeColor());

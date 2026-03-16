@@ -2,6 +2,7 @@ package fr.peaceandcube.pacprofile.module.homes;
 
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -46,6 +47,13 @@ public class HomesModule extends Module {
                     .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), 1, maxHomePages).open())
                     .build();
         };
+    }
+
+    @Override
+    protected void registerConfigOptions() {
+        configOptions.put("default_color", ConfigOption.string("red"));
+        configOptions.put("enable_teleportation", ConfigOption.bool(true));
+        configOptions.put("enable_deletion", ConfigOption.bool(true));
     }
 
     @Override

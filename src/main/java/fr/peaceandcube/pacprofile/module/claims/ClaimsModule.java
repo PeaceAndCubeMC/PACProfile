@@ -59,6 +59,10 @@ public class ClaimsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("claims", "Claims");
         defaultTranslations.put("claims_total", "Total: ");

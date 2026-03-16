@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.module.headtickets;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -50,6 +51,11 @@ public class HeadTicketsModule extends Module {
                     })
                     .build();
         };
+    }
+
+    @Override
+    protected void registerConfigOptions() {
+        configOptions.put("quests_scoreboard", ConfigOption.string(""));
     }
 
     @Override

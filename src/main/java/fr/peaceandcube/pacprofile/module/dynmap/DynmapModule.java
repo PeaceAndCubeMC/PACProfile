@@ -36,6 +36,10 @@ public class DynmapModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("dynmap", "Dynmap");
         defaultTranslations.put("dynmap_click", "⇒ Click to open the dynmap");

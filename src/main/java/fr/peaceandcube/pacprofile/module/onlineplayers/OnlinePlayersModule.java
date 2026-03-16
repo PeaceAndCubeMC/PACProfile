@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.module.onlineplayers;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -44,6 +45,11 @@ public class OnlinePlayersModule extends Module {
                     .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
                     .build();
         };
+    }
+
+    @Override
+    protected void registerConfigOptions() {
+        configOptions.put("enable_teleportation", ConfigOption.bool(true));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fr.peaceandcube.pacprofile.file;
 
+import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
 import org.bukkit.Material;
@@ -22,18 +23,17 @@ public class ConfigFile extends YamlFile {
         DEFAULT_CONFIGS.add(new ConfigEntry("rules", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("links", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("dynmap", "", "commands_on_click"));
-        DEFAULT_CONFIGS.add(new ConfigEntry("quests_scoreboard", "", "head_tickets"));
         DEFAULT_CONFIGS.add(new ConfigEntry("name", "Spawn", "warps.spawn"));
         DEFAULT_CONFIGS.add(new ConfigEntry("icon", "grass_block", "warps.spawn"));
         DEFAULT_CONFIGS.add(new ConfigEntry("category", "Spawn", "warps.spawn"));
     }
 
-    public ConfigFile(String name, Plugin plugin) {
+    public ConfigFile(String name, Plugin plugin, List<Module> modules) {
         super(name, plugin);
-        this.initConfig();
+        this.initConfig(modules);
     }
 
-    private void initConfig() {
+    private void initConfig(List<Module> modules) {
         // global config
         if (!this.config.isBoolean("debug_logging")) {
             this.config.set("debug_logging", false);
@@ -52,22 +52,24 @@ public class ConfigFile extends YamlFile {
             }
         });
 
-        // config for homes
-        ConfigurationSection homesSection = getOrCreateSection(config, "homes");
-        if (!homesSection.isString("default_color")) {
-            homesSection.set("default_color", "red");
-        }
-        if (!homesSection.isBoolean("enable_teleportation")) {
-            homesSection.set("enable_teleportation", true);
-        }
-        if (!homesSection.isBoolean("enable_deletion")) {
-            homesSection.set("enable_deletion", true);
-        }
-
-        // config for online players
-        ConfigurationSection onlinePlayersSection = getOrCreateSection(config, "online_players");
-        if (!onlinePlayersSection.isBoolean("enable_teleportation")) {
-            onlinePlayersSection.set("enable_teleportation", true);
+        for (Module module : modules) {
+            if (!module.configOptions().isEmpty()) {
+                ConfigurationSection section = getOrCreateSection(config, module.name());
+                module.configOptions().forEach((key, option) -> {
+                    switch (option.type()) {
+                        case BOOLEAN -> {
+                            if (!section.isBoolean(key)) {
+                                section.set(key, option.value());
+                            }
+                        }
+                        case STRING -> {
+                            if (!section.isString(key)) {
+                                section.set(key, option.value());
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         // config for statistics

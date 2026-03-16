@@ -27,6 +27,10 @@ public class SettingsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("settings", "Settings");
         defaultTranslations.put("settings_click", "⇒ Click to edit settings");

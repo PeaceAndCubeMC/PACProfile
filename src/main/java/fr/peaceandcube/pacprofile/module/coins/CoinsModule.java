@@ -51,6 +51,10 @@ public class CoinsModule extends Module {
     }
 
     @Override
+    protected void registerConfigOptions() {
+    }
+
+    @Override
     protected void registerDefaultTranslations() {
         defaultTranslations.put("coins", "Coins");
         defaultTranslations.put("coins_total", "Total: ");
