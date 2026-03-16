@@ -1,5 +1,7 @@
 package fr.peaceandcube.pacprofile.config;
 
+import java.util.Map;
+
 public class ConfigOption {
 
     private final Type type;
@@ -26,8 +28,13 @@ public class ConfigOption {
         return new ConfigOption(Type.STRING, value);
     }
 
+    public static ConfigOption object(Map<String, ConfigOption> options) {
+        return new ConfigOption(Type.OBJECT, options);
+    }
+
     public enum Type {
         BOOLEAN,
-        STRING
+        STRING,
+        OBJECT
     }
 }

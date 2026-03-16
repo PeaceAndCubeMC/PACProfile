@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.module.statistics;
 
 import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class StatisticsModule extends Module {
@@ -55,6 +57,11 @@ public class StatisticsModule extends Module {
 
     @Override
     protected void registerConfigOptions() {
+        for (Statistic statistic : Statistics.ALL) {
+            configOptions.put(statistic.getName(), ConfigOption.object(Map.of(
+                    "enabled", ConfigOption.bool(true)
+            )));
+        }
     }
 
     @Override

@@ -1,14 +1,15 @@
 package fr.peaceandcube.pacprofile.file;
 
+import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
-import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConfigFile extends YamlFile {
     private static final List<ConfigEntry> DEFAULT_CONFIGS = new ArrayList<>();
@@ -55,31 +56,7 @@ public class ConfigFile extends YamlFile {
         for (Module module : modules) {
             if (!module.configOptions().isEmpty()) {
                 ConfigurationSection section = getOrCreateSection(config, module.name());
-                module.configOptions().forEach((key, option) -> {
-                    switch (option.type()) {
-                        case BOOLEAN -> {
-                            if (!section.isBoolean(key)) {
-                                section.set(key, option.value());
-                            }
-                        }
-                        case STRING -> {
-                            if (!section.isString(key)) {
-                                section.set(key, option.value());
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-        // config for statistics
-        ConfigurationSection statsSection = getOrCreateSection(config, "statistics");
-        this.config.setComments("statistics", List.of("Toggles specific statistics"));
-
-        for (Statistic statistic : Statistics.ALL) {
-            ConfigurationSection statSection = getOrCreateSection(statsSection, statistic.getName());
-            if (!statSection.isSet("enabled")) {
-                statSection.set("enabled", true);
+                createConfigOptions(section, module.configOptions());
             }
         }
 
@@ -92,6 +69,39 @@ public class ConfigFile extends YamlFile {
             section = parent.createSection(name);
         }
         return section;
+    }
+
+    private void createConfigOptions(ConfigurationSection section, Map<String, ConfigOption> options) {
+        options.forEach((key, option) -> {
+            switch (option.type()) {
+                case BOOLEAN -> {
+                    if (!section.isBoolean(key)) {
+                        section.set(key, option.value());
+                    }
+                }
+                case STRING -> {
+                    if (!section.isString(key)) {
+                        section.set(key, option.value());
+                    }
+                }
+                case OBJECT -> {
+                    ConfigurationSection subSection = getOrCreateSection(section, key);
+                    createConfigOptions(subSection, mapOptions(option.value()));
+                }
+            }
+        });
+    }
+
+    private Map<String, ConfigOption> mapOptions(Object object) {
+        Map<String, ConfigOption> options = new LinkedHashMap<>();
+        if (object instanceof Map<?,?> map) {
+            map.forEach((k, v) -> {
+                if (k instanceof String key && v instanceof ConfigOption value) {
+                    options.put(key, value);
+                }
+            });
+        }
+        return options;
     }
 
     public boolean hasDebugLogging() {

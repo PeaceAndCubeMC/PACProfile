@@ -44,15 +44,6 @@ public class ConfigFileTest {
                 name: Spawn
                 icon: grass_block
                 category: Spawn
-            head_tickets:
-              quests_scoreboard: ''
-            homes:
-              default_color: red
-              enable_teleportation: true
-              enable_deletion: true
-            online_players:
-              enable_teleportation: true
-            # Toggles specific statistics
             statistics:
               health:
                 enabled: true
@@ -78,6 +69,14 @@ public class ConfigFileTest {
                 enabled: true
               luck:
                 enabled: true
+            head_tickets:
+              quests_scoreboard: ''
+            homes:
+              default_color: red
+              enable_teleportation: true
+              enable_deletion: true
+            online_players:
+              enable_teleportation: true
             """;
 
     private List<Module> modules;
