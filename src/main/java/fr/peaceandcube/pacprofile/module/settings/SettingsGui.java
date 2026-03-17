@@ -4,7 +4,7 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.GuiContext;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.settings.enums.PTimeType;
 import fr.peaceandcube.pacprofile.module.settings.enums.PWeatherType;
 import fr.peaceandcube.pacprofile.text.LoreComponents;

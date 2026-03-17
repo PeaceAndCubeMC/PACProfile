@@ -2,7 +2,7 @@ package fr.peaceandcube.pacprofile.module.coins;
 
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;

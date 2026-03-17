@@ -1,10 +1,10 @@
 package fr.peaceandcube.pacprofile.file;
 
-import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.module.Module;
 import org.bukkit.plugin.Plugin;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LangFile extends YamlFile {
@@ -51,18 +51,18 @@ public class LangFile extends YamlFile {
         DEFAULT_TRANSLATIONS.put("order_click", "⇒ Click to toggle order");
     }
 
-    public LangFile(String name, Plugin plugin) {
+    public LangFile(String name, Plugin plugin, List<Module> modules) {
         super(name, plugin);
-        this.init();
+        this.init(modules);
     }
 
-    private void init() {
+    private void init(List<Module> modules) {
         DEFAULT_TRANSLATIONS.forEach((k, v) -> {
             if (!this.config.isSet(k) || this.config.getString(k).isBlank()) {
                 this.config.set(k, v);
             }
         });
-        for (Module module : PACProfile.getInstance().getModules()) {
+        for (Module module : modules) {
             module.defaultTranslations().forEach((k, v) -> {
                 if (!this.config.isSet(k) || this.config.getString(k).isBlank()) {
                     this.config.set(k, v);

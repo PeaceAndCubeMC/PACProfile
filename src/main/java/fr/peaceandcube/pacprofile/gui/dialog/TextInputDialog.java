@@ -1,6 +1,6 @@
 package fr.peaceandcube.pacprofile.gui.dialog;
 
-import fr.peaceandcube.pacprofile.item.GuiItemName;
+import fr.peaceandcube.pacprofile.gui.item.GuiItemName;
 import fr.peaceandcube.pacprofile.util.Messages;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;

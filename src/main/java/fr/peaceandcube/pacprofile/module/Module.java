@@ -1,7 +1,7 @@
 package fr.peaceandcube.pacprofile.module;
 
 import fr.peaceandcube.pacprofile.config.ConfigOption;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedHashMap;

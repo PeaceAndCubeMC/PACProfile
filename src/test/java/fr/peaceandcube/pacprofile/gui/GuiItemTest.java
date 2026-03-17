@@ -1,5 +1,6 @@
-package fr.peaceandcube.pacprofile.item;
+package fr.peaceandcube.pacprofile.gui;
 
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;

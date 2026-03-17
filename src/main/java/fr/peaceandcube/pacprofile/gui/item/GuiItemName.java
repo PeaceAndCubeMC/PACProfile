@@ -1,4 +1,4 @@
-package fr.peaceandcube.pacprofile.item;
+package fr.peaceandcube.pacprofile.gui.item;
 
 public record GuiItemName(String text, int color) {
 }

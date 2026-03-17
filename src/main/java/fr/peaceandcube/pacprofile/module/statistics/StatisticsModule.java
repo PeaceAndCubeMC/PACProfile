@@ -2,7 +2,7 @@ package fr.peaceandcube.pacprofile.module.statistics;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.config.ConfigOption;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;

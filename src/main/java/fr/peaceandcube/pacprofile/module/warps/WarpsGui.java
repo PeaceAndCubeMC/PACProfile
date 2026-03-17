@@ -5,7 +5,7 @@ import fr.peaceandcube.pacprofile.file.WarpEntry;
 import fr.peaceandcube.pacprofile.gui.GuiContext;
 import fr.peaceandcube.pacprofile.gui.PaginatedGui;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;

@@ -3,7 +3,7 @@ package fr.peaceandcube.pacprofile.gui;
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.exception.NotPaginatedGuiException;
-import fr.peaceandcube.pacprofile.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
