@@ -6,6 +6,7 @@ import fr.peaceandcube.pacprofile.command.ReloadCommand;
 import fr.peaceandcube.pacprofile.file.ConfigFile;
 import fr.peaceandcube.pacprofile.file.LangFile;
 import fr.peaceandcube.pacprofile.file.PlayerDataFile;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.claims.ClaimsModule;
@@ -36,6 +37,7 @@ public class PACProfile extends JavaPlugin {
     private static LuckPerms luckPerms;
     private static Essentials essentials;
     private static GriefPrevention griefPrevention;
+    private static TranslationManager translationManager;
 
     public ConfigFile config;
     public LangFile lang;
@@ -58,6 +60,8 @@ public class PACProfile extends JavaPlugin {
         config = new ConfigFile("config.yml", this, modules);
         lang = new LangFile("lang.yml", this, modules);
         playerData = new PlayerDataFile("playerdata.yml", this);
+
+        TranslationManager.init(modules);
     }
 
     private void registerModules() {
@@ -83,6 +87,7 @@ public class PACProfile extends JavaPlugin {
         PACProfile.getInstance().playerData.reload();
         Messages.init();
         LoreComponents.init();
+        TranslationManager.init(PACProfile.getInstance().modules);
         Logger.info("All data has been reloaded");
     }
 

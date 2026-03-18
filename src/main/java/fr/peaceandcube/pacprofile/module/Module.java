@@ -2,6 +2,7 @@ package fr.peaceandcube.pacprofile.module;
 
 import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedHashMap;
@@ -25,19 +26,19 @@ public abstract class Module {
         registerDefaultTranslations();
     }
 
-    public String name() {
+    public final String name() {
         return name;
     }
 
-    public GuiItem guiItem(Player player) {
+    public final GuiItem guiItem(Player player) {
         return guiItem.apply(player);
     }
 
-    public Map<String, ConfigOption> configOptions() {
+    public final Map<String, ConfigOption> configOptions() {
         return configOptions;
     }
 
-    public Map<String, String> defaultTranslations() {
+    public final Map<String, String> defaultTranslations() {
         return defaultTranslations;
     }
 
@@ -50,4 +51,8 @@ public abstract class Module {
     protected abstract void registerConfigOptions();
 
     protected abstract void registerDefaultTranslations();
+
+    public final String translate(String key) {
+        return TranslationManager.translate(key);
+    }
 }

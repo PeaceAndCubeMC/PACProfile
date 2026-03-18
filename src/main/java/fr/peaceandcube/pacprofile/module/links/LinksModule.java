@@ -4,7 +4,6 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,7 +25,7 @@ public class LinksModule extends Module {
     protected Function<Player, GuiItem> createGuiItem() {
         return player -> GuiItem.builder().slot(46).material(Material.IRON_CHAIN)
                 .customModelData(3004)
-                .name(Messages.LINKS, 0xFF55FF)
+                .name(translate("links"), 0xFF55FF)
                 .lore(Component.empty(), LoreComponents.LINKS_CLICK)
                 .onLeftClick(context -> {
                     context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());

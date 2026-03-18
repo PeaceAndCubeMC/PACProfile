@@ -4,7 +4,6 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,7 +23,7 @@ public class WarpsModule extends Module {
 
             return GuiItem.builder().slot(34).material(Material.ENDER_PEARL)
                     .customModelData(3004)
-                    .name(Messages.WARPS, 0xFFFF55)
+                    .name(translate("warps"), 0xFFFF55)
                     .lore(Component.empty(), LoreComponents.WARPS_CLICK)
                     .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), 1, maxWarpsPages).open())
                     .build();

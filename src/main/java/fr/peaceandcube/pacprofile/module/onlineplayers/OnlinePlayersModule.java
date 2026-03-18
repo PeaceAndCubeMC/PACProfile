@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -40,7 +39,7 @@ public class OnlinePlayersModule extends Module {
 
             return GuiItem.builder().slot(32).material(Material.PLAYER_HEAD)
                     .customModelData(3005)
-                    .name(Messages.ONLINE_PLAYERS, 0x55FF55)
+                    .name(translate("online_players"), 0x55FF55)
                     .lore(lore)
                     .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
                     .build();

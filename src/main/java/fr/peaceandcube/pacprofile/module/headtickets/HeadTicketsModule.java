@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -41,7 +40,7 @@ public class HeadTicketsModule extends Module {
 
             return GuiItem.builder().slot(22).material(Material.NAME_TAG)
                     .customModelData(3004)
-                    .name(Messages.HEAD_TICKETS, 0x00AAAA)
+                    .name(translate("head_tickets"), 0x00AAAA)
                     .lore(lore)
                     .onLeftClick(context -> {
                         if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {

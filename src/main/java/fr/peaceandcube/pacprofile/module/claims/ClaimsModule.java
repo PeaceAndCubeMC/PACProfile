@@ -4,7 +4,6 @@ import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -51,7 +50,7 @@ public class ClaimsModule extends Module {
 
             return GuiItem.builder().slot(30).material(Material.GOLDEN_SHOVEL)
                     .customModelData(3004)
-                    .name(Messages.CLAIMS, 0x00AA00)
+                    .name(translate("claims"), 0x00AA00)
                     .lore(lore)
                     .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), 1, maxClaimPages).open())
                     .build();

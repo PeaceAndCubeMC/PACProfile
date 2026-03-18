@@ -6,7 +6,6 @@ import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -42,7 +41,7 @@ public class HomesModule extends Module {
 
             return GuiItem.builder().slot(28).material(Material.RED_BED)
                     .customModelData(3004)
-                    .name(Messages.HOMES, 0x5555FF)
+                    .name(translate("homes"), 0x5555FF)
                     .lore(lore)
                     .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), 1, maxHomePages).open())
                     .build();

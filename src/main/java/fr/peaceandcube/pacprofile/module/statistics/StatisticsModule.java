@@ -7,7 +7,6 @@ import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -45,7 +44,7 @@ public class StatisticsModule extends Module {
 
             return GuiItem.builder().slot(9).material(Material.ENCHANTED_BOOK)
                     .customModelData(3004)
-                    .name(Messages.STATISTICS, 0xFF55FF)
+                    .name(translate("statistics"), 0xFF55FF)
                     .lore(lore)
                     .onLeftClick(context -> {
                         this.baseStatistics = !this.baseStatistics;
