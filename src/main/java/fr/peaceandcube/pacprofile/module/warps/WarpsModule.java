@@ -25,7 +25,7 @@ public class WarpsModule extends Module {
                     .customModelData(3004)
                     .name(translate("warps"), 0xFFFF55)
                     .lore(Component.empty(), LoreProvider.line(translate("warps_click")))
-                    .onLeftClick(context -> new WarpsGui(context.viewer(), context.player(), 1, maxWarpsPages).open())
+                    .onLeftClick(context -> new WarpsGui(this, context.viewer(), context.player(), 1, maxWarpsPages).open())
                     .build();
         };
     }

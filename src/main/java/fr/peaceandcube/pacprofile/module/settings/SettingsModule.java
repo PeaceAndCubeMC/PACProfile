@@ -21,7 +21,7 @@ public class SettingsModule extends Module {
                 .customModelData(3004)
                 .name(translate("settings"), 0x555555)
                 .lore(Component.empty(), LoreProvider.line(translate("settings_click")))
-                .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
+                .onLeftClick(context -> new SettingsGui(this, context.viewer(), context.player()).open())
                 .build();
     }
 

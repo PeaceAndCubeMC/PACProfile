@@ -39,7 +39,7 @@ public class OnlinePlayersModule extends Module {
                     .customModelData(3005)
                     .name(translate("online_players"), 0x55FF55)
                     .lore(lore)
-                    .onLeftClick(context -> new OnlinePlayersGui(context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
+                    .onLeftClick(context -> new OnlinePlayersGui(this, context.viewer(), context.player(), 1, maxOnlinePlayersPages).open())
                     .build();
         };
     }
@@ -61,6 +61,7 @@ public class OnlinePlayersModule extends Module {
         defaultTranslations.put("online_player_mail_sent_1", "Has sent ");
         defaultTranslations.put("online_player_mail_sent_2", " mail(s)");
         defaultTranslations.put("online_player_click", "⇒ Click to ask for a teleportation");
+        defaultTranslations.put("online_player_notes", "Notes");
         defaultTranslations.put("online_player_notes_click_left", "⇒ Left click to edit notes");
         defaultTranslations.put("online_player_notes_click_right", "⇒ Right click to clear notes");
         defaultTranslations.put("online_player_notes_title", "Edit notes");

@@ -7,7 +7,6 @@ import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistic;
 import fr.peaceandcube.pacprofile.module.statistics.data.Statistics;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -32,7 +31,10 @@ public class StatisticsModule extends Module {
     protected Function<Player, GuiItem> createGuiItem() {
         return player -> {
             List<Component> lore = new ArrayList<>();
-            lore.add(this.baseStatistics ? LoreComponents.STATISTICS_BASE : LoreComponents.STATISTICS_CURRENT);
+            lore.add(this.baseStatistics
+                    ? LoreProvider.line(translate("statistics_base"), NamedTextColor.RED)
+                    : LoreProvider.line(translate("statistics_current"), NamedTextColor.GREEN)
+            );
             lore.add(Component.empty());
             for (Statistic statistic : Statistics.ALL) {
                 if (PACProfile.getInstance().config.isStatisticEnabled(statistic.name())) {

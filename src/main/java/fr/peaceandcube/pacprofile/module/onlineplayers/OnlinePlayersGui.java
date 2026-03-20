@@ -10,7 +10,9 @@ import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.logging.Logger;
+import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
@@ -34,21 +36,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OnlinePlayersGui extends PaginatedGui {
+    private final Module module;
     private final PlayerData playerData;
     private List<Player> playerList;
 
-    public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages) {
-        this(viewer, player, page, maxPages, Order.DEFAULT);
+    public OnlinePlayersGui(Module module, Player viewer, Player player, int page, int maxPages) {
+        this(module, viewer, player, page, maxPages, Order.DEFAULT);
     }
 
-    public OnlinePlayersGui(Player viewer, Player player, int page, int maxPages, Order order) {
-        super(Component.text(Messages.ONLINE_PLAYERS_TITLE.formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
+    public OnlinePlayersGui(Module module, Player viewer, Player player, int page, int maxPages, Order order) {
+        super(Component.text(module.translate("online_players_title").formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
                 viewer,
                 player,
                 page,
                 maxPages,
                 new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA)
         );
+        this.module = module;
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.playerList = Bukkit.getOnlinePlayers().stream().filter(p -> !PACProfile.getEssentials().getUser(p).isVanished()).collect(Collectors.toList());
         this.fillInventory();
@@ -91,17 +95,15 @@ public class OnlinePlayersGui extends PaginatedGui {
             lore.add(Component.empty());
             lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, NamedTextColor.YELLOW, TextDecoration.BOLD)));
             if (!player.getUniqueId().equals(this.player.getUniqueId())) {
-                lore.add(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_1
-                        .append(Component.text(trustCount, NamedTextColor.YELLOW, TextDecoration.BOLD))
-                        .append(LoreComponents.ONLINE_PLAYER_TRUST_COUNT_2)
+                lore.add(LoreProvider.line(module.translate("online_player_trust_count_1"), trustCount)
+                        .append(LoreProvider.line(module.translate("online_player_trust_count_2")))
                 );
-                lore.add(LoreComponents.ONLINE_PLAYER_MAIL_SENT_1
-                        .append(Component.text(mailSentCount, NamedTextColor.YELLOW, TextDecoration.BOLD))
-                        .append(LoreComponents.ONLINE_PLAYER_MAIL_SENT_2)
+                lore.add(LoreProvider.line(module.translate("online_player_mail_sent_1"), mailSentCount)
+                        .append(LoreProvider.line(module.translate("online_player_mail_sent_2")))
                 );
                 lore.add(Component.empty());
                 if (PACProfile.getInstance().config.isOnlinePlayerTeleportationEnabled()) {
-                    lore.add(LoreComponents.ONLINE_PLAYER_CLICK);
+                    lore.add(LoreProvider.line(module.translate("online_player_click")));
                 }
             }
             this.setItem(GuiItem.builder().slot(slot).material(Material.PLAYER_HEAD).player(player)
@@ -123,38 +125,38 @@ public class OnlinePlayersGui extends PaginatedGui {
             notesLore.add(Component.empty());
             notesLore.addAll(getNotesLore(playerUuid));
             notesLore.add(Component.empty());
-            notesLore.add(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_LEFT);
-            notesLore.add(LoreComponents.ONLINE_PLAYER_NOTES_CLICK_RIGHT);
+            notesLore.add(LoreProvider.line(module.translate("online_player_notes_click_left")));
+            notesLore.add(LoreProvider.line(module.translate("online_player_notes_click_right")));
             this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
                     .customModelData(3031)
-                    .name(Messages.HOME_NOTES, 0x00AA00)
+                    .name(module.translate("online_player_notes"), 0x00AA00)
                     .lore(notesLore)
                     .onLeftClick(context -> TextInputDialog.builder()
                             .player(context.viewer())
-                            .title(Messages.ONLINE_PLAYERS, 0x55FF55)
+                            .title(module.translate("online_players"), 0x55FF55)
                             .bodyItem(new DialogItem(Material.PLAYER_HEAD, 3030, player))
                             .bodyText(player.getName())
-                            .inputLabel(Messages.ONLINE_PLAYER_NOTES_TITLE)
+                            .inputLabel(module.translate("online_player_notes_title"))
                             .inputValue(PACProfile.getInstance().playerData.getPlayerNotes(context.player().getUniqueId(), playerUuid))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
                                 Logger.debug("%s edited notes for player %s".formatted(context.player().getName(), player.getName()));
                                 PACProfile.getInstance().playerData.setPlayerNotes(context.player().getUniqueId(), playerUuid, newValue);
-                                new OnlinePlayersGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
+                                new OnlinePlayersGui(module, context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                             })
                             .build()
                             .show())
                     .onRightClick(context -> new ConfirmationGui(context.viewer(), context.player(), this, () -> {
                         Logger.debug("%s removed notes for player %s".formatted(context.player().getName(), player.getName()));
                         PACProfile.getInstance().playerData.removePlayerNotes(context.player().getUniqueId(), player.getUniqueId().toString());
-                        new OnlinePlayersGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
+                        new OnlinePlayersGui(module, context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                     }).open())
                     .build());
         }
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
-                .name(Messages.ONLINE_PLAYERS_ORDER, 0x00AA00)
+                .name(module.translate("online_players_order"), 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
@@ -171,6 +173,7 @@ public class OnlinePlayersGui extends PaginatedGui {
                         new ProfileGui(context.viewer(), context.player()).open();
                     } else {
                         new OnlinePlayersGui(
+                                module,
                                 context.viewer(),
                                 context.player(),
                                 context.page() - 1,
@@ -193,6 +196,7 @@ public class OnlinePlayersGui extends PaginatedGui {
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(context -> new OnlinePlayersGui(
+                            module,
                             context.viewer(),
                             context.player(),
                             context.page() + 1,

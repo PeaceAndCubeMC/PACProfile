@@ -41,7 +41,7 @@ public class HomesModule extends Module {
                     .customModelData(3004)
                     .name(translate("homes"), 0x5555FF)
                     .lore(lore)
-                    .onLeftClick(context -> new HomesGui(context.viewer(), context.player(), 1, maxHomePages).open())
+                    .onLeftClick(context -> new HomesGui(this, context.viewer(), context.player(), 1, maxHomePages).open())
                     .build();
         };
     }

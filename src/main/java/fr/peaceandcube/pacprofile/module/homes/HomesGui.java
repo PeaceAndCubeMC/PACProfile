@@ -8,11 +8,13 @@ import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.logging.Logger;
+import fr.peaceandcube.pacprofile.module.Module;
+import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
 import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -29,20 +31,22 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class HomesGui extends PaginatedGui {
+    private final Module module;
     private List<String> homes;
 
-    public HomesGui(Player viewer, Player player, int page, int maxPages) {
-        this(viewer, player, page, maxPages, Order.DEFAULT);
+    public HomesGui(Module module, Player viewer, Player player, int page, int maxPages) {
+        this(module, viewer, player, page, maxPages, Order.DEFAULT);
     }
 
-    public HomesGui(Player viewer, Player player, int page, int maxPages, Order order) {
-        super(Component.text(Messages.HOMES_TITLE.formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
+    public HomesGui(Module module, Player viewer, Player player, int page, int maxPages, Order order) {
+        super(Component.text(module.translate("homes_title").formatted(player.getName(), Math.max(1, page), Math.max(1, maxPages))),
                 viewer,
                 player,
                 page,
                 maxPages,
                 new OrderSet(order, Order.DEFAULT, Order.NAME_AZ, Order.NAME_ZA, Order.COLOR)
         );
+        this.module = module;
         this.homes = this.user.getHomes();
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
@@ -86,16 +90,16 @@ public class HomesGui extends PaginatedGui {
 
             List<Component> bedLore = new ArrayList<>();
             bedLore.add(Component.empty());
-            bedLore.add(LoreComponents.HOME_WORLD.append(Component.text(world, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_X.append(Component.text(x, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_Y.append(Component.text(y, NamedTextColor.YELLOW, TextDecoration.BOLD)));
-            bedLore.add(LoreComponents.HOME_Z.append(Component.text(z, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            bedLore.add(LoreProvider.line(module.translate("home_world"), world));
+            bedLore.add(LoreProvider.line(module.translate("home_x"), x));
+            bedLore.add(LoreProvider.line(module.translate("home_y"), y));
+            bedLore.add(LoreProvider.line(module.translate("home_z"), z));
             bedLore.add(Component.empty());
             if (PACProfile.getInstance().config.isHomeTeleportationEnabled()) {
-                bedLore.add(LoreComponents.HOME_CLICK_LEFT);
+                bedLore.add(LoreProvider.line(module.translate("home_click_left")));
             }
             if (PACProfile.getInstance().config.isHomeDeletionEnabled()) {
-                bedLore.add(LoreComponents.HOME_CLICK_RIGHT);
+                bedLore.add(LoreProvider.line(module.translate("home_click_right")));
             }
             this.setItem(GuiItem.builder().slot(slot).material(color.getBed())
                     .customModelData(3010)
@@ -122,7 +126,7 @@ public class HomesGui extends PaginatedGui {
                             new ConfirmationGui(context.viewer(), context.player(), this, () -> {
                                 Logger.debug("%s deleted home %s:%s".formatted(context.viewer().getName(), context.player().getName(), name));
                                 context.dispatchCommand(command);
-                                new HomesGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
+                                new HomesGui(module, context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                             }).open();
                         }
                     })
@@ -132,45 +136,45 @@ public class HomesGui extends PaginatedGui {
             notesLore.add(Component.empty());
             notesLore.addAll(getNotesLore(name));
             notesLore.add(Component.empty());
-            notesLore.add(LoreComponents.HOME_NOTES_CLICK_LEFT);
-            notesLore.add(LoreComponents.HOME_NOTES_CLICK_RIGHT);
+            bedLore.add(LoreProvider.line(module.translate("home_notes_click_left")));
+            bedLore.add(LoreProvider.line(module.translate("home_notes_click_right")));
             this.setItem(GuiItem.builder().slot(slot + 1).material(Material.PAPER)
                     .customModelData(3011)
-                    .name(Messages.HOME_NOTES, 0x00AA00)
+                    .name(module.translate("home_notes"), 0x00AA00)
                     .lore(notesLore)
                     .onLeftClick(context -> TextInputDialog.builder()
                             .player(context.viewer())
-                            .title(Messages.HOMES, 0x5555FF)
+                            .title(module.translate("homes"), 0x5555FF)
                             .bodyItem(new DialogItem(color.getBed(), 3010))
                             .bodyText(name)
-                            .inputLabel(Messages.HOME_NOTES_TITLE)
+                            .inputLabel(module.translate("home_notes_title"))
                             .inputValue(PACProfile.getInstance().playerData.getHomeNotes(context.player().getUniqueId(), name))
                             .inputSize(8, 80)
                             .onConfirm(newValue -> {
                                 Logger.debug("%s edited notes for home %s".formatted(context.player().getName(), name));
                                 PACProfile.getInstance().playerData.setHomeNotes(context.player().getUniqueId(), name, newValue);
-                                new HomesGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
+                                new HomesGui(module, context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                             })
                             .build()
                             .show())
                     .onRightClick(context -> new ConfirmationGui(context.viewer(), context.player(), this, () -> {
                         Logger.debug("%s removed notes for home %s".formatted(context.player().getName(), name));
                         PACProfile.getInstance().playerData.removeHomeNotes(context.player().getUniqueId(), name);
-                        new HomesGui(context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
+                        new HomesGui(module, context.viewer(), context.player(), context.page(), context.maxPages(), context.orderSet().currentOrder()).open();
                     }).open())
                     .build());
 
             this.setItem(GuiItem.builder().slot(slot + 2).material(color.getDye())
                     .customModelData(3012)
-                    .name(Messages.HOME_COLOR, 0x00AAAA)
-                    .lore(Component.empty(), LoreComponents.HOME_COLOR_CLICK)
-                    .onLeftClick(context -> new HomeColorGui(context.viewer(), context.player(), name, context.page(), context.maxPages()).open())
+                    .name(module.translate("home_color"), 0x00AAAA)
+                    .lore(Component.empty(), LoreProvider.line(module.translate("home_color_click")))
+                    .onLeftClick(context -> new HomeColorGui(module, context.viewer(), context.player(), name, context.page(), context.maxPages()).open())
                     .build());
         }
 
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
-                .name(Messages.HOMES_ORDER, 0x00AA00)
+                .name(module.translate("homes_order"), 0x00AA00)
                 .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
                 .lore(Component.empty(), LoreComponents.ORDER_CLICK)
                 .onLeftClick(context -> {
@@ -187,6 +191,7 @@ public class HomesGui extends PaginatedGui {
                         new ProfileGui(context.viewer(), context.player()).open();
                     } else {
                         new HomesGui(
+                                module,
                                 context.viewer(),
                                 context.player(),
                                 context.page() - 1,
@@ -209,6 +214,7 @@ public class HomesGui extends PaginatedGui {
                     .customModelData(3003)
                     .name(Messages.PAGE_NEXT, 0xFF55FF)
                     .onLeftClick(context -> new HomesGui(
+                            module,
                             context.viewer(),
                             context.player(),
                             context.page() + 1,

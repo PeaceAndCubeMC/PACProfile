@@ -6,8 +6,12 @@ import net.kyori.adventure.text.format.TextDecoration;
 
 public class LoreProvider {
 
+    public static Component line(String text, NamedTextColor color) {
+        return Component.text(text, color).decoration(TextDecoration.ITALIC, false);
+    }
+
     public static Component line(String text) {
-        return Component.text(text, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
+        return line(text, NamedTextColor.GRAY);
     }
 
     public static Component line(String text, String value) {

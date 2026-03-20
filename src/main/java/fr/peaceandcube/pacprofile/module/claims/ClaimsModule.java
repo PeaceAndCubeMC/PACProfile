@@ -50,7 +50,7 @@ public class ClaimsModule extends Module {
                     .customModelData(3004)
                     .name(translate("claims"), 0x00AA00)
                     .lore(lore)
-                    .onLeftClick(context -> new ClaimsGui(context.viewer(), context.player(), 1, maxClaimPages).open())
+                    .onLeftClick(context -> new ClaimsGui(this, context.viewer(), context.player(), 1, maxClaimPages).open())
                     .build();
         };
     }

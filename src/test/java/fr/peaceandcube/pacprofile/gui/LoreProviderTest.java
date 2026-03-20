@@ -21,6 +21,16 @@ public class LoreProviderTest {
     }
 
     @Test
+    public void testCreateSimpleLineColor() {
+        Component loreLine = LoreProvider.line("Lore line", NamedTextColor.GREEN);
+
+        Assertions.assertInstanceOf(TextComponent.class, loreLine);
+        Assertions.assertEquals("Lore line", ((TextComponent) loreLine).content());
+        Assertions.assertEquals(NamedTextColor.GREEN, loreLine.color());
+        Assertions.assertFalse(loreLine.hasDecoration(TextDecoration.ITALIC));
+    }
+
+    @Test
     public void testCreateLineStringValue() {
         Component loreLine = LoreProvider.line("Lore line", "Value");
 

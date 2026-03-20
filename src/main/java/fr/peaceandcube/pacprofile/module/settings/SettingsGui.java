@@ -5,9 +5,10 @@ import fr.peaceandcube.pacprofile.gui.GuiContext;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.settings.enums.PTimeType;
 import fr.peaceandcube.pacprofile.module.settings.enums.PWeatherType;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacutilities.PACUtilities;
 import net.kyori.adventure.text.Component;
@@ -23,9 +24,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SettingsGui extends UnmodifiableGui {
+    private final Module module;
 
-    public SettingsGui(Player viewer, Player player) {
-        super(1, Component.text(Messages.SETTINGS_TITLE), viewer, player);
+    public SettingsGui(Module module, Player viewer, Player player) {
+        super(1, Component.text(module.translate("settings_title")), viewer, player);
+        this.module = module;
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
     }
@@ -36,13 +39,15 @@ public class SettingsGui extends UnmodifiableGui {
 
         if (hasPermission("essentials.msgtoggle")) {
             boolean msgtoggleEnabled = !PACProfile.getEssentials().getUser(this.player).isIgnoreMsg();
-            Component msgtoggle = msgtoggleEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
+            Component msgtoggle = msgtoggleEnabled
+                    ? LoreProvider.line(module.translate("settings_enabled"), NamedTextColor.GREEN)
+                    : LoreProvider.line(module.translate("settings_disabled"), NamedTextColor.RED);
             this.setItem(GuiItem.builder().slot(2).material(Material.PAPER)
                     .customModelData(3050)
                     .glint(msgtoggleEnabled)
-                    .name(Messages.SETTINGS_MSGTOGGLE, 0x5555FF)
+                    .name(module.translate("settings_msgtoggle"), 0x5555FF)
                     .lore(Component.empty(), msgtoggle)
-                    .lore(Component.empty(), LoreComponents.SETTINGS_MSGTOGGLE_CLICK)
+                    .lore(Component.empty(), LoreProvider.line(module.translate("settings_msgtoggle_click")))
                     .onLeftClick(context -> {
                         PACProfile.getEssentials().getUser(context.player()).setIgnoreMsg(msgtoggleEnabled);
                         context.fillInventory();
@@ -52,13 +57,15 @@ public class SettingsGui extends UnmodifiableGui {
 
         if (hasPermission("pacutilities.togglemsgsound")) {
             boolean togglemsgsoundEnabled = PACUtilities.playersFile.isMsgSoundEnabled(this.player.getUniqueId().toString());
-            Component togglemsgsound = togglemsgsoundEnabled ? LoreComponents.SETTINGS_ENABLED : LoreComponents.SETTINGS_DISABLED;
+            Component togglemsgsound = togglemsgsoundEnabled
+                    ? LoreProvider.line(module.translate("settings_enabled"), NamedTextColor.GREEN)
+                    : LoreProvider.line(module.translate("settings_disabled"), NamedTextColor.RED);
             this.setItem(GuiItem.builder().slot(3).material(Material.JUKEBOX)
                     .customModelData(3050)
                     .glint(togglemsgsoundEnabled)
-                    .name(Messages.SETTINGS_TOGGLEMSGSOUND, 0x5555FF)
+                    .name(module.translate("settings_togglemsgsound"), 0x5555FF)
                     .lore(Component.empty(), togglemsgsound)
-                    .lore(Component.empty(), LoreComponents.SETTINGS_TOGGLEMSGSOUND_CLICK)
+                    .lore(Component.empty(), LoreProvider.line(module.translate("settings_togglemsgsound_click")))
                     .onLeftClick(context -> {
                         PACUtilities.playersFile.setMsgSound(context.player().getUniqueId().toString(), !togglemsgsoundEnabled);
                         context.fillInventory();
@@ -72,19 +79,19 @@ public class SettingsGui extends UnmodifiableGui {
             List<Component> ptimeLore = new ArrayList<>();
             ptimeLore.add(Component.empty());
             Arrays.stream(PTimeType.values()).forEach(time -> {
-                String text = PACProfile.getInstance().lang.translate("settings_ptime_" + time.name().toLowerCase());
-                Component component = Component.text(text, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
+                String text = module.translate("settings_ptime_" + time.name().toLowerCase());
+                Component component = LoreProvider.line(text);
                 if (time == currentTime && this.player.getPlayerTimeOffset() != 0) {
                     component = component.color(NamedTextColor.YELLOW).decoration(TextDecoration.BOLD, true);
                 }
                 ptimeLore.add(component);
             });
             ptimeLore.add(Component.empty());
-            ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_LEFT);
-            ptimeLore.add(LoreComponents.SETTINGS_PTIME_CLICK_RIGHT);
+            ptimeLore.add(LoreProvider.line(module.translate("settings_ptime_click_left")));
+            ptimeLore.add(LoreProvider.line(module.translate("settings_ptime_click_right")));
             this.setItem(GuiItem.builder().slot(5).material(Material.CLOCK)
                     .customModelData(3050)
-                    .name(Messages.SETTINGS_PTIME, 0x5555FF)
+                    .name(module.translate("settings_ptime"), 0x5555FF)
                     .lore(ptimeLore)
                     .onLeftClick(context -> {
                         PTimeType newTime = currentTime.next();
@@ -112,19 +119,19 @@ public class SettingsGui extends UnmodifiableGui {
             List<Component> pweatherLore = new ArrayList<>();
             pweatherLore.add(Component.empty());
             Arrays.stream(PWeatherType.values()).forEach(weather -> {
-                String text = PACProfile.getInstance().lang.translate("settings_pweather_" + weather.name().toLowerCase());
-                Component component = Component.text(text, NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false);
+                String text = module.translate("settings_pweather_" + weather.name().toLowerCase());
+                Component component = LoreProvider.line(text);
                 if (weather == currentWeather && this.player.getPlayerWeather() != null) {
                     component = component.color(NamedTextColor.YELLOW).decoration(TextDecoration.BOLD, true);
                 }
                 pweatherLore.add(component);
             });
             pweatherLore.add(Component.empty());
-            pweatherLore.add(LoreComponents.SETTINGS_PWEATHER_CLICK_LEFT);
-            pweatherLore.add(LoreComponents.SETTINGS_PWEATHER_CLICK_RIGHT);
+            pweatherLore.add(LoreProvider.line(module.translate("settings_pweather_click_left")));
+            pweatherLore.add(LoreProvider.line(module.translate("settings_pweather_click_right")));
             this.setItem(GuiItem.builder().slot(6).material(Material.SUNFLOWER)
                     .customModelData(3050)
-                    .name(Messages.SETTINGS_PWEATHER, 0x5555FF)
+                    .name(module.translate("settings_pweather"), 0x5555FF)
                     .lore(pweatherLore)
                     .onLeftClick(context -> {
                         PWeatherType newWeather = currentWeather.next();
