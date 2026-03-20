@@ -2,12 +2,10 @@ package fr.peaceandcube.pacprofile.module.claims;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -35,17 +33,17 @@ public class ClaimsModule extends Module {
 
             List<Component> lore = List.of(
                     Component.empty(),
-                    LoreComponents.CLAIMS_TOTAL.append(Component.text(totalClaimCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.CLAIMS_CB_USED.append(Component.text(usedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.CLAIMS_CB_REMAINING.append(Component.text(remainingClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreProvider.line(translate("claims_total"), totalClaimCount),
+                    LoreProvider.line(translate("claims_cb_used"), usedClaimBlocks),
+                    LoreProvider.line(translate("claims_cb_remaining"), remainingClaimBlocks),
                     Component.empty(),
-                    LoreComponents.CLAIMS_CB_ACCRUED.append(Component.text(accruedClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.CLAIMS_CB_BONUS.append(Component.text(bonusClaimBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.CLAIMS_CB_TOTAL.append(Component.text(totalClaimsBlocks, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreProvider.line(translate("claims_cb_accrued"), accruedClaimBlocks),
+                    LoreProvider.line(translate("claims_cb_bonus"), bonusClaimBlocks),
+                    LoreProvider.line(translate("claims_cb_total"), totalClaimsBlocks),
                     Component.empty(),
-                    LoreComponents.CLAIMS_CB_PER_HOUR.append(Component.text(blocksAccruedPerHour, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreProvider.line(translate("claims_cb_per_hour"), blocksAccruedPerHour),
                     Component.empty(),
-                    LoreComponents.CLAIMS_CLICK
+                    LoreProvider.line(translate("claims_click"))
             );
 
             return GuiItem.builder().slot(30).material(Material.GOLDEN_SHOVEL)

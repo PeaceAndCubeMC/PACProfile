@@ -4,11 +4,9 @@ import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -32,11 +30,11 @@ public class HomesModule extends Module {
 
             List<Component> lore = List.of(
                     Component.empty(),
-                    LoreComponents.HOMES_TOTAL.append(Component.text(usedHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.HOMES_REMAINING.append(Component.text(remainingHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
-                    LoreComponents.HOMES_MAX_AVAILABLE.append(Component.text(totalHomeCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreProvider.line(translate("homes_total"), usedHomeCount),
+                    LoreProvider.line(translate("homes_remaining"), remainingHomeCount),
+                    LoreProvider.line(translate("homes_max_available"), totalHomeCount),
                     Component.empty(),
-                    LoreComponents.HOMES_CLICK
+                    LoreProvider.line(translate("homes_click"))
             );
 
             return GuiItem.builder().slot(28).material(Material.RED_BED)

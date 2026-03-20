@@ -119,7 +119,7 @@ public class ConfigFileTest {
         Assertions.assertTrue(configFile.isHomeTeleportationEnabled());
         Assertions.assertTrue(configFile.isHomeDeletionEnabled());
         Assertions.assertTrue(configFile.isOnlinePlayerTeleportationEnabled());
-        Statistics.ALL.forEach(statistic -> Assertions.assertTrue(configFile.isStatisticEnabled(statistic.getName())));
+        Statistics.ALL.forEach(statistic -> Assertions.assertTrue(configFile.isStatisticEnabled(statistic.name())));
     }
 
     @Test

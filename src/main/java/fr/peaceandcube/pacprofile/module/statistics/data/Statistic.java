@@ -1,9 +1,5 @@
 package fr.peaceandcube.pacprofile.module.statistics.data;
 
-import fr.peaceandcube.pacprofile.PACProfile;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
@@ -16,11 +12,11 @@ public class Statistic {
         this.attribute = attribute;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public double getBaseValue(Player player) {
+    public double baseValue(Player player) {
         var attr = player.getAttribute(attribute);
         if (attr != null) {
             return Math.round(attr.getBaseValue() * 100.0) / 100.0;
@@ -28,17 +24,11 @@ public class Statistic {
         return 0.0;
     }
 
-    public double getCurrentValue(Player player) {
+    public double currentValue(Player player) {
         var attr = player.getAttribute(attribute);
         if (attr != null) {
             return Math.round(attr.getValue() * 100.0) / 100.0;
         }
         return 0.0;
-    }
-
-    public Component getTextComponent() {
-        String text = PACProfile.getInstance().lang.translate("statistics_" + name);
-        return Component.text(text, NamedTextColor.GRAY)
-                .decoration(TextDecoration.ITALIC, false);
     }
 }

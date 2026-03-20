@@ -1,8 +1,8 @@
 package fr.peaceandcube.pacprofile.module.settings;
 
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class SettingsModule extends Module {
         return player -> GuiItem.builder().slot(17).material(Material.COMPARATOR)
                 .customModelData(3004)
                 .name(translate("settings"), 0x555555)
-                .lore(Component.empty(), LoreComponents.SETTINGS_CLICK)
+                .lore(Component.empty(), LoreProvider.line(translate("settings_click")))
                 .onLeftClick(context -> new SettingsGui(context.viewer(), context.player()).open())
                 .build();
     }

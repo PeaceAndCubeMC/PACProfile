@@ -3,11 +3,9 @@ package fr.peaceandcube.pacprofile.module.coins;
 import com.earth2me.essentials.User;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -29,10 +27,10 @@ public class CoinsModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreComponents.COINS_NUMBER.append(Component.text(coinCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("coins_total"), coinCount));
             if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
                 lore.add(Component.empty());
-                lore.add(LoreComponents.COINS_CLICK);
+                lore.add(LoreProvider.line(translate("coins_click")));
             }
 
             return GuiItem.builder().slot(20).material(Material.SUNFLOWER)

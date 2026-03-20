@@ -4,12 +4,10 @@ import fr.peaceandcube.pacbirthday.PACBirthday;
 import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
@@ -40,17 +38,17 @@ public class IdentityModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreComponents.PROFILE_RANK.append(Component.text(rank, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("profile_rank"), rank));
             if (rankExpiration != null) {
-                lore.add(LoreComponents.PROFILE_RANK_EXPIRATION.append(Component.text(rankExpiration, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+                lore.add(LoreProvider.line(translate("profile_rank_expiration"), rankExpiration));
             }
             lore.add(Component.empty());
             if (nickname != null) {
-                lore.add(LoreComponents.PROFILE_NICKNAME.append(Component.text(nickname, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+                lore.add(LoreProvider.line(translate("profile_nickname"), nickname));
             }
-            lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("profile_birthday"), birthday));
             lore.add(Component.empty());
-            lore.add(LoreComponents.PROFILE_JOIN_DATE.append(Component.text(joinDate, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("profile_join_date"), joinDate));
 
             return GuiItem.builder().slot(4).material(Material.PLAYER_HEAD).player(player)
                     .customModelData(3004)

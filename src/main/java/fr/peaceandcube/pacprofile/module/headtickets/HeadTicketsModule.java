@@ -3,11 +3,9 @@ package fr.peaceandcube.pacprofile.module.headtickets;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -30,12 +28,12 @@ public class HeadTicketsModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreComponents.HEAD_TICKETS_NUMBER.append(Component.text(headTicketCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("head_tickets_total"), headTicketCount));
             lore.add(Component.empty());
-            lore.add(LoreComponents.HEAD_TICKETS_QUEST_NUMBER.append(Component.text(questCount, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(translate("head_tickets_quest_number"), questCount));
             if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
                 lore.add(Component.empty());
-                lore.add(LoreComponents.HEAD_TICKETS_CLICK);
+                lore.add(LoreProvider.line(translate("head_tickets_click")));
             }
 
             return GuiItem.builder().slot(22).material(Material.NAME_TAG)

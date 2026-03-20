@@ -3,11 +3,9 @@ package fr.peaceandcube.pacprofile.module.onlineplayers;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.config.ConfigOption;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,9 +30,9 @@ public class OnlinePlayersModule extends Module {
 
             List<Component> lore = List.of(
                     Component.empty(),
-                    LoreComponents.ONLINE_PLAYERS_COUNT.append(Component.text(onlinePlayersCount, NamedTextColor.YELLOW, TextDecoration.BOLD)),
+                    LoreProvider.line(translate("online_players_count"), onlinePlayersCount),
                     Component.empty(),
-                    LoreComponents.ONLINE_PLAYERS_CLICK
+                    LoreProvider.line(translate("online_players_click"))
             );
 
             return GuiItem.builder().slot(32).material(Material.PLAYER_HEAD)

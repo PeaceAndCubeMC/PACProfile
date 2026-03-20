@@ -10,7 +10,7 @@ public class HealthStatistic extends Statistic {
     }
 
     @Override
-    public double getCurrentValue(Player player) {
+    public double currentValue(Player player) {
         return player.getHealth();
     }
 }
