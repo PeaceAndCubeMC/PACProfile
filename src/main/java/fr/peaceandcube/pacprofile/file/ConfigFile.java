@@ -1,6 +1,7 @@
 package fr.peaceandcube.pacprofile.file;
 
 import fr.peaceandcube.pacprofile.config.ConfigOption;
+import fr.peaceandcube.pacprofile.config.GlobalConfigOptions;
 import fr.peaceandcube.pacprofile.module.Module;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,8 +16,6 @@ public class ConfigFile extends YamlFile {
     private static final List<ConfigEntry> DEFAULT_CONFIGS = new ArrayList<>();
 
     static {
-        DEFAULT_CONFIGS.add(new ConfigEntry("date_format", "yyyy-MM-dd HH:mm:ss", null));
-        DEFAULT_CONFIGS.add(new ConfigEntry("first_time_advancement_name", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets_scoreboard", "", null));
         DEFAULT_CONFIGS.add(new ConfigEntry("coins", "", "commands_on_click"));
         DEFAULT_CONFIGS.add(new ConfigEntry("head_tickets", "", "commands_on_click"));
@@ -35,10 +34,7 @@ public class ConfigFile extends YamlFile {
     }
 
     private void initConfig(List<Module> modules) {
-        // global config
-        if (!this.config.isBoolean("debug_logging")) {
-            this.config.set("debug_logging", false);
-        }
+        createConfigOptions(config, GlobalConfigOptions.configOptions());
 
         DEFAULT_CONFIGS.forEach(entry -> {
             if (entry.section() != null) {

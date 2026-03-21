@@ -1,6 +1,6 @@
 package fr.peaceandcube.pacprofile.module.homes.enums;
 
-import fr.peaceandcube.pacprofile.PACProfile;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import org.bukkit.Material;
 
 public enum HomeColor {
@@ -44,7 +44,7 @@ public enum HomeColor {
     }
 
     public String translate() {
-        return PACProfile.getInstance().lang.translate("color_" + this.name);
+        return TranslationManager.translate("color_" + this.name);
     }
 
     public static HomeColor byName(String name) {

@@ -1,6 +1,6 @@
 package fr.peaceandcube.pacprofile.file;
 
-import fr.peaceandcube.pacprofile.lang.CommonTranslations;
+import fr.peaceandcube.pacprofile.lang.GlobalTranslations;
 import fr.peaceandcube.pacprofile.module.Module;
 import org.bukkit.plugin.Plugin;
 
@@ -14,7 +14,7 @@ public class LangFile extends YamlFile {
     }
 
     private void init(List<Module> modules) {
-        CommonTranslations.defaultTranslations().forEach(this::addToFile);
+        GlobalTranslations.defaultTranslations().forEach(this::addToFile);
         for (Module module : modules) {
             module.defaultTranslations().forEach(this::addToFile);
         }

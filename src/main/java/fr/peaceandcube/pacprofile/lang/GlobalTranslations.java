@@ -3,7 +3,7 @@ package fr.peaceandcube.pacprofile.lang;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CommonTranslations {
+public class GlobalTranslations {
 
     public static Map<String, String> defaultTranslations() {
         Map<String, String> translations = new LinkedHashMap<>();

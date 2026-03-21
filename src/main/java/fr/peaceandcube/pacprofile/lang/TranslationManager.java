@@ -14,7 +14,7 @@ public class TranslationManager {
     public static void init(List<Module> modules) {
         CACHED_TRANSLATIONS.clear();
 
-        CommonTranslations.defaultTranslations().keySet().forEach(TranslationManager::add);
+        GlobalTranslations.defaultTranslations().keySet().forEach(TranslationManager::add);
         for (Module module : modules) {
             module.defaultTranslations().keySet().forEach(TranslationManager::add);
         }
