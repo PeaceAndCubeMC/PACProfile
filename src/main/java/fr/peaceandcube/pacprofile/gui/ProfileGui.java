@@ -2,8 +2,8 @@ package fr.peaceandcube.pacprofile.gui;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -16,7 +16,7 @@ public class ProfileGui extends UnmodifiableGui {
     private final PlayerData playerData;
 
     public ProfileGui(Player viewer, Player player) {
-        super(6, Component.text(Messages.PROFILE.formatted(player.getName())), viewer, player);
+        super(6, Component.text(TranslationManager.translate("profile").formatted(player.getName())), viewer, player);
         this.playerData = PACProfile.getGriefPrevention().dataStore.getPlayerData(this.player.getUniqueId());
         this.fillInventory();
         Bukkit.getPluginManager().registerEvents(this, PACProfile.getInstance());
@@ -34,7 +34,7 @@ public class ProfileGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(53).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(Messages.EXIT, 0xFF5555)
+                .name(TranslationManager.translate("exit"), 0xFF5555)
                 .onLeftClick(GuiContext::close)
                 .build());
 

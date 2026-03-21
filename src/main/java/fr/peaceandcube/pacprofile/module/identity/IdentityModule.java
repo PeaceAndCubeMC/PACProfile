@@ -5,8 +5,8 @@ import fr.peaceandcube.pacbirthday.util.LocalizedMonth;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.module.Module;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
@@ -79,7 +79,7 @@ public class IdentityModule extends Module {
                 return group.getDisplayName();
             }
         }
-        return Messages.NOT_DEFINED;
+        return TranslationManager.translate("not_defined");
     }
 
     private String getRankExpiration(Player player) {
@@ -105,7 +105,7 @@ public class IdentityModule extends Module {
             String month = LocalizedMonth.fromNumber(Integer.parseInt(birthday.substring(3, 5))).getLocalizedName();
             return day + " " + month;
         }
-        return Messages.NOT_DEFINED;
+        return TranslationManager.translate("not_defined");
     }
 
     private String getFirstPlayed(Player player) {

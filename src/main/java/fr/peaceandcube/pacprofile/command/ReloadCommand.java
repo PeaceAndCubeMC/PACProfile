@@ -1,7 +1,9 @@
 package fr.peaceandcube.pacprofile.command;
 
 import fr.peaceandcube.pacprofile.PACProfile;
-import fr.peaceandcube.pacprofile.util.Messages;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +20,10 @@ public class ReloadCommand implements CommandExecutor, TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender.hasPermission(PERM_RELOAD)) {
             PACProfile.reload();
-            sender.sendMessage(Messages.RELOAD_SUCCESS);
+            sender.sendMessage(Component.text(
+                    TranslationManager.translate("command_reload_success"),
+                    NamedTextColor.GREEN)
+            );
             return true;
         }
         return false;

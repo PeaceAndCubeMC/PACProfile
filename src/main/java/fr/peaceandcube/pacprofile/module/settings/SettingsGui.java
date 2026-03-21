@@ -6,10 +6,10 @@ import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.settings.enums.PTimeType;
 import fr.peaceandcube.pacprofile.module.settings.enums.PWeatherType;
-import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacutilities.PACUtilities;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -155,13 +155,13 @@ public class SettingsGui extends UnmodifiableGui {
 
         this.setItem(GuiItem.builder().slot(0).material(Material.ARROW)
                 .customModelData(3002)
-                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
+                .name(TranslationManager.translate("page_previous"), 0xFF55FF)
                 .onLeftClick(context -> new ProfileGui(context.viewer(), context.player()).open())
                 .build());
 
         this.setItem(GuiItem.builder().slot(8).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(Messages.EXIT, 0xFF5555)
+                .name(TranslationManager.translate("exit"), 0xFF5555)
                 .onLeftClick(GuiContext::close)
                 .build());
     }

@@ -14,13 +14,17 @@ public class TranslationManager {
     public static void init(List<Module> modules) {
         CACHED_TRANSLATIONS.clear();
 
+        CommonTranslations.defaultTranslations().keySet().forEach(TranslationManager::add);
         for (Module module : modules) {
-            module.defaultTranslations().keySet()
-                    .forEach(key -> CACHED_TRANSLATIONS.put(key, PACProfile.getInstance().lang.translate(key)));
+            module.defaultTranslations().keySet().forEach(TranslationManager::add);
         }
     }
 
+    private static void add(String key) {
+        CACHED_TRANSLATIONS.put(key, PACProfile.getInstance().lang.translate(key));
+    }
+
     public static String translate(String key) {
-        return CACHED_TRANSLATIONS.get(key);
+        return CACHED_TRANSLATIONS.getOrDefault(key, key);
     }
 }

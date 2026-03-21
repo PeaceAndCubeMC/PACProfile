@@ -9,13 +9,12 @@ import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -82,10 +81,11 @@ public class HomesGui extends PaginatedGui {
 
             String name = this.homes.get(index);
             Location location = this.user.getHome(name);
-            String world = location != null ? location.getWorld().getName() : Messages.INVALID;
-            String x = location != null ? String.valueOf(location.getBlockX()) : Messages.INVALID;
-            String y = location != null ? String.valueOf(location.getBlockY()) : Messages.INVALID;
-            String z = location != null ? String.valueOf(location.getBlockZ()) : Messages.INVALID;
+            String invalidMessage = TranslationManager.translate("invalid");
+            String world = location != null ? location.getWorld().getName() : invalidMessage;
+            String x = location != null ? String.valueOf(location.getBlockX()) : invalidMessage;
+            String y = location != null ? String.valueOf(location.getBlockY()) : invalidMessage;
+            String z = location != null ? String.valueOf(location.getBlockZ()) : invalidMessage;
             HomeColor color = HomeColor.byName(PACProfile.getInstance().playerData.getHomeColor(this.player.getUniqueId(), name));
 
             List<Component> bedLore = new ArrayList<>();
@@ -175,8 +175,9 @@ public class HomesGui extends PaginatedGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
                 .name(module.translate("homes_order"), 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
-                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_by"),
+                        TranslationManager.translate("order_" + this.orderSet().currentOrder().getName())))
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_click")))
                 .onLeftClick(context -> {
                     context.orderSet().next();
                     context.fillInventory();
@@ -185,7 +186,7 @@ public class HomesGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
+                .name(TranslationManager.translate("page_previous"), 0xFF55FF)
                 .onLeftClick(context -> {
                     if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
@@ -204,7 +205,7 @@ public class HomesGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(Messages.EXIT, 0xFF5555)
+                .name(TranslationManager.translate("exit"), 0xFF5555)
                 .onLeftClick(GuiContext::close)
                 .build());
 
@@ -212,7 +213,7 @@ public class HomesGui extends PaginatedGui {
         if (homeCount > maxHomeOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(Messages.PAGE_NEXT, 0xFF55FF)
+                    .name(TranslationManager.translate("page_next"), 0xFF55FF)
                     .onLeftClick(context -> new HomesGui(
                             module,
                             context.viewer(),
@@ -232,6 +233,6 @@ public class HomesGui extends PaginatedGui {
                     .map(note -> Component.text(note, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
                     .toList();
         }
-        return List.of(Component.text(Messages.NOT_DEFINED, NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        return List.of(Component.text(TranslationManager.translate("not_defined"), NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 }

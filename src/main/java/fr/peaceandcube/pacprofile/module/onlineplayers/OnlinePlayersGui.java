@@ -11,12 +11,11 @@ import fr.peaceandcube.pacprofile.gui.dialog.DialogItem;
 import fr.peaceandcube.pacprofile.gui.dialog.TextInputDialog;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.PlayerData;
@@ -93,7 +92,7 @@ public class OnlinePlayersGui extends PaginatedGui {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreComponents.PROFILE_BIRTHDAY.append(Component.text(birthday, NamedTextColor.YELLOW, TextDecoration.BOLD)));
+            lore.add(LoreProvider.line(TranslationManager.translate("profile_birthday"), birthday));
             if (!player.getUniqueId().equals(this.player.getUniqueId())) {
                 lore.add(LoreProvider.line(module.translate("online_player_trust_count_1"), trustCount)
                         .append(LoreProvider.line(module.translate("online_player_trust_count_2")))
@@ -157,8 +156,9 @@ public class OnlinePlayersGui extends PaginatedGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3013)
                 .name(module.translate("online_players_order"), 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
-                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_by"),
+                        TranslationManager.translate("order_" + this.orderSet().currentOrder().getName())))
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_click")))
                 .onLeftClick(context -> {
                     context.orderSet().next();
                     context.fillInventory();
@@ -167,7 +167,7 @@ public class OnlinePlayersGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
+                .name(TranslationManager.translate("page_previous"), 0xFF55FF)
                 .onLeftClick(context -> {
                     if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
@@ -186,7 +186,7 @@ public class OnlinePlayersGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(Messages.EXIT, 0xFF5555)
+                .name(TranslationManager.translate("exit"), 0xFF5555)
                 .onLeftClick(GuiContext::close)
                 .build());
 
@@ -194,7 +194,7 @@ public class OnlinePlayersGui extends PaginatedGui {
         if (playerCount > maxPlayersOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(Messages.PAGE_NEXT, 0xFF55FF)
+                    .name(TranslationManager.translate("page_next"), 0xFF55FF)
                     .onLeftClick(context -> new OnlinePlayersGui(
                             module,
                             context.viewer(),
@@ -214,7 +214,7 @@ public class OnlinePlayersGui extends PaginatedGui {
             String month = LocalizedMonth.fromNumber(Integer.parseInt(birthday.substring(3, 5))).getLocalizedName();
             return day + " " + month;
         }
-        return Messages.NOT_DEFINED;
+        return TranslationManager.translate("not_defined");
     }
 
     private int getTrustCount(String playerUuid) {
@@ -243,6 +243,6 @@ public class OnlinePlayersGui extends PaginatedGui {
                     .map(note -> Component.text(note, NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
                     .toList();
         }
-        return List.of(Component.text(Messages.NOT_DEFINED, NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        return List.of(Component.text(TranslationManager.translate("not_defined"), NamedTextColor.YELLOW, TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
     }
 }

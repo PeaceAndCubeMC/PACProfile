@@ -1,10 +1,5 @@
 package fr.peaceandcube.pacprofile.order;
 
-import fr.peaceandcube.pacprofile.PACProfile;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-
 public enum Order {
     DEFAULT("default"),
     NAME_AZ("name_az"),
@@ -21,9 +16,7 @@ public enum Order {
         this.name = name;
     }
 
-    public Component getText() {
-        String text = PACProfile.getInstance().lang.translate("order_" + name);
-        return Component.text(text, NamedTextColor.YELLOW, TextDecoration.BOLD)
-                .decoration(TextDecoration.ITALIC, false);
+    public String getName() {
+        return name;
     }
 }

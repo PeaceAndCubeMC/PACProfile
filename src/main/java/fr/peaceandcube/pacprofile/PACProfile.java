@@ -22,8 +22,6 @@ import fr.peaceandcube.pacprofile.module.rules.RulesModule;
 import fr.peaceandcube.pacprofile.module.settings.SettingsModule;
 import fr.peaceandcube.pacprofile.module.statistics.StatisticsModule;
 import fr.peaceandcube.pacprofile.module.warps.WarpsModule;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -37,7 +35,6 @@ public class PACProfile extends JavaPlugin {
     private static LuckPerms luckPerms;
     private static Essentials essentials;
     private static GriefPrevention griefPrevention;
-    private static TranslationManager translationManager;
 
     public ConfigFile config;
     public LangFile lang;
@@ -85,8 +82,6 @@ public class PACProfile extends JavaPlugin {
         PACProfile.getInstance().config.reload();
         PACProfile.getInstance().lang.reload();
         PACProfile.getInstance().playerData.reload();
-        Messages.init();
-        LoreComponents.init();
         TranslationManager.init(PACProfile.getInstance().modules);
         Logger.info("All data has been reloaded");
     }

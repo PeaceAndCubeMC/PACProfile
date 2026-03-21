@@ -7,12 +7,11 @@ import fr.peaceandcube.pacprofile.gui.PaginatedGui;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.logging.Logger;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.order.Order;
 import fr.peaceandcube.pacprofile.order.OrderSet;
-import fr.peaceandcube.pacprofile.text.LoreComponents;
-import fr.peaceandcube.pacprofile.util.Messages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -87,8 +86,9 @@ public class WarpsGui extends PaginatedGui {
         this.setItem(GuiItem.builder().slot(51).material(Material.HOPPER)
                 .customModelData(3041)
                 .name(module.translate("warps_order"), 0x00AA00)
-                .lore(Component.empty(), LoreComponents.ORDER_BY.append(this.orderSet().currentOrder().getText()))
-                .lore(Component.empty(), LoreComponents.ORDER_CLICK)
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_by"),
+                        TranslationManager.translate("order_" + this.orderSet().currentOrder().getName())))
+                .lore(Component.empty(), LoreProvider.line(TranslationManager.translate("order_click")))
                 .onLeftClick(context -> {
                     context.orderSet().next();
                     context.fillInventory();
@@ -97,7 +97,7 @@ public class WarpsGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(45).material(Material.ARROW)
                 .customModelData(3002)
-                .name(Messages.PAGE_PREVIOUS, 0xFF55FF)
+                .name(TranslationManager.translate("page_previous"), 0xFF55FF)
                 .onLeftClick(context -> {
                     if (context.page() == 1) {
                         new ProfileGui(context.viewer(), context.player()).open();
@@ -116,7 +116,7 @@ public class WarpsGui extends PaginatedGui {
 
         this.setItem(GuiItem.builder().slot(49).material(Material.BARRIER)
                 .customModelData(3002)
-                .name(Messages.EXIT, 0xFF5555)
+                .name(TranslationManager.translate("exit"), 0xFF5555)
                 .onLeftClick(GuiContext::close)
                 .build());
 
@@ -124,7 +124,7 @@ public class WarpsGui extends PaginatedGui {
         if (warpCount > maxWarpsOnPage) {
             this.setItem(GuiItem.builder().slot(53).material(Material.ARROW)
                     .customModelData(3003)
-                    .name(Messages.PAGE_NEXT, 0xFF55FF)
+                    .name(TranslationManager.translate("page_next"), 0xFF55FF)
                     .onLeftClick(context -> new WarpsGui(
                             module,
                             context.viewer(),

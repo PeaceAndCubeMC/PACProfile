@@ -1,7 +1,7 @@
 package fr.peaceandcube.pacprofile.gui.dialog;
 
 import fr.peaceandcube.pacprofile.gui.item.GuiItemName;
-import fr.peaceandcube.pacprofile.util.Messages;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
@@ -108,7 +108,7 @@ public class TextInputDialog {
                             ))
                             .build()
                     ).type(DialogType.confirmation(
-                            ActionButton.builder(Component.text(Messages.CONFIRMATION_YES))
+                            ActionButton.builder(Component.text(TranslationManager.translate("confirmation_yes")))
                                     .action(DialogAction.customClick((response, audience) -> {
                                         String value = response.getText("value");
                                         if (audience == player) {
@@ -116,7 +116,7 @@ public class TextInputDialog {
                                         }
                                     }, ClickCallback.Options.builder().build()))
                                     .build(),
-                            ActionButton.builder(Component.text(Messages.CONFIRMATION_NO))
+                            ActionButton.builder(Component.text(TranslationManager.translate("confirmation_no")))
                                     .build()
                     ))
             );

@@ -2,9 +2,11 @@ package fr.peaceandcube.pacprofile.command;
 
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
+import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import fr.peaceandcube.pacprofile.logging.Logger;
-import fr.peaceandcube.pacprofile.util.Messages;
 import fr.peaceandcube.pacprofile.util.SuggestionProviders;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.advancement.Advancement;
@@ -50,13 +52,19 @@ public class ProfileCommand implements CommandExecutor, TabExecutor {
                         gui.open();
                         Logger.debug("%s opened %s's profile".formatted(viewer.getName(), player.getName()));
                     } else {
-                        sender.sendMessage(Messages.PLAYER_NOT_FOUND);
+                        sender.sendMessage(Component.text(
+                                TranslationManager.translate("command_profile_player_not_found"),
+                                NamedTextColor.RED)
+                        );
                     }
                     return true;
                 }
             }
         } else {
-            sender.sendMessage(Messages.SENDER_NOT_PLAYER);
+            sender.sendMessage(Component.text(
+                    TranslationManager.translate("command_profile_sender_not_player"),
+                    NamedTextColor.RED)
+            );
             return true;
         }
 
