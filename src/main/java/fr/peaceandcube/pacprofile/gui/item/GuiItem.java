@@ -1,18 +1,21 @@
 package fr.peaceandcube.pacprofile.gui.item;
 
 import fr.peaceandcube.pacprofile.gui.GuiContext;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class GuiItem {
@@ -119,27 +122,29 @@ public class GuiItem {
             return this;
         }
 
+        @SuppressWarnings("UnstableApiUsage")
         public GuiItem build() {
             if (slot == null || material == null) {
                 return null;
             }
 
             ItemStack stack = new ItemStack(material);
-            ItemMeta meta = stack.getItemMeta();
             if (name != null) {
-                meta.customName(Component
+                stack.setData(DataComponentTypes.CUSTOM_NAME, Component
                         .text(name.text(), TextColor.color(name.color()), TextDecoration.BOLD)
                         .decoration(TextDecoration.ITALIC, false));
             }
-            meta.lore(lore);
-            meta.setCustomModelData(customModelData);
-            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
-            meta.setEnchantmentGlintOverride(glint);
-            meta.setHideTooltip(hideTooltip);
-            if (meta instanceof SkullMeta skullMeta) {
-                skullMeta.setOwningPlayer(player);
+            stack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
+            stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                    .addFloat(customModelData).build());
+            stack.setData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, glint);
+            stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                    .hideTooltip(hideTooltip)
+                    .hiddenComponents(Set.of(DataComponentTypes.ATTRIBUTE_MODIFIERS, DataComponentTypes.ENCHANTMENTS))
+                    .build());
+            if (player != null) {
+                stack.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(player.getPlayerProfile()));
             }
-            stack.setItemMeta(meta);
 
             return new GuiItem(slot, stack, leftClickAction, rightClickAction);
         }
