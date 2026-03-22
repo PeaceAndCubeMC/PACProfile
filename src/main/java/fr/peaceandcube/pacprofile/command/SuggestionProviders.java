@@ -1,6 +1,5 @@
 package fr.peaceandcube.pacprofile.command;
 
-import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,8 +17,7 @@ public class SuggestionProviders {
                 .toList();
     }
 
-    public static List<String> getModules(String prefix) {
-        List<Module> modules = PACProfile.getInstance().getModules();
+    public static List<String> getModules(List<Module> modules, String prefix) {
         List<String> names = new ArrayList<>();
         names.add("main");
         names.addAll(modules.stream()

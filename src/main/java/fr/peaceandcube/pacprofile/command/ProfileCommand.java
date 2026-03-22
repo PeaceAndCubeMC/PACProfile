@@ -107,7 +107,7 @@ public class ProfileCommand implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String @NotNull [] args) {
         if (args.length == 1) {
-            return SuggestionProviders.getModules(args[0]);
+            return SuggestionProviders.getModules(PACProfile.getInstance().getModules(), args[0]);
         }
 
         if (args.length == 2 && sender.hasPermission(PERM_PROFILE_OTHERS)) {
