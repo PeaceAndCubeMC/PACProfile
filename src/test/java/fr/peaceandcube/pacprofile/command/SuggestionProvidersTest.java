@@ -31,11 +31,11 @@ public class SuggestionProvidersTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'',3",
-            "M,1",
-            "t,2",
-            "the,1",
-            "Radiohead,0"
+        "'',3",
+        "M,1",
+        "t,2",
+        "the,1",
+        "Radiohead,0"
     })
     void testGetOnlinePlayers(String prefix, int expectedCount) {
         serverMock.addPlayer("Muse");
@@ -49,9 +49,9 @@ public class SuggestionProvidersTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'',4,'main,settings,homes,claims'",
-            "M,1,'main'",
-            "c,1,'claims'"
+        "'',4,'main,settings,homes,claims'",
+        "M,1,'main'",
+        "c,1,'claims'"
     })
     void testGetModules(String prefix, int expectedCount, String expectedNames) {
         List<Module> modules = List.of(new SettingsModule(), new CoinsModule(), new HomesModule(), new ClaimsModule());
