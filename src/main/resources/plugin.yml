@@ -24,7 +24,7 @@ commands:
     description: Opens the profile interface
     permission: pacprofile.profile
     permission-message: §cYou do not have the permission to use this command.
-    usage: "§eUsage: §r/profile [<player>]"
+    usage: "§eUsage: §r/profile [<module>] [<player>]"
 
 permissions:
   pacprofile.reload:

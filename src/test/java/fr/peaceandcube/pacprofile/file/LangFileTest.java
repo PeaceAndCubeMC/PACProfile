@@ -15,6 +15,7 @@ public class LangFileTest {
 
     private static final String FILE_CONTENT = """
             command_profile_sender_not_player: Command sender must be a player!
+            command_profile_module_not_found: Module was not found.
             command_profile_player_not_found: Target player was not found.
             command_reload_success: PACProfile was successfully reloaded
             not_defined: Not defined

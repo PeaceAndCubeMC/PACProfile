@@ -5,7 +5,6 @@ import fr.peaceandcube.pacprofile.lang.TranslationManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
@@ -13,11 +12,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ReloadCommand implements CommandExecutor, TabExecutor {
+public class ReloadCommand implements TabExecutor {
+
     private static final String PERM_RELOAD = "pacprofile.reload";
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (sender.hasPermission(PERM_RELOAD)) {
             PACProfile.reload();
             sender.sendMessage(Component.text(
@@ -30,7 +30,7 @@ public class ReloadCommand implements CommandExecutor, TabExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String @NotNull [] args) {
         return List.of();
     }
 }

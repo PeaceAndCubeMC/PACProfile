@@ -8,6 +8,7 @@ public class GlobalTranslations {
     public static Map<String, String> defaultTranslations() {
         Map<String, String> translations = new LinkedHashMap<>();
         translations.put("command_profile_sender_not_player", "Command sender must be a player!");
+        translations.put("command_profile_module_not_found", "Module was not found.");
         translations.put("command_profile_player_not_found", "Target player was not found.");
         translations.put("command_reload_success", "PACProfile was successfully reloaded");
         translations.put("not_defined", "Not defined");

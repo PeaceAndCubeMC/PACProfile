@@ -1,3 +1,6 @@
+- Profile command now allows accessing to the gui of some modules (#5)
+  - New command syntax is `/profile [<module>] [<player>]`
+  - Openable modules are `settings`, `homes`, `claims`, `online_players` and `warps`
 - Refactored the codebase to introduce modules
   - Modules handle everything related to a profile feature, like user interfaces
   - Default translations are now defined per module

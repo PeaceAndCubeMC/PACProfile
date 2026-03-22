@@ -73,7 +73,7 @@ public abstract class UnmodifiableGui implements Listener, GuiContext {
 
     @Override
     public void dispatchCommand(String command) {
-        if (command != null && !command.isEmpty()) {
+        if (command != null && !command.isBlank()) {
             // Get as close as possible to player-run commands, in order to respect permissions
             this.viewer.chat("/" + command);
         }
