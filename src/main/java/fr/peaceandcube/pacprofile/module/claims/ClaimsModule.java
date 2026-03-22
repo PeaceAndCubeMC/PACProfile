@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class ClaimsModule extends Module {
 
     public ClaimsModule() {
-        super("claims");
+        super("claims", true);
     }
 
     @Override

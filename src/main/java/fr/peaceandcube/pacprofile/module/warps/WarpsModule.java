@@ -13,7 +13,7 @@ import java.util.function.Function;
 public class WarpsModule extends Module {
 
     public WarpsModule() {
-        super("warps");
+        super("warps", true);
     }
 
     @Override

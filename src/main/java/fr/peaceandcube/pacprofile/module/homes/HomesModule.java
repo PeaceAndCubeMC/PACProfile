@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class HomesModule extends Module {
 
     public HomesModule() {
-        super("homes");
+        super("homes", true);
     }
 
     @Override

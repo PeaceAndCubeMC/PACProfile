@@ -12,12 +12,18 @@ import java.util.function.Function;
 public abstract class Module {
 
     private final String name;
+    private final boolean openable;
     private final Function<Player, GuiItem> guiItem;
     protected final Map<String, ConfigOption> configOptions;
     protected final Map<String, String> defaultTranslations;
 
     protected Module(String name) {
+        this(name, false);
+    }
+
+    protected Module(String name, boolean openable) {
         this.name = name;
+        this.openable = openable;
         this.guiItem = createGuiItem();
         this.configOptions = new LinkedHashMap<>();
         this.defaultTranslations = new LinkedHashMap<>();
@@ -28,6 +34,10 @@ public abstract class Module {
 
     public final String name() {
         return name;
+    }
+
+    public final boolean isOpenable() {
+        return openable;
     }
 
     public final GuiItem guiItem(Player player) {

@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class SettingsModule extends Module {
 
     public SettingsModule() {
-        super("settings");
+        super("settings", true);
     }
 
     @Override

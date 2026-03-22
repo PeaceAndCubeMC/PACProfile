@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class OnlinePlayersModule extends Module {
 
     public OnlinePlayersModule() {
-        super("online_players");
+        super("online_players", true);
     }
 
     @Override
