@@ -9,11 +9,11 @@ import java.util.List;
 public class LangFile extends YamlFile {
 
     public LangFile(String name, Plugin plugin, List<Module> modules) {
-        super(name, plugin);
-        this.init(modules);
+        super(name, plugin, modules);
     }
 
-    private void init(List<Module> modules) {
+    @Override
+    protected void init() {
         GlobalTranslations.defaultTranslations().forEach(this::addToFile);
         for (Module module : modules) {
             module.defaultTranslations().forEach(this::addToFile);

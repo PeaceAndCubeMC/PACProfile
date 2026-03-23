@@ -13,4 +13,8 @@ public class Logger {
             PACProfile.getInstance().getLogger().info(message);
         }
     }
+
+    public static void error(String message) {
+        PACProfile.getInstance().getLogger().severe(message);
+    }
 }

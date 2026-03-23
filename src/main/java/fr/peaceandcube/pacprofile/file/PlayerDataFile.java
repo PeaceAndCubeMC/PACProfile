@@ -19,7 +19,11 @@ public class PlayerDataFile extends YamlFile {
     private static final String COLOR = "color";
 
     public PlayerDataFile(String name, Plugin plugin) {
-        super(name, plugin);
+        super(name, plugin, List.of());
+    }
+
+    @Override
+    void init() {
     }
 
     public String getHomeNotes(UUID player, String home) {

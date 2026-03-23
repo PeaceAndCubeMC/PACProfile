@@ -29,11 +29,11 @@ public class ConfigFile extends YamlFile {
     }
 
     public ConfigFile(String name, Plugin plugin, List<Module> modules) {
-        super(name, plugin);
-        this.initConfig(modules);
+        super(name, plugin, modules);
     }
 
-    private void initConfig(List<Module> modules) {
+    @Override
+    protected void init() {
         createConfigOptions(config, GlobalConfigOptions.configOptions());
 
         DEFAULT_CONFIGS.forEach(entry -> {
