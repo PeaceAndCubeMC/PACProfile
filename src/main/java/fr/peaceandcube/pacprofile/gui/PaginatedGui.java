@@ -4,7 +4,7 @@ import fr.peaceandcube.pacprofile.order.OrderSet;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
-public abstract class PaginatedGui extends UnmodifiableGui {
+public abstract class PaginatedGui extends BaseGui {
     private static final int ROWS = 6;
     private final int page;
     private final int maxPages;

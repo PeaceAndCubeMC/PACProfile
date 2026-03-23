@@ -27,7 +27,7 @@ public abstract class YamlFile {
         saveToDisk();
     }
 
-    abstract void init();
+    protected abstract void init();
 
     public void reload() {
         this.config = YamlConfiguration.loadConfiguration(this.file);

@@ -3,7 +3,7 @@ package fr.peaceandcube.pacprofile.module.settings;
 import fr.peaceandcube.pacprofile.PACProfile;
 import fr.peaceandcube.pacprofile.gui.GuiContext;
 import fr.peaceandcube.pacprofile.gui.ProfileGui;
-import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
+import fr.peaceandcube.pacprofile.gui.BaseGui;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.gui.item.LoreProvider;
 import fr.peaceandcube.pacprofile.lang.TranslationManager;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SettingsGui extends UnmodifiableGui {
+public class SettingsGui extends BaseGui {
     private final Module module;
 
     public SettingsGui(Module module, Player viewer, Player player) {

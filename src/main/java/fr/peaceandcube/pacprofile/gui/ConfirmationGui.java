@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class ConfirmationGui extends UnmodifiableGui {
-    private final UnmodifiableGui previousGui;
+public class ConfirmationGui extends BaseGui {
+    private final BaseGui previousGui;
     private final Action action;
 
-    public ConfirmationGui(Player viewer, Player player, UnmodifiableGui previousGui, Action action) {
+    public ConfirmationGui(Player viewer, Player player, BaseGui previousGui, Action action) {
         super(1, Component.text(TranslationManager.translate("confirmation_title")), viewer, player);
         this.previousGui = previousGui;
         this.action = action;

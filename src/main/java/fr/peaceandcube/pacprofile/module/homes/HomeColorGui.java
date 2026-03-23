@@ -1,7 +1,7 @@
 package fr.peaceandcube.pacprofile.module.homes;
 
 import fr.peaceandcube.pacprofile.PACProfile;
-import fr.peaceandcube.pacprofile.gui.UnmodifiableGui;
+import fr.peaceandcube.pacprofile.gui.BaseGui;
 import fr.peaceandcube.pacprofile.gui.item.GuiItem;
 import fr.peaceandcube.pacprofile.module.Module;
 import fr.peaceandcube.pacprofile.module.homes.enums.HomeColor;
@@ -9,7 +9,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class HomeColorGui extends UnmodifiableGui {
+public class HomeColorGui extends BaseGui {
     private final Module module;
     private final String name;
     private final int page;

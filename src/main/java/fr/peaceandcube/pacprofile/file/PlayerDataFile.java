@@ -23,7 +23,7 @@ public class PlayerDataFile extends YamlFile {
     }
 
     @Override
-    void init() {
+    protected void init() {
     }
 
     public String getHomeNotes(UUID player, String home) {

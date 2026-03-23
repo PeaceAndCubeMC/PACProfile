@@ -17,14 +17,14 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class UnmodifiableGui implements Listener, GuiContext {
+public abstract class BaseGui implements GuiContext, Listener {
     protected final Inventory inv;
     protected final Player viewer;
     protected final Player player;
     protected final User user;
     protected final List<GuiItem> items;
 
-    protected UnmodifiableGui(int rows, Component title, Player viewer, Player player) {
+    protected BaseGui(int rows, Component title, Player viewer, Player player) {
         this.inv = Bukkit.createInventory(null, 9 * rows, title);
         this.viewer = viewer;
         this.player = player;

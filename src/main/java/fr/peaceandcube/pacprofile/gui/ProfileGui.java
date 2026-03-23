@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
-public class ProfileGui extends UnmodifiableGui {
+public class ProfileGui extends BaseGui {
     private final PlayerData playerData;
 
     public ProfileGui(Player viewer, Player player) {
