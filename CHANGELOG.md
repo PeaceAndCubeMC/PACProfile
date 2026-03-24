@@ -6,7 +6,7 @@
   - Default translations are now defined per module
   - Gui items no longer need to be defined in a gui
     - Their click actions now use a gui context to access data or perform actions
-- Gui items are now defined using data components
+- Gui items and dialog items are now defined using data components
 - Fixed a crash when a translation key is absent in the lang file
 - Fixed config and lang keys not saved again if deleted and reloaded
 - Added release CI workflow

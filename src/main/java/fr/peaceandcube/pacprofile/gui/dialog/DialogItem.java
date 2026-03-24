@@ -1,10 +1,12 @@
 package fr.peaceandcube.pacprofile.gui.dialog;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
+import io.papermc.paper.datacomponent.item.ResolvableProfile;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 public class DialogItem {
     private final Material material;
@@ -33,15 +35,16 @@ public class DialogItem {
         return player;
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public ItemStack toItemStack() {
-        ItemStack itemStack = new ItemStack(material);
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setHideTooltip(true);
-        meta.setCustomModelData(customModelData);
-        if (meta instanceof SkullMeta skullMeta) {
-            skullMeta.setOwningPlayer(player);
-        }
-        itemStack.setItemMeta(meta);
-        return itemStack;
+        ItemStack stack = new ItemStack(material);
+        stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay()
+                .hideTooltip(true)
+                .build());
+        stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData()
+                .addFloat(customModelData)
+                .build());
+        stack.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile(player.getPlayerProfile()));
+        return stack;
     }
 }
