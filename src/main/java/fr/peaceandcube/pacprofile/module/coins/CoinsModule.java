@@ -27,15 +27,15 @@ public class CoinsModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("coins_total"), coinCount));
+            lore.add(LoreProvider.line(translate("total"), coinCount));
             if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
                 lore.add(Component.empty());
-                lore.add(LoreProvider.line(translate("coins_click")));
+                lore.add(LoreProvider.line(translate("click")));
             }
 
             return GuiItem.builder().slot(20).material(Material.SUNFLOWER)
                     .customModelData(3004)
-                    .name(translate("coins"), 0xFFAA00)
+                    .name(translate("name"), 0xFFAA00)
                     .lore(lore)
                     .onLeftClick(context -> {
                         if (!PACProfile.getInstance().config.getCommandOnClickCoins().isBlank()) {
@@ -53,8 +53,8 @@ public class CoinsModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("coins", "Coins");
-        defaultTranslations.put("coins_total", "Total: ");
-        defaultTranslations.put("coins_click", "⇒ Click to see more about coins");
+        defaultTranslations.put("name", "Coins");
+        defaultTranslations.put("total", "Total: ");
+        defaultTranslations.put("click", "⇒ Click to see more about coins");
     }
 }

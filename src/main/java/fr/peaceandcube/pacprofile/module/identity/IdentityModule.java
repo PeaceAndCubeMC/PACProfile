@@ -38,17 +38,17 @@ public class IdentityModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("profile_rank"), rank));
+            lore.add(LoreProvider.line(translate("rank"), rank));
             if (rankExpiration != null) {
-                lore.add(LoreProvider.line(translate("profile_rank_expiration"), rankExpiration));
+                lore.add(LoreProvider.line(translate("rank_expiration"), rankExpiration));
             }
             lore.add(Component.empty());
             if (nickname != null) {
-                lore.add(LoreProvider.line(translate("profile_nickname"), nickname));
+                lore.add(LoreProvider.line(translate("nickname"), nickname));
             }
-            lore.add(LoreProvider.line(translate("profile_birthday"), birthday));
+            lore.add(LoreProvider.line(translate("birthday"), birthday));
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("profile_join_date"), joinDate));
+            lore.add(LoreProvider.line(translate("join_date"), joinDate));
 
             return GuiItem.builder().slot(4).material(Material.PLAYER_HEAD).player(player)
                     .customModelData(3004)
@@ -64,11 +64,11 @@ public class IdentityModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("profile_rank", "Rank: ");
-        defaultTranslations.put("profile_rank_expiration", "Expiration: ");
-        defaultTranslations.put("profile_nickname", "Nickname: ");
-        defaultTranslations.put("profile_birthday", "Birthday: ");
-        defaultTranslations.put("profile_join_date", "Joined on: ");
+        defaultTranslations.put("rank", "Rank: ");
+        defaultTranslations.put("rank_expiration", "Expiration: ");
+        defaultTranslations.put("nickname", "Nickname: ");
+        defaultTranslations.put("birthday", "Birthday: ");
+        defaultTranslations.put("join_date", "Joined on: ");
     }
 
     private String getRank(Player player) {

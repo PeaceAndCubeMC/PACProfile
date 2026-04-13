@@ -27,22 +27,23 @@ public class LangFileTest {
             exit: Exit
             page_previous: Previous Page
             page_next: Next Page
-            color_white: White
-            color_light_gray: Light Gray
-            color_gray: Gray
-            color_black: Black
-            color_brown: Brown
-            color_red: Red
-            color_orange: Orange
-            color_yellow: Yellow
-            color_lime: Lime
-            color_green: Green
-            color_cyan: Cyan
-            color_light_blue: Light Blue
-            color_blue: Blue
-            color_purple: Purple
-            color_magenta: Magenta
-            color_pink: Pink
+            color:
+              white: White
+              light_gray: Light Gray
+              gray: Gray
+              black: Black
+              brown: Brown
+              red: Red
+              orange: Orange
+              yellow: Yellow
+              lime: Lime
+              green: Green
+              cyan: Cyan
+              light_blue: Light Blue
+              blue: Blue
+              purple: Purple
+              magenta: Magenta
+              pink: Pink
             order_by: 'Order by: '
             order_default: Default
             order_name_az: Name (A-Z)
@@ -53,11 +54,12 @@ public class LangFileTest {
             order_category_za: Category (Z-A)
             order_color: Color
             order_click: ⇒ Click to toggle order
-            profile_rank: 'Rank: '
-            profile_rank_expiration: 'Expiration: '
-            profile_nickname: 'Nickname: '
-            profile_birthday: 'Birthday: '
-            profile_join_date: 'Joined on: '
+            identity:
+              rank: 'Rank: '
+              rank_expiration: 'Expiration: '
+              nickname: 'Nickname: '
+              birthday: 'Birthday: '
+              join_date: 'Joined on: '
             """;
 
     @BeforeEach
@@ -79,23 +81,23 @@ public class LangFileTest {
 
         Assertions.assertTrue(langFile.file.exists());
         Assertions.assertEquals(FILE_CONTENT, langFile.config.saveToString());
-        Assertions.assertEquals("Nickname: ", langFile.translate("profile_nickname"));
-        Assertions.assertEquals("Birthday: ", langFile.translate("profile_birthday"));
+        Assertions.assertEquals("Nickname: ", langFile.translate("identity.nickname"));
+        Assertions.assertEquals("Birthday: ", langFile.translate("identity.birthday"));
     }
 
     @Test
     void testUpdateLangFile() {
         List<Module> modules = List.of(new IdentityModule());
         PluginMock mockPlugin = MockBukkit.createMockPlugin();
-        mockPlugin.getConfig().set("profile_rank", "");
-        mockPlugin.getConfig().set("profile_nickname", "Username: ");
+        mockPlugin.getConfig().set("identity.rank", "");
+        mockPlugin.getConfig().set("identity.nickname", "Username: ");
         mockPlugin.saveConfig();
 
         LangFile langFile = new LangFile("config.yml", mockPlugin, modules);
 
         Assertions.assertTrue(langFile.file.exists());
-        Assertions.assertEquals("Rank: ", langFile.translate("profile_rank"));
-        Assertions.assertEquals("Username: ", langFile.translate("profile_nickname"));
-        Assertions.assertEquals("Birthday: ", langFile.translate("profile_birthday"));
+        Assertions.assertEquals("Rank: ", langFile.translate("identity.rank"));
+        Assertions.assertEquals("Username: ", langFile.translate("identity.nickname"));
+        Assertions.assertEquals("Birthday: ", langFile.translate("identity.birthday"));
     }
 }

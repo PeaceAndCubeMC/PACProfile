@@ -25,8 +25,8 @@ public class DynmapModule extends Module {
     protected Function<Player, GuiItem> createGuiItem() {
         return player -> GuiItem.builder().slot(47).material(Material.MAP)
                 .customModelData(3004)
-                .name(translate("dynmap"), 0xFF55FF)
-                .lore(Component.empty(), LoreProvider.line(translate("dynmap_click")))
+                .name(translate("name"), 0xFF55FF)
+                .lore(Component.empty(), LoreProvider.line(translate("click")))
                 .onLeftClick(context -> {
                     context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickDynmap());
                     context.close();
@@ -40,7 +40,7 @@ public class DynmapModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("dynmap", "Dynmap");
-        defaultTranslations.put("dynmap_click", "⇒ Click to open the dynmap");
+        defaultTranslations.put("name", "Dynmap");
+        defaultTranslations.put("click", "⇒ Click to open the dynmap");
     }
 }

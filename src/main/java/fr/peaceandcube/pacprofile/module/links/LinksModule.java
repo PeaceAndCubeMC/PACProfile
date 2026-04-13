@@ -25,8 +25,8 @@ public class LinksModule extends Module {
     protected Function<Player, GuiItem> createGuiItem() {
         return player -> GuiItem.builder().slot(46).material(Material.IRON_CHAIN)
                 .customModelData(3004)
-                .name(translate("links"), 0xFF55FF)
-                .lore(Component.empty(), LoreProvider.line(translate("links_click")))
+                .name(translate("name"), 0xFF55FF)
+                .lore(Component.empty(), LoreProvider.line(translate("click")))
                 .onLeftClick(context -> {
                     context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickLinks());
                     context.close();
@@ -40,7 +40,7 @@ public class LinksModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("links", "Server Links");
-        defaultTranslations.put("links_click", "⇒ Click to see the links");
+        defaultTranslations.put("name", "Server Links");
+        defaultTranslations.put("click", "⇒ Click to see the links");
     }
 }

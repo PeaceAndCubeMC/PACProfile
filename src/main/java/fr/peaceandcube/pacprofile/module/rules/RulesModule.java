@@ -25,8 +25,8 @@ public class RulesModule extends Module {
     protected Function<Player, GuiItem> createGuiItem() {
         return player -> GuiItem.builder().slot(45).material(Material.KNOWLEDGE_BOOK)
                 .customModelData(3004)
-                .name(translate("rules"), 0xFF55FF)
-                .lore(Component.empty(), LoreProvider.line(translate("rules_click")))
+                .name(translate("name"), 0xFF55FF)
+                .lore(Component.empty(), LoreProvider.line(translate("click")))
                 .onLeftClick(context -> {
                     context.dispatchCommand(PACProfile.getInstance().config.getCommandOnClickRules());
                     context.close();
@@ -40,7 +40,7 @@ public class RulesModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("rules", "Rules");
-        defaultTranslations.put("rules_click", "⇒ Click to see the rules");
+        defaultTranslations.put("name", "Rules");
+        defaultTranslations.put("click", "⇒ Click to see the rules");
     }
 }

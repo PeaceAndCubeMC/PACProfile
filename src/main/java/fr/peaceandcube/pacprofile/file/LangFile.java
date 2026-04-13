@@ -16,7 +16,9 @@ public class LangFile extends YamlFile {
     protected void init() {
         GlobalTranslations.defaultTranslations().forEach(this::addToFile);
         for (Module module : modules) {
-            module.defaultTranslations().forEach(this::addToFile);
+            module.defaultTranslations().forEach((key, value) ->
+                    addToFile("%s.%s".formatted(module.name(), key), value)
+            );
         }
         this.save();
     }

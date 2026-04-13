@@ -44,7 +44,7 @@ public enum HomeColor {
     }
 
     public String translate() {
-        return TranslationManager.translate("color_" + this.name);
+        return TranslationManager.translate("color.%s".formatted(name));
     }
 
     public static HomeColor byName(String name) {

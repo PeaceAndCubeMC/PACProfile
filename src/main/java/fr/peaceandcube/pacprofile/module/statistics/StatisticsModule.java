@@ -32,8 +32,8 @@ public class StatisticsModule extends Module {
         return player -> {
             List<Component> lore = new ArrayList<>();
             lore.add(this.baseStatistics
-                    ? LoreProvider.line(translate("statistics_base"), NamedTextColor.RED)
-                    : LoreProvider.line(translate("statistics_current"), NamedTextColor.GREEN)
+                    ? LoreProvider.line(translate("base"), NamedTextColor.RED)
+                    : LoreProvider.line(translate("current"), NamedTextColor.GREEN)
             );
             lore.add(Component.empty());
             for (Statistic statistic : Statistics.ALL) {
@@ -43,13 +43,13 @@ public class StatisticsModule extends Module {
             }
             lore.add(Component.empty());
             lore.add(this.baseStatistics
-                    ? LoreProvider.line(translate("statistics_click_current"))
-                    : LoreProvider.line(translate("statistics_click_base"))
+                    ? LoreProvider.line(translate("click_current"))
+                    : LoreProvider.line(translate("click_base"))
             );
 
             return GuiItem.builder().slot(9).material(Material.ENCHANTED_BOOK)
                     .customModelData(3004)
-                    .name(translate("statistics"), 0xFF55FF)
+                    .name(translate("name"), 0xFF55FF)
                     .lore(lore)
                     .onLeftClick(context -> {
                         this.baseStatistics = !this.baseStatistics;
@@ -70,29 +70,29 @@ public class StatisticsModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("statistics", "Statistics");
-        defaultTranslations.put("statistics_base", "Base statistics");
-        defaultTranslations.put("statistics_current", "Current statistics");
-        defaultTranslations.put("statistics_health", "❤ Health: ");
-        defaultTranslations.put("statistics_max_health", "❤ Max health: ");
-        defaultTranslations.put("statistics_oxygen_bonus", "🫧 Oxygen bonus: ");
-        defaultTranslations.put("statistics_armor", "\uD83D\uDEE1 Armor: ");
-        defaultTranslations.put("statistics_armor_toughness", "\uD83D\uDEE1 Armor toughness: ");
-        defaultTranslations.put("statistics_knockback_resistance", "❄ Knockback resistance: ");
-        defaultTranslations.put("statistics_speed", "👟 Speed: ");
-        defaultTranslations.put("statistics_sneaking_speed", "👟 Sneaking speed: ");
-        defaultTranslations.put("statistics_attack_damage", "\uD83D\uDDE1 Attack damage: ");
-        defaultTranslations.put("statistics_attack_speed", "\uD83D\uDDE1 Attack speed: ");
-        defaultTranslations.put("statistics_mining_efficiency", "⛏ Mining efficiency: ");
-        defaultTranslations.put("statistics_luck", "☘ Luck: ");
-        defaultTranslations.put("statistics_click_base", "⇒ Click to show base statistics");
-        defaultTranslations.put("statistics_click_current", "⇒ Click to show current statistics");
+        defaultTranslations.put("name", "Statistics");
+        defaultTranslations.put("base", "Base statistics");
+        defaultTranslations.put("current", "Current statistics");
+        defaultTranslations.put("health", "❤ Health: ");
+        defaultTranslations.put("max_health", "❤ Max health: ");
+        defaultTranslations.put("oxygen_bonus", "🫧 Oxygen bonus: ");
+        defaultTranslations.put("armor", "\uD83D\uDEE1 Armor: ");
+        defaultTranslations.put("armor_toughness", "\uD83D\uDEE1 Armor toughness: ");
+        defaultTranslations.put("knockback_resistance", "❄ Knockback resistance: ");
+        defaultTranslations.put("speed", "👟 Speed: ");
+        defaultTranslations.put("sneaking_speed", "👟 Sneaking speed: ");
+        defaultTranslations.put("attack_damage", "\uD83D\uDDE1 Attack damage: ");
+        defaultTranslations.put("attack_speed", "\uD83D\uDDE1 Attack speed: ");
+        defaultTranslations.put("mining_efficiency", "⛏ Mining efficiency: ");
+        defaultTranslations.put("luck", "☘ Luck: ");
+        defaultTranslations.put("click_base", "⇒ Click to show base statistics");
+        defaultTranslations.put("click_current", "⇒ Click to show current statistics");
     }
 
     private Component getStatisticComponent(Statistic statistic, Player player) {
         double value = this.baseStatistics ? statistic.baseValue(player) : statistic.currentValue(player);
         double diff = Math.round((statistic.currentValue(player) - statistic.baseValue(player)) * 100.0) / 100.0;
-        Component component = LoreProvider.line(translate("statistics_" + statistic.name()), value);
+        Component component = LoreProvider.line(translate(statistic.name()), value);
         if (!this.baseStatistics && diff != 0) {
             TextColor diffColor = diff > 0 ? NamedTextColor.GREEN : NamedTextColor.RED;
             // if the difference is positive, add a plus sign

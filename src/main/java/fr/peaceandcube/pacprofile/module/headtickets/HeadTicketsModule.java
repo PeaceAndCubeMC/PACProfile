@@ -28,17 +28,17 @@ public class HeadTicketsModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("head_tickets_total"), headTicketCount));
+            lore.add(LoreProvider.line(translate("total"), headTicketCount));
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("head_tickets_quest_number"), questCount));
+            lore.add(LoreProvider.line(translate("quests_number"), questCount));
             if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
                 lore.add(Component.empty());
-                lore.add(LoreProvider.line(translate("head_tickets_click")));
+                lore.add(LoreProvider.line(translate("click")));
             }
 
             return GuiItem.builder().slot(22).material(Material.NAME_TAG)
                     .customModelData(3004)
-                    .name(translate("head_tickets"), 0x00AAAA)
+                    .name(translate("name"), 0x00AAAA)
                     .lore(lore)
                     .onLeftClick(context -> {
                         if (!PACProfile.getInstance().config.getCommandOnClickHeadTickets().isBlank()) {
@@ -57,10 +57,10 @@ public class HeadTicketsModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("head_tickets", "Head Tickets");
-        defaultTranslations.put("head_tickets_total", "Total: ");
-        defaultTranslations.put("head_tickets_quest_number", "Quests done: ");
-        defaultTranslations.put("head_tickets_click", "⇒ Click to see more about head tickets");
+        defaultTranslations.put("name", "Head Tickets");
+        defaultTranslations.put("total", "Total: ");
+        defaultTranslations.put("quests_number", "Quests done: ");
+        defaultTranslations.put("click", "⇒ Click to see more about head tickets");
     }
 
     private int getObjectiveScore(Player player, String scoreboard) {

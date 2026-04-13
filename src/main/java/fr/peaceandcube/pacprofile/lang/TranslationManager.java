@@ -16,7 +16,9 @@ public class TranslationManager {
 
         GlobalTranslations.defaultTranslations().keySet().forEach(TranslationManager::add);
         for (Module module : modules) {
-            module.defaultTranslations().keySet().forEach(TranslationManager::add);
+            module.defaultTranslations().keySet().forEach(key ->
+                    add("%s.%s".formatted(module.name(), key))
+            );
         }
     }
 

@@ -28,16 +28,16 @@ public class MailsModule extends Module {
 
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(LoreProvider.line(translate("mails_total"), mailCount));
-            lore.add(LoreProvider.line(translate("mails_unread"), unreadMailCount));
+            lore.add(LoreProvider.line(translate("total"), mailCount));
+            lore.add(LoreProvider.line(translate("unread"), unreadMailCount));
             if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
                 lore.add(Component.empty());
-                lore.add(LoreProvider.line(translate("mails_click")));
+                lore.add(LoreProvider.line(translate("click")));
             }
 
             return GuiItem.builder().slot(24).material(Material.WRITABLE_BOOK)
                     .customModelData(3004)
-                    .name(translate("mails"), 0xAA00AA)
+                    .name(translate("name"), 0xAA00AA)
                     .lore(lore)
                     .onLeftClick(context -> {
                         if (!PACProfile.getInstance().config.getCommandOnClickMails().isBlank()) {
@@ -55,9 +55,9 @@ public class MailsModule extends Module {
 
     @Override
     protected void registerDefaultTranslations() {
-        defaultTranslations.put("mails", "Mails");
-        defaultTranslations.put("mails_total", "Total: ");
-        defaultTranslations.put("mails_unread", "Unread: ");
-        defaultTranslations.put("mails_click", "⇒ Click to see mails");
+        defaultTranslations.put("name", "Mails");
+        defaultTranslations.put("total", "Total: ");
+        defaultTranslations.put("unread", "Unread: ");
+        defaultTranslations.put("click", "⇒ Click to see mails");
     }
 }

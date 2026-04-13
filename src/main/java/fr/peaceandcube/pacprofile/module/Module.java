@@ -63,6 +63,6 @@ public abstract class Module {
     protected abstract void registerDefaultTranslations();
 
     public final String translate(String key) {
-        return TranslationManager.translate(key);
+        return TranslationManager.translate("%s.%s".formatted(name, key));
     }
 }
